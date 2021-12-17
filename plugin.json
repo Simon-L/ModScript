@@ -1,0 +1,23 @@
+{
+  "slug": "ModScript",
+  "name": "ModScript",
+  "version": "2.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "ModScript",
+  "author": "",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Cardinalua",
+      "name": "Cardinalua",
+      "description": "",
+      "tags": []
+    }
+  ]
+}
