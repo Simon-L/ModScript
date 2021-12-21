@@ -9,4 +9,9 @@
 
 :warning: Heavily WIP!
 
+```
+make dep
+make
+```
+
 * Load script with right click Open script
