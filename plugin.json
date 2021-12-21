@@ -18,6 +18,16 @@
       "name": "Cardinalua",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "MIDIToExp",
+      "name": "MIDIToExp",
+      "description": "Converts MIDI from an external device to generic expander messages",
+      "tags": [
+        "External",
+        "MIDI",
+        "Polyphonic"
+      ]
     }
   ]
 }

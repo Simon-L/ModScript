@@ -1,5 +1,7 @@
 // LuaJITEngine.cpp
 // Mostly adapted from the LuaJIT engine in VCV-Prototype https://github.com/VCVRack/VCV-Prototype/blob/v2/src/LuaJITEngine.cpp
+// Copyright © 2019-2021 Andrew Belt and VCV Prototype contributors.
+// 2021 Modifications by Simon-L
 
 #include "LuaJITEngine.hpp"
 #include <string>
@@ -14,12 +16,13 @@ struct LuaProcessBlock {
 	float sampleRate;
 	float sampleTime;
 	int bufferSize;
+	int midiInputSize;
 	float* inputs[NUM_ROWS + 1];
 	float* outputs[NUM_ROWS + 1];
+	uint8_t* midiInput[MAX_MIDI_MESSAGES + 1];
 	float* knobs;
-	bool* switches;
-	float* lights[NUM_ROWS + 1];
-	float* switchLights[NUM_ROWS + 1];
+	float* light;
+	bool _switch;
 };
 
 LuaProcessBlock luaBlock;
@@ -40,13 +43,15 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Warray-bounds"
 	luaBlock.knobs = &block->knobs[-1];
-	luaBlock.switches = &block->switches[-1];
+	luaBlock.light = &block->light[-1];
+	luaBlock._switch = block->_switch;
 
 	for (int i = 0; i < NUM_ROWS; i++) {
 		luaBlock.inputs[i + 1] = &block->inputs[i][-1];
 		luaBlock.outputs[i + 1] = &block->outputs[i][-1];
-		luaBlock.lights[i + 1] = &block->lights[i][-1];
-		luaBlock.switchLights[i + 1] = &block->switchLights[i][-1];
+	}
+	for (int i = 0; i < MAX_MIDI_MESSAGES; i++) {
+		luaBlock.midiInput[i + 1] = &block->midiInput[i][-1];
 	}
 #pragma GCC diagnostic pop
 
@@ -85,6 +90,11 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_pushcfunction(L, native_display);
 	lua_setglobal(L, "display");
 
+	lua_pushcfunction(L, native_setParamValue);
+	lua_setglobal(L, "setParamValue");
+	lua_pushcfunction(L, native_getParamValue);
+	lua_setglobal(L, "getParamValue");
+
 	// Set config
 	lua_newtable(L);
 	{
@@ -107,12 +117,13 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "float sampleRate;" << std::endl
 	<< "float sampleTime;" << std::endl
 	<< "int bufferSize;" << std::endl
+	<< "int midiInputSize;" << std::endl
 	<< "float *inputs[" << NUM_ROWS + 1 << "];" << std::endl
 	<< "float *outputs[" << NUM_ROWS + 1 << "];" << std::endl
+	<< "uint8_t *midiInput[" << MAX_MIDI_MESSAGES + 1 << "];" << std::endl
 	<< "float *knobs;" << std::endl
-	<< "bool *switches;" << std::endl
-	<< "float *lights[" << NUM_ROWS + 1 << "];" << std::endl
-	<< "float *switchLights[" << NUM_ROWS + 1 << "];" << std::endl
+	<< "float *light;" << std::endl
+	<< "bool _switch;" << std::endl
 	<< "};]]" << std::endl
 	// Declare the function `_castBlock` used to transform `luaBlock` pointer into a LuaJIT cdata
 	<< "_ffi_cast = ffi.cast" << std::endl
@@ -202,6 +213,8 @@ int LuaJITEngine::process() {
 	luaBlock.sampleRate = block->sampleRate;
 	luaBlock.sampleTime = block->sampleTime;
 	luaBlock.bufferSize = block->bufferSize;
+	luaBlock._switch = block->_switch;
+	luaBlock.midiInputSize = block->midiInputSize;
 
 	// Duplicate process function
 	lua_pushvalue(L, -2);
@@ -234,6 +247,31 @@ LuaJITEngine* LuaJITEngine::getEngine(lua_State* L) {
 // 	return 0;
 // }
 
+int LuaJITEngine::native_setParamValue(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 3) {
+		DEBUG("LuaJIT: getParamValue: exactly 3 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int64_t moduleId = lua_tointeger(L, 1);
+	int paramId = lua_tointeger(L, 2);
+	lua_Number paramValue = lua_tonumber(L, 3);
+	getEngine(L)->setParamValue(moduleId, paramId, paramValue);
+	return 0;
+}
+
+int LuaJITEngine::native_getParamValue(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 2) {
+		DEBUG("LuaJIT: getParamValue: exactly 2 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int64_t moduleId = lua_tointeger(L, 1);
+	int paramId = lua_tointeger(L, 2);
+	double paramValue = getEngine(L)->getParamValue(moduleId, paramId);
+	lua_pushnumber(L, paramValue);
+	return 1;
+}
 int LuaJITEngine::native_display(lua_State* L) {
 	lua_getglobal(L, "tostring");
 	lua_pushvalue(L, 1);
