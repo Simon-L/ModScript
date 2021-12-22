@@ -7,7 +7,7 @@
 #include <osdialog.h>
 #include <mutex>
 #include <fstream>
-
+#include <sys/stat.h>
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
 
@@ -66,6 +66,10 @@ struct Cardinalua : ModScriptExpander, Module {
 
 	std::vector<GenericMidiExpanderMessage> midiMessages;
 
+	bool autoReload = false;
+	dsp::Timer reloadTimer;
+	time_t lastMtime = 0;
+
 	Cardinalua() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -87,8 +91,6 @@ struct Cardinalua : ModScriptExpander, Module {
 
 	void process(const ProcessArgs& args) override {
 
-		rack::engine::Engine* eng = APP->engine;
-
 		bool expanderPresent = (leftExpander.module && isModScriptExpander(leftExpander.module));
         if (expanderPresent) {
             processExpMessage();
@@ -106,6 +108,18 @@ struct Cardinalua : ModScriptExpander, Module {
 			for (int i = 0; i < NUM_ROWS; i++)
 				outputs[i].setVoltage(0.f);
 			return;
+		}
+
+		if (autoReload) {
+			reloadTimer.process(args.sampleTime);
+			if (reloadTimer.time > 0.5) {
+				reloadTimer.reset();
+				struct stat _st;
+				stat(path.c_str(), &_st);
+				if (_st.st_mtime > lastMtime) {
+					setScript();
+				}
+			}
 		}
 
 		// Inputs
@@ -172,17 +186,21 @@ struct Cardinalua : ModScriptExpander, Module {
 
 	void loadScript() {
 		std::string dir = asset::plugin(pluginInstance, "examples");
-		char* pathC = osdialog_file(OSDIALOG_OPEN, dir.c_str(), NULL, NULL);
+		osdialog_filters* filters = osdialog_filters_parse("Lua script:lua");
+		char* pathC = osdialog_file(OSDIALOG_OPEN, dir.c_str(), NULL, filters);
 		if (!pathC) {
 			return;
 		}
-		std::string path = pathC;
+		osdialog_filters_free(filters);
+
+		this->path = pathC;
 		DEBUG("Script path %s", pathC);
-		setScript(path);
 		std::free(pathC);
+
+		setScript();
 	}
 
-	void setScript(std::string path) {
+	void setScript() {
 		DEBUG("Loading %s", path.c_str());
 		std::lock_guard<std::mutex> lock(scriptMutex);
 		// Read file
@@ -198,6 +216,10 @@ struct Cardinalua : ModScriptExpander, Module {
 		catch (const std::runtime_error& err) {
 			WARN("Failed opening %s", path.c_str());
 		}
+		struct stat _st;
+		stat(path.c_str(), &_st);
+		lastMtime = _st.st_mtime;
+
 		DEBUG("Content:\n%s", script.c_str());
 
 		// Reset script state
@@ -285,6 +307,18 @@ struct LoadScriptItem : MenuItem {
 	}
 };
 
+struct AutoReloadItem : MenuItem {
+	Cardinalua *module;
+	void onAction(const event::Action& e) override {
+		module->autoReload ^= true;
+		module->reloadTimer.reset();	
+	}
+	void step() override {
+		rightText = CHECKMARK(module->autoReload);
+	}
+};
+
+
 struct CardinaluaWidget : ModuleWidget {
 	CardinaluaWidget(Cardinalua* module) {
 		setModule(module);
@@ -317,6 +351,10 @@ struct CardinaluaWidget : ModuleWidget {
 		LoadScriptItem* loadscript = createMenuItem<LoadScriptItem>("Open script");
 		loadscript->module = _module;
 		menu->addChild(loadscript);
+
+		AutoReloadItem* autoreload = createMenuItem<AutoReloadItem>("Auto-reload script on change");
+		autoreload->module = _module;
+		menu->addChild(autoreload);
 	}
 };
 
