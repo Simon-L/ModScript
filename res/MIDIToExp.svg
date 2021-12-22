@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40.639999mm"
+   height="128.5mm"
+   viewBox="0 0 40.64 128.5"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="MIDIToExp.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="6.8334608"
+     inkscape:cx="88.022748"
+     inkscape:cy="340.23756"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="2560"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     width="50.8mm" />
+  <defs
+     id="defs2">
+    <rect
+       x="23.727484"
+       y="58.65154"
+       width="111.01845"
+       height="17.987807"
+       id="rect11272" />
+  </defs>
+  <g
+     inkscape:label="Base"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <rect
+       style="fill:#f9f9f9;stroke:#ececec;stroke-width:0.499998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;paint-order:markers fill stroke"
+       id="rect864"
+       width="40.639999"
+       height="128.5"
+       x="0"
+       y="0"
+       rx="0.5"
+       ry="0.5" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer23"
+     inkscape:label="Detail"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267"
+       width="9.2866144"
+       height="14"
+       x="3.2626929"
+       y="55.123001"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-8"
+       width="9.2866144"
+       height="14"
+       x="15.605694"
+       y="55.123001"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-3"
+       width="9.2866144"
+       height="14"
+       x="27.947693"
+       y="55.123001"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-5"
+       width="9.2866144"
+       height="14"
+       x="3.2626929"
+       y="71.378998"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-8-9"
+       width="9.2866144"
+       height="14"
+       x="15.605694"
+       y="71.378998"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-3-6"
+       width="9.2866144"
+       height="14"
+       x="27.947693"
+       y="71.378998"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-56"
+       width="9.2866144"
+       height="14"
+       x="3.2626929"
+       y="87.635002"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-8-3"
+       width="9.2866144"
+       height="14"
+       x="15.605694"
+       y="87.635002"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-3-0"
+       width="9.2866144"
+       height="14"
+       x="27.947693"
+       y="87.635002"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-5-2"
+       width="9.2866144"
+       height="14"
+       x="3.2626929"
+       y="103.891"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-8-9-0"
+       width="9.2866144"
+       height="14"
+       x="15.605694"
+       y="103.891"
+       rx="0.49999899"
+       ry="0.49999902" />
+    <rect
+       style="display:inline;fill:#666666;stroke:#666666;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="rect81267-3-6-7"
+       width="9.2866144"
+       height="14"
+       x="27.947693"
+       y="103.891"
+       rx="0.49999899"
+       ry="0.49999902" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer24"
+     inkscape:label="Control"
+     style="display:none">
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006"
+       cx="7.9060001"
+       cy="64.347"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5"
+       cx="20.249001"
+       cy="64.347"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-3"
+       cx="32.591"
+       cy="64.347"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-8"
+       cx="7.9060001"
+       cy="80.602997"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-1"
+       cx="20.249002"
+       cy="80.602997"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-3-1"
+       cx="32.591003"
+       cy="80.602997"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-8-3"
+       cx="7.9060001"
+       cy="96.859001"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-1-1"
+       cx="20.249002"
+       cy="96.859001"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-3-1-5"
+       cx="32.591003"
+       cy="96.859001"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-8-3-8"
+       cx="7.9060001"
+       cy="113.115"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-1-1-1"
+       cx="20.249004"
+       cy="113.115"
+       r="2.5" />
+    <circle
+       style="display:inline;fill:#000000;stroke:#ececec;stroke-width:0.499999;stroke-miterlimit:10;paint-order:markers fill stroke"
+       id="path80006-5-3-1-5-3"
+       cx="32.591003"
+       cy="113.115"
+       r="2.5" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer25"
+     inkscape:label="Text"
+     style="display:none">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="17.215044"
+       y="58.849022"
+       id="text55943-7-3-4-3"><tspan
+         sodipodi:role="line"
+         id="tspan109439"
+         x="17.215044"
+         y="58.849022">GATE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="30.403708"
+       y="58.849022"
+       id="text55943-7-3-4-7"><tspan
+         sodipodi:role="line"
+         id="tspan109711"
+         x="30.403708"
+         y="58.849022">VEL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.7201219"
+       y="75.147346"
+       id="text55943-7-3-4-4"><tspan
+         sodipodi:role="line"
+         id="tspan111297"
+         x="5.7201219"
+         y="75.147346">AFT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="18.303011"
+       y="75.147346"
+       id="text55943-7-3-4-9"><tspan
+         sodipodi:role="line"
+         id="tspan109399"
+         x="18.303011"
+         y="75.147346">PW</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="30.468624"
+       y="75.147346"
+       id="text55943-7-3-4-72"><tspan
+         sodipodi:role="line"
+         id="tspan113183"
+         x="30.468624"
+         y="75.147346">MW</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.6086464"
+       y="91.45697"
+       id="text55943-7-3-4-0"><tspan
+         sodipodi:role="line"
+         id="tspan116255"
+         x="5.6086464"
+         y="91.45697">CLK</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="17.975636"
+       y="91.45697"
+       id="text55943-7-3-4-77"><tspan
+         sodipodi:role="line"
+         id="tspan116275"
+         x="17.975636"
+         y="91.45697">VOL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="30.283766"
+       y="91.45697"
+       id="text55943-7-3-4-91"><tspan
+         sodipodi:role="line"
+         id="tspan116295"
+         x="30.283766"
+         y="91.45697">PAN</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="4.2201114"
+       y="107.71296"
+       id="text55943-7-3-4-41"><tspan
+         sodipodi:role="line"
+         id="tspan116315"
+         x="4.2201114"
+         y="107.71296">START</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="17.150135"
+       y="107.71296"
+       id="text55943-7-3-4-6"><tspan
+         sodipodi:role="line"
+         id="tspan116335"
+         x="17.150135"
+         y="107.71296">STOP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="29.284704"
+       y="107.71296"
+       id="text55943-7-3-4-47"><tspan
+         sodipodi:role="line"
+         id="tspan116355"
+         x="29.284704"
+         y="107.71296">CONT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="4.3626328"
+       y="58.849022"
+       id="text55943-7-3-4"><tspan
+         sodipodi:role="line"
+         id="tspan109419"
+         x="4.3626328"
+         y="58.849022">V/OCT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#333333;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.8473077"
+       y="9.6140852"
+       id="text55943"><tspan
+         sodipodi:role="line"
+         id="tspan119633"
+         x="5.8473077"
+         y="9.6140852">MIDI to Expander</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g31996"
+     inkscape:label="Copie de Text"
+     style="display:inline">
+    <g
+       aria-label="GATE"
+       id="text31946"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 18.843465,58.849022 v -1.083733 h -0.728133 v 0.234245 h 0.516467 c 0,0.474133 -0.231423,0.668866 -0.513645,0.668866 -0.366888,0 -0.561621,-0.285044 -0.561621,-0.815622 0,-0.513644 0.214488,-0.838199 0.555977,-0.838199 0.242711,0 0.414866,0.127 0.485422,0.423333 h 0.217311 c -0.06209,-0.423333 -0.344311,-0.668866 -0.705555,-0.668866 -0.468489,0 -0.784577,0.440266 -0.784577,1.092199 0,0.555977 0.273755,1.041399 0.759177,1.041399 0.220133,0 0.400755,-0.08184 0.561622,-0.316089 l 0.0508,0.262467 z"
+         id="path32112" />
+      <path
+         d="m 20.514212,58.849022 -0.601133,-2.026354 h -0.256822 l -0.62371,2.026354 h 0.231422 l 0.174977,-0.589844 h 0.666044 l 0.163689,0.589844 z M 20.023146,58.013645 H 19.50668 l 0.268111,-0.897466 z"
+         id="path32114" />
+      <path
+         d="M 21.716473,57.068201 V 56.822668 H 20.36463 v 0.245533 h 0.564444 v 1.780821 h 0.225777 v -1.780821 z"
+         id="path32116" />
+      <path
+         d="M 23.172737,58.849022 V 58.603489 H 22.173671 V 57.9318 h 0.905933 v -0.245533 h -0.905933 v -0.618066 h 0.982133 v -0.245533 h -1.207911 v 2.026354 z"
+         id="path32118" />
+    </g>
+    <g
+       aria-label="VEL"
+       id="text31950"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 31.902306,56.822668 h -0.253999 l -0.471311,1.735665 -0.476955,-1.735665 h -0.251178 l 0.606777,2.026354 h 0.239889 z"
+         id="path32105" />
+      <path
+         d="M 33.37268,58.849022 V 58.603489 H 32.373614 V 57.9318 h 0.905933 v -0.245533 h -0.905933 v -0.618066 h 0.982133 v -0.245533 h -1.20791 v 2.026354 z"
+         id="path32107" />
+      <path
+         d="m 34.732987,58.849022 v -0.245533 h -0.841021 v -1.780821 h -0.225778 v 2.026354 z"
+         id="path32109" />
+    </g>
+    <g
+       aria-label="AFT"
+       id="text31954"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="M 7.2328318,75.147346 6.6316989,73.120992 h -0.256822 l -0.6237106,2.026354 h 0.231422 L 6.157566,74.557502 h 0.6660439 l 0.1636888,0.589844 z M 6.7417655,74.311969 H 6.2252993 l 0.2681109,-0.897466 z"
+         id="path32098" />
+      <path
+         d="M 8.6128945,73.366526 V 73.120992 H 7.464251 v 2.026354 H 7.6900286 V 74.230125 H 8.502828 V 73.984592 H 7.6900286 v -0.618066 z"
+         id="path32100" />
+      <path
+         d="M 10.060692,73.366526 V 73.120992 H 8.7088484 v 0.245534 h 0.564444 v 1.78082 H 9.49907 v -1.78082 z"
+         id="path32102" />
+    </g>
+    <g
+       aria-label="PW"
+       id="text31958"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 19.742343,73.693903 c 0,-0.344311 -0.197555,-0.572911 -0.493888,-0.572911 h -0.745066 v 2.026354 h 0.225777 v -0.855132 h 0.519289 c 0.299155,0 0.493888,-0.237067 0.493888,-0.598311 z m -0.231422,0.0085 c 0,0.237066 -0.112889,0.3556 -0.338666,0.3556 h -0.443089 v -0.702733 h 0.451555 c 0.222956,0 0.3302,0.112889 0.3302,0.347133 z"
+         id="path32093" />
+      <path
+         d="m 21.994472,73.120992 h -0.248355 l -0.310445,1.659466 -0.375355,-1.659466 h -0.245533 l -0.375355,1.659466 -0.313267,-1.659466 h -0.242711 l 0.4318,2.026354 h 0.237066 l 0.386645,-1.690509 0.380999,1.690509 h 0.237067 z"
+         id="path32095" />
+    </g>
+    <g
+       aria-label="MW"
+       id="text31962"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 32.229689,75.147346 v -2.026354 h -0.31891 l -0.474133,1.721555 -0.476956,-1.721555 h -0.321733 v 2.026354 h 0.217311 v -1.326443 -0.389466 l 0.468489,1.715909 h 0.220133 l 0.474133,-1.718732 v 0.522111 1.196621 z"
+         id="path32088" />
+      <path
+         d="m 34.543906,73.120992 h -0.248355 l -0.310444,1.659466 -0.375356,-1.659466 h -0.245533 l -0.375355,1.659466 -0.313267,-1.659466 h -0.242711 l 0.4318,2.026354 h 0.237067 l 0.386644,-1.690509 0.380999,1.690509 h 0.237067 z"
+         id="path32090" />
+    </g>
+    <g
+       aria-label="CLK"
+       id="text31966"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="M 7.1834452,90.711904 H 6.9661343 c -0.079022,0.400755 -0.2455332,0.553155 -0.4882441,0.553155 -0.3386664,0 -0.5362218,-0.296333 -0.5362218,-0.809977 0,-0.519288 0.206022,-0.832555 0.5503329,-0.832555 0.231422,0 0.3894664,0.118533 0.4571996,0.417689 h 0.217311 c -0.053622,-0.423333 -0.3160887,-0.663222 -0.6801551,-0.663222 -0.4741329,0 -0.7761105,0.414866 -0.7761105,1.069621 0,0.651933 0.2906887,1.063977 0.7478883,1.063977 0.1834443,0 0.3527775,-0.07055 0.4797775,-0.203199 0.1241776,-0.129823 0.1890887,-0.273756 0.2455331,-0.595489 z"
+         id="path32081" />
+      <path
+         d="M 8.5211748,91.45697 V 91.211437 H 7.6801532 V 89.430616 H 7.4543756 v 2.026354 z"
+         id="path32083" />
+      <path
+         d="M 10.101616,91.45697 9.3904168,90.24906 10.084683,89.430616 H 9.7742387 L 8.9670838,90.412749 V 89.430616 H 8.7413062 v 2.026354 h 0.2257776 v -0.711199 l 0.2624664,-0.3048 0.5813774,1.015999 z"
+         id="path32085" />
+    </g>
+    <g
+       aria-label="DIV"
+       id="text3110"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583"
+       transform="translate(2.6153564e-8,-0.056446)">
+      <path
+         d="m 19.810146,90.421215 c 0,-0.601132 -0.273755,-0.990599 -0.699911,-0.990599 h -0.67451 v 2.026354 h 0.666044 c 0.468488,0 0.708377,-0.460022 0.708377,-1.035755 z m -0.231422,0.02258 c 0,0.4826 -0.183444,0.778933 -0.4826,0.778933 H 18.661502 V 89.66486 h 0.420511 c 0.318911,0 0.496711,0.276578 0.496711,0.778933 z"
+         id="path3202" />
+      <path
+         d="M 20.354832,91.45697 V 89.430616 H 20.131876 V 91.45697 Z"
+         id="path3204" />
+      <path
+         d="m 22.062277,89.430616 h -0.254 l -0.471311,1.735666 -0.476955,-1.735666 h -0.251178 l 0.606778,2.026354 h 0.239888 z"
+         id="path3206" />
+    </g>
+    <g
+       aria-label="RTR"
+       id="text3114"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 31.752804,91.45697 v -0.04515 c -0.06773,-0.04798 -0.08184,-0.07902 -0.08467,-0.2032 l -0.01129,-0.366889 c -0.01411,-0.231422 -0.05644,-0.313266 -0.200377,-0.380999 0.172155,-0.129823 0.231422,-0.254 0.231422,-0.4826 0,-0.3556 -0.191911,-0.547511 -0.544689,-0.547511 h -0.770466 v 2.026354 h 0.225778 V 90.587731 H 31.1432 c 0.2032,0 0.296334,0.1016 0.296334,0.361245 0,0.214488 0.01693,0.426155 0.03669,0.507999 z m -0.296333,-1.456265 c 0,0.239888 -0.107245,0.352777 -0.338667,0.352777 H 30.598516 V 89.66486 h 0.5588 c 0.200377,0 0.299155,0.110067 0.299155,0.335845 z"
+         id="path3195" />
+      <path
+         d="m 33.194955,89.676149 v -0.245533 h -1.351843 v 0.245533 h 0.564444 v 1.780821 h 0.225777 v -1.780821 z"
+         id="path3197" />
+      <path
+         d="m 34.809263,91.45697 v -0.04515 c -0.06773,-0.04798 -0.08184,-0.07902 -0.08467,-0.2032 l -0.01129,-0.366889 c -0.01411,-0.231422 -0.05644,-0.313266 -0.200378,-0.380999 0.172156,-0.129823 0.231422,-0.254 0.231422,-0.4826 0,-0.3556 -0.191911,-0.547511 -0.544688,-0.547511 h -0.770466 v 2.026354 h 0.225777 v -0.869244 h 0.544689 c 0.2032,0 0.296333,0.1016 0.296333,0.361245 0,0.214488 0.01693,0.426155 0.03669,0.507999 z M 34.51293,90.000705 c 0,0.239888 -0.107244,0.352777 -0.338666,0.352777 H 33.654975 V 89.66486 h 0.5588 c 0.200378,0 0.299155,0.110067 0.299155,0.335845 z"
+         id="path3199" />
+    </g>
+    <g
+       aria-label="START"
+       id="text31978"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 5.6537992,107.15698 c 0,-0.28786 -0.1298221,-0.47413 -0.3781775,-0.54469 l -0.474133,-0.13264 c -0.1326443,-0.0367 -0.1947332,-0.11853 -0.1947332,-0.26247 0,-0.22013 0.1382888,-0.34995 0.3753553,-0.34995 0.2455331,0 0.4148663,0.13546 0.4148663,0.41204 h 0.2116666 c 0,-0.44591 -0.2370665,-0.64629 -0.6265329,-0.64629 -0.3838219,0 -0.5926662,0.26247 -0.5926662,0.61807 0,0.25682 0.1185332,0.42051 0.3527775,0.48542 l 0.3414886,0.096 c 0.2737554,0.0762 0.3527775,0.15804 0.3527775,0.34995 0,0.22296 -0.1580443,0.34996 -0.4261552,0.34996 -0.2906887,0 -0.4656663,-0.15522 -0.4656663,-0.47414 H 4.3330002 c 0,0.49954 0.2793998,0.70838 0.6660439,0.70838 0.4063997,0 0.6547551,-0.23142 0.6547551,-0.6096 z"
+         id="path32056" />
+      <path
+         d="m 7.1044138,105.93214 v -0.24553 H 5.7525703 v 0.24553 h 0.564444 v 1.78082 H 6.542792 v -1.78082 z"
+         id="path32058" />
+      <path
+         d="m 8.4223837,107.71296 -0.6011329,-2.02635 h -0.256822 l -0.6237107,2.02635 h 0.2314221 l 0.1749776,-0.58984 h 0.6660439 l 0.1636888,0.58984 z M 7.9313174,106.87758 H 7.4148511 l 0.2681109,-0.89746 z"
+         id="path32060" />
+      <path
+         d="m 10.036691,107.71296 v -0.0452 c -0.067733,-0.048 -0.081844,-0.079 -0.084667,-0.2032 l -0.011289,-0.36688 c -0.014111,-0.23143 -0.056444,-0.31327 -0.2003776,-0.381 0.1721554,-0.12983 0.231422,-0.254 0.231422,-0.4826 0,-0.3556 -0.191911,-0.54751 -0.5446885,-0.54751 h -0.770466 v 2.02635 h 0.2257776 v -0.86924 h 0.5446884 c 0.2031999,0 0.2963331,0.1016 0.2963331,0.36124 0,0.21449 0.016933,0.42615 0.036689,0.508 z m -0.2963332,-1.45627 c 0,0.23989 -0.1072444,0.35278 -0.3386664,0.35278 H 8.8824029 v -0.68862 h 0.5587995 c 0.2003777,0 0.2991554,0.11007 0.2991554,0.33584 z"
+         id="path32062" />
+      <path
+         d="m 11.478842,105.93214 v -0.24553 h -1.351844 v 0.24553 h 0.564444 v 1.78082 h 0.225778 v -1.78082 z"
+         id="path32064" />
+    </g>
+    <g
+       aria-label="STOP"
+       id="text31982"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 18.583823,107.15698 c 0,-0.28786 -0.129822,-0.47413 -0.378178,-0.54469 l -0.474133,-0.13264 c -0.132644,-0.0367 -0.194733,-0.11853 -0.194733,-0.26247 0,-0.22013 0.138289,-0.34995 0.375355,-0.34995 0.245534,0 0.414867,0.13546 0.414867,0.41204 h 0.211666 c 0,-0.44591 -0.237066,-0.64629 -0.626533,-0.64629 -0.383821,0 -0.592666,0.26247 -0.592666,0.61807 0,0.25682 0.118533,0.42051 0.352778,0.48542 l 0.341488,0.096 c 0.273756,0.0762 0.352778,0.15804 0.352778,0.34995 0,0.22296 -0.158044,0.34996 -0.426155,0.34996 -0.290689,0 -0.465667,-0.15522 -0.465667,-0.47414 h -0.211666 c 0,0.49954 0.2794,0.70838 0.666044,0.70838 0.406399,0 0.654755,-0.23142 0.654755,-0.6096 z"
+         id="path32047" />
+      <path
+         d="m 20.034437,105.93214 v -0.24553 h -1.351843 v 0.24553 h 0.564444 v 1.78082 h 0.225778 v -1.78082 z"
+         id="path32049" />
+      <path
+         d="m 21.705186,106.7026 c 0,-0.635 -0.333022,-1.06962 -0.798688,-1.06962 -0.5334,0 -0.821266,0.47414 -0.821266,1.06962 0,0.57292 0.282222,1.06398 0.809977,1.06398 0.527755,0 0.809977,-0.49106 0.809977,-1.06398 z m -0.231422,-0.003 c 0,0.49389 -0.231422,0.82127 -0.578555,0.82127 -0.347133,0 -0.578555,-0.32738 -0.578555,-0.81845 0,-0.50235 0.228599,-0.82408 0.587021,-0.82408 0.338667,0 0.570089,0.33302 0.570089,0.82126 z"
+         id="path32051" />
+      <path
+         d="m 23.234825,106.25952 c 0,-0.34431 -0.197555,-0.57291 -0.493888,-0.57291 h -0.745066 v 2.02635 h 0.225777 v -0.85513 h 0.519289 c 0.299155,0 0.493888,-0.23707 0.493888,-0.59831 z m -0.231422,0.008 c 0,0.23707 -0.112888,0.3556 -0.338666,0.3556 h -0.443089 v -0.70273 h 0.451556 c 0.222955,0 0.330199,0.11289 0.330199,0.34713 z"
+         id="path32053" />
+    </g>
+    <g
+       aria-label="CONT"
+       id="text31986"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="m 30.859503,106.96789 h -0.217311 c -0.07902,0.40076 -0.245533,0.55316 -0.488244,0.55316 -0.338666,0 -0.536222,-0.29633 -0.536222,-0.80998 0,-0.51929 0.206022,-0.83255 0.550333,-0.83255 0.231422,0 0.389466,0.11853 0.4572,0.41768 h 0.217311 c -0.05362,-0.42333 -0.316089,-0.66322 -0.680155,-0.66322 -0.474133,0 -0.776111,0.41487 -0.776111,1.06962 0,0.65194 0.290689,1.06398 0.747888,1.06398 0.183445,0 0.352778,-0.0706 0.479778,-0.2032 0.124178,-0.12982 0.189089,-0.27375 0.245533,-0.59549 z"
+         id="path32038" />
+      <path
+         d="m 32.651607,106.7026 c 0,-0.635 -0.333022,-1.06962 -0.798688,-1.06962 -0.5334,0 -0.821266,0.47414 -0.821266,1.06962 0,0.57292 0.282222,1.06398 0.809977,1.06398 0.527755,0 0.809977,-0.49106 0.809977,-1.06398 z m -0.231422,-0.003 c 0,0.49389 -0.231422,0.82127 -0.578555,0.82127 -0.347133,0 -0.578555,-0.32738 -0.578555,-0.81845 0,-0.50235 0.2286,-0.82408 0.587022,-0.82408 0.338666,0 0.570088,0.33302 0.570088,0.82126 z"
+         id="path32040" />
+      <path
+         d="m 34.237691,107.71296 v -2.02635 H 34.02038 v 1.64535 l -0.838199,-1.64535 h -0.265289 v 2.02635 h 0.217311 v -1.64536 l 0.85231,1.64536 z"
+         id="path32042" />
+      <path
+         d="m 35.795554,105.93214 v -0.24553 H 34.44371 v 0.24553 h 0.564444 v 1.78082 h 0.225778 v -1.78082 z"
+         id="path32044" />
+    </g>
+    <g
+       aria-label="V/OCT"
+       id="text31990"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros Cn';-inkscape-font-specification:'TeX Gyre Heros Cn, Normal';letter-spacing:0px;word-spacing:0px;display:inline;fill:#f9f9f9;stroke-width:0.264583">
+      <path
+         d="M 5.8612316,56.822668 H 5.6072318 L 5.1359211,58.558333 4.6589659,56.822668 H 4.4077883 l 0.6067773,2.026354 h 0.2398887 z"
+         id="path32027" />
+      <path
+         d="M 6.5893615,56.769046 H 6.4369616 l -0.5700885,2.133598 h 0.1552222 z"
+         id="path32029" />
+      <path
+         d="m 8.2601123,57.838667 c 0,-0.634999 -0.333022,-1.069621 -0.7986883,-1.069621 -0.5333996,0 -0.8212661,0.474133 -0.8212661,1.069621 0,0.572911 0.282222,1.063977 0.8099772,1.063977 0.5277552,0 0.8099772,-0.491066 0.8099772,-1.063977 z m -0.2314221,-0.0028 c 0,0.493888 -0.231422,0.821266 -0.5785551,0.821266 -0.3471331,0 -0.5785551,-0.327378 -0.5785551,-0.818444 0,-0.502355 0.2285998,-0.824088 0.5870218,-0.824088 0.3386664,0 0.5700884,0.333022 0.5700884,0.821266 z"
+         id="path32031" />
+      <path
+         d="m 9.9252181,58.103956 h -0.217311 c -0.079022,0.400755 -0.2455331,0.553155 -0.488244,0.553155 -0.3386664,0 -0.5362218,-0.296333 -0.5362218,-0.809977 0,-0.519289 0.206022,-0.832555 0.5503329,-0.832555 0.231422,0 0.3894663,0.118533 0.4571996,0.417688 h 0.217311 c -0.053622,-0.423333 -0.3160887,-0.663221 -0.6801551,-0.663221 -0.4741329,0 -0.7761105,0.414866 -0.7761105,1.069621 0,0.651933 0.2906887,1.063977 0.7478883,1.063977 0.1834443,0 0.3527775,-0.07055 0.4797774,-0.2032 0.1241777,-0.129822 0.1890888,-0.273755 0.2455332,-0.595488 z"
+         id="path32033" />
+      <path
+         d="m 11.404058,57.068201 v -0.245533 h -1.351843 v 0.245533 h 0.564444 v 1.780821 h 0.225778 v -1.780821 z"
+         id="path32035" />
+    </g>
+    <g
+       aria-label="MIDI to Expander"
+       id="text31994"
+       style="font-weight:bold;font-size:3.52778px;line-height:1.25;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros, Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#333333;stroke-width:0.264583">
+      <path
+         d="M 8.584865,9.6140852 V 7.0423335 H 7.7875867 L 7.3360309,9.088446 6.8703639,7.0423335 H 6.0801412 v 2.5717517 h 0.529167 V 7.6103061 l 0.4621392,2.0037791 h 0.529167 L 8.055698,7.6103061 v 2.0037791 z"
+         id="path31998" />
+      <path
+         d="M 9.5373595,9.6140852 V 7.0423335 h -0.529167 v 2.5717517 z"
+         id="path32000" />
+      <path
+         d="m 12.169083,8.3264455 c 0,-0.3951114 -0.109361,-0.7443616 -0.313972,-0.9877784 C 11.682249,7.130528 11.438832,7.0423335 11.043721,7.0423335 h -1.005417 v 2.5717517 h 1.005417 c 0.391584,0 0.635001,-0.091722 0.81139,-0.2998613 0.201083,-0.2398891 0.313972,-0.5891393 0.313972,-0.9877784 z m -0.529167,0.00353 c 0,0.5644448 -0.197556,0.8431394 -0.596195,0.8431394 h -0.47625 V 7.483306 h 0.47625 c 0.398639,0 0.596195,0.2786947 0.596195,0.8466673 z"
+         id="path32002" />
+      <path
+         d="M 13.065133,9.6140852 V 7.0423335 h -0.529167 v 2.5717517 z"
+         id="path32004" />
+      <path
+         d="M 15.337022,9.6140852 V 9.2683628 c -0.04939,0.00706 -0.07761,0.010583 -0.112889,0.010583 -0.130528,0 -0.162278,-0.038806 -0.162278,-0.208139 v -0.994834 h 0.275167 V 7.7478895 H 15.061855 V 7.2363614 h -0.493889 v 0.5115281 h -0.243417 v 0.3280836 h 0.243417 v 1.1288896 c 0,0.2998613 0.15875,0.4233336 0.483306,0.4233336 0.109361,0 0.197556,-0.010583 0.28575,-0.014111 z"
+         id="path32006" />
+      <path
+         d="m 17.421933,8.6756957 c 0,-0.6455837 -0.34925,-0.9983618 -0.945445,-0.9983618 -0.582083,0 -0.938389,0.3598336 -0.938389,0.9842507 0,0.6279448 0.356306,0.9842506 0.941917,0.9842506 0.578556,0 0.941917,-0.3598335 0.941917,-0.9701395 z m -0.493889,-0.00706 c 0,0.3563058 -0.183444,0.578556 -0.448028,0.578556 -0.268111,0 -0.448028,-0.2222502 -0.448028,-0.5856115 0,-0.3633614 0.179917,-0.5856115 0.448028,-0.5856115 0.271639,0 0.448028,0.2187224 0.448028,0.592667 z"
+         id="path32008" />
+      <path
+         d="M 20.752151,9.6140852 V 9.1731127 H 19.358678 V 8.5063623 h 1.231195 V 8.0653898 H 19.358678 V 7.483306 h 1.329973 V 7.0423335 h -1.85914 v 2.5717517 z"
+         id="path32010" />
+      <path
+         d="M 22.791207,9.6140852 22.156206,8.654529 22.777096,7.709084 H 22.184429 L 21.877512,8.2841121 21.567067,7.709084 H 20.9744 l 0.620889,0.945445 -0.635,0.9595562 h 0.592667 l 0.324556,-0.5926671 0.321028,0.5926671 z"
+         id="path32012" />
+      <path
+         d="m 24.890236,8.6615846 c 0,-0.5644448 -0.299861,-0.9842507 -0.797278,-0.9842507 -0.239889,0 -0.409223,0.1023057 -0.529167,0.3139725 V 7.709084 h -0.49389 v 2.674057 h 0.49389 V 9.360085 c 0.119944,0.2116668 0.289278,0.2857502 0.529167,0.2857502 0.458611,0 0.797278,-0.4056947 0.797278,-0.9842506 z m -0.493889,0.00706 c 0,0.3457225 -0.172862,0.5644449 -0.416278,0.5644449 -0.246945,0 -0.416278,-0.2151946 -0.416278,-0.5715004 0,-0.3563058 0.169333,-0.5715004 0.416278,-0.5715004 0.250472,0 0.416278,0.2151946 0.416278,0.5785559 z"
+         id="path32014" />
+      <path
+         d="M 26.869313,9.6140852 V 9.5541129 C 26.781118,9.472974 26.756424,9.4200573 26.756424,9.3212795 V 8.2629454 c 0,-0.3880558 -0.264583,-0.5856115 -0.779639,-0.5856115 -0.515056,0 -0.783168,0.2187224 -0.814918,0.6596949 h 0.476251 c 0.02469,-0.1975557 0.105833,-0.2610557 0.34925,-0.2610557 0.1905,0 0.28575,0.0635 0.28575,0.1905001 0,0.2010835 -0.148167,0.1799168 -0.395111,0.2222502 l -0.197556,0.035278 c -0.377472,0.067028 -0.560917,0.2293057 -0.560917,0.5750281 0,0.3704169 0.261056,0.5468059 0.578556,0.5468059 0.211667,0 0.405695,-0.091722 0.578556,-0.271639 0,0.098778 0.01058,0.1834445 0.05644,0.239889 z M 26.273118,8.799168 c 0,0.2857502 -0.141111,0.4480281 -0.391583,0.4480281 -0.165806,0 -0.268112,-0.0635 -0.268112,-0.2046113 0,-0.144639 0.07761,-0.1975557 0.282223,-0.2363612 l 0.169333,-0.03175 c 0.130528,-0.024694 0.151695,-0.03175 0.208139,-0.059972 z"
+         id="path32016" />
+      <path
+         d="M 28.908369,9.6140852 V 8.3370288 c 0,-0.4198058 -0.232833,-0.6596949 -0.638528,-0.6596949 -0.257528,0 -0.430389,0.09525 -0.571501,0.3069169 V 7.709084 H 27.204451 V 9.6140852 H 27.69834 V 8.4710845 c 0,-0.225778 0.158751,-0.3739447 0.39864,-0.3739447 0.211666,0 0.3175,0.1164167 0.3175,0.3421946 v 1.1747508 z"
+         id="path32018" />
+      <path
+         d="M 31.060309,9.6140852 V 7.0423335 H 30.56642 V 7.9560286 C 30.442948,7.7655284 30.277142,7.6773339 30.040781,7.6773339 c -0.455084,0 -0.800806,0.4127503 -0.800806,0.9877785 0,0.5397503 0.296333,0.9807228 0.800806,0.9807228 0.236361,0 0.402167,-0.088195 0.525639,-0.2504724 V 9.6140852 Z M 30.56642,8.6721679 c 0,0.3457225 -0.169333,0.5609171 -0.416278,0.5609171 -0.246945,0 -0.416278,-0.2187224 -0.416278,-0.5679726 0,-0.352778 0.169333,-0.5750282 0.416278,-0.5750282 0.250472,0 0.416278,0.2187224 0.416278,0.5820837 z"
+         id="path32020" />
+      <path
+         d="m 33.14522,8.7321402 c 0,-0.6561671 -0.331612,-1.0548063 -0.892529,-1.0548063 -0.546806,0 -0.881945,0.370417 -0.881945,1.0089451 0,0.610306 0.331612,0.9595562 0.871362,0.9595562 0.426861,0 0.772584,-0.1940279 0.881945,-0.5679726 h -0.486834 c -0.04233,0.1375835 -0.197555,0.1905002 -0.377472,0.1905002 -0.232834,0 -0.381,-0.1058334 -0.395111,-0.4762504 h 1.277056 z M 32.630164,8.4640289 h -0.758473 c 0.03175,-0.2645835 0.155222,-0.4092225 0.373945,-0.4092225 0.211667,0 0.359833,0.1375834 0.384528,0.4092225 z"
+         id="path32022" />
+      <path
+         d="M 34.559859,8.1818065 V 7.6808617 c -0.02822,-0.00353 -0.04586,-0.00353 -0.05997,-0.00353 -0.225778,0 -0.423333,0.1481668 -0.529167,0.4056948 V 7.709084 H 33.47683 v 1.9050012 h 0.493889 V 8.6016123 c 0,-0.2892779 0.144639,-0.4339169 0.433917,-0.4339169 0.05292,0 0.08819,0.00353 0.155223,0.014111 z"
+         id="path32024" />
+    </g>
+  </g>
+</svg>
