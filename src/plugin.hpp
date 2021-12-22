@@ -1,6 +1,12 @@
 #pragma once
 #include <rack.hpp>
 
+#if defined(WIN32) || defined(_WIN32) 
+#define PATH_SEPARATOR "\\" 
+#else 
+#define PATH_SEPARATOR "/" 
+#endif 
+
 
 using namespace rack;
 

@@ -3,6 +3,7 @@
 
 #pragma once
 #include <rack.hpp>
+#include "plugin.hpp"
 #include <luajit-2.0/lua.hpp>
 
 static const int NUM_ROWS = 4;

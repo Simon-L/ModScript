@@ -185,7 +185,7 @@ struct Cardinalua : ModScriptExpander, Module {
 	}
 
 	void loadScript() {
-		std::string dir = asset::plugin(pluginInstance, "examples");
+		std::string dir = asset::plugin(pluginInstance, "scripts");
 		osdialog_filters* filters = osdialog_filters_parse("Lua script:lua");
 		char* pathC = osdialog_file(OSDIALOG_OPEN, dir.c_str(), NULL, filters);
 		if (!pathC) {

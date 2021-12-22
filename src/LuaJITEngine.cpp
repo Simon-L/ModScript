@@ -127,9 +127,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "};]]" << std::endl
 	// Declare the function `_castBlock` used to transform `luaBlock` pointer into a LuaJIT cdata
 	<< "_ffi_cast = ffi.cast" << std::endl
-	<< "function _castBlock(b) return _ffi_cast('struct LuaProcessBlock*', b) end" << std::endl
-	// Remove global functions that could be abused
-	<< "jit = nil; require = nil; ffi = nil; load = nil; loadfile = nil; loadstring = nil; dofile = nil;" << std::endl;
+	<< "function _castBlock(b) return _ffi_cast('struct LuaProcessBlock*', b) end" << std::endl;
 	std::string ffi_script = ffi_stream.str();
 
 	// Compile the ffi script
@@ -142,6 +140,31 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	}
 
 	// Run the ffi script
+	if (lua_pcall(L, 0, 0, 0)) {
+		const char* s = lua_tostring(L, -1);
+		WARN("LuaJIT: %s", s);
+		DEBUG(s);
+		lua_pop(L, 1);
+		return -1;
+	}
+
+	std::string lib_dir = asset::plugin(pluginInstance, "scripts" PATH_SEPARATOR "lib");
+	std::stringstream lib_stream;
+	lib_stream
+	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
+	<< "local midi = require('midi')" << std::endl;
+	std::string lib_script = lib_stream.str();
+
+	// Compile the lib script
+	if (luaL_loadbuffer(L, lib_script.c_str(), lib_script.size(), "lib_script.lua")) {
+		const char* s = lua_tostring(L, -1);
+		WARN("LuaJIT: %s", s);
+		DEBUG(s);
+		lua_pop(L, 1);
+		return -1;
+	}
+
+	// Run the lib script
 	if (lua_pcall(L, 0, 0, 0)) {
 		const char* s = lua_tostring(L, -1);
 		WARN("LuaJIT: %s", s);
