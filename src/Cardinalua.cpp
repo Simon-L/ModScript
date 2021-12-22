@@ -311,15 +311,75 @@ struct AutoReloadItem : MenuItem {
 	Cardinalua *module;
 	void onAction(const event::Action& e) override {
 		module->autoReload ^= true;
-		module->reloadTimer.reset();	
+		module->reloadTimer.reset();
 	}
 	void step() override {
 		rightText = CHECKMARK(module->autoReload);
 	}
 };
 
+struct HoveredNameLabel : MenuLabel {
+	std::string* name;
+	void step() override {
+		text = *name;
+	}
+};
+
+struct HoveredParameterLabel : MenuLabel {
+	std::string* name;
+	int64_t* id;
+	void step() override {
+		if (*id < 0)
+			text = string::f("Parameter: %s Id: -/-", name->c_str());
+		else
+			text = string::f("Parameter: %s Id: %ld", name->c_str(), *id);
+	}
+};
+
+struct HoveredIdItem : MenuItem {
+	int64_t* id;
+	void onAction(const event::Action& e) override {
+		glfwSetClipboardString(APP->window->win, string::f("0x%lx", *id).c_str());
+	}
+	void step() override {
+		text = string::f("Id: 0x%lx", *id);
+	}
+};
 
 struct CardinaluaWidget : ModuleWidget {
+	HoveredNameLabel* lastHoveredName;
+	HoveredParameterLabel* lastHoveredParameter;
+	HoveredIdItem* lastHoveredId;
+	int64_t hoveredModule;
+	int64_t hoveredParam;
+	std::string hoveredModuleName;
+	std::string hoveredParameterName;
+
+	void step() override {
+		if (module) {
+			Cardinalua* _module = dynamic_cast<Cardinalua*>(module);
+			rack::widget::EventState* evState = APP->event;
+			if (ModuleWidget *mwidget = dynamic_cast<ModuleWidget *>(evState->hoveredWidget)) {
+				int64_t _hovId = mwidget->getModule()->getId();
+				if (_hovId != hoveredModule && _hovId != _module->getId()) {
+					hoveredModule = _hovId;
+					hoveredParam = -1;
+					hoveredParameterName = "-/-";
+					// DEBUG("%lx - %s", (int64_t)hoveredModule, mwidget->getModel()->getFullName().c_str());
+					hoveredModuleName = mwidget->getModel()->getFullName();
+				}
+			}
+			if (ParamWidget *pwidget = dynamic_cast<ParamWidget *>(evState->hoveredWidget)) {
+				int64_t _hovId = pwidget->paramId;
+				if (_hovId != hoveredParam && pwidget->module->getId() != _module->getId()) {
+					hoveredParam = _hovId;
+					hoveredParameterName = pwidget->module->getParamQuantity(hoveredParam)->name;
+				}
+			}
+		}
+		ModuleWidget::step();
+	}
+
 	CardinaluaWidget(Cardinalua* module) {
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Cardinalua.svg")));
@@ -355,6 +415,20 @@ struct CardinaluaWidget : ModuleWidget {
 		AutoReloadItem* autoreload = createMenuItem<AutoReloadItem>("Auto-reload script on change");
 		autoreload->module = _module;
 		menu->addChild(autoreload);
+
+		menu->addChild(createMenuLabel("Last hovered module:"));
+		lastHoveredName = createMenuLabel<HoveredNameLabel>("-/-");
+		lastHoveredName->name = &hoveredModuleName;
+		menu->addChild(lastHoveredName);
+
+		lastHoveredId = createMenuItem<HoveredIdItem>("Id: -/-", "Click to copy");
+		lastHoveredId->id = &hoveredModule;
+		menu->addChild(lastHoveredId);
+
+		lastHoveredParameter = createMenuLabel<HoveredParameterLabel>("Parameter: -/- Id: -/-");
+		lastHoveredParameter->name = &hoveredParameterName;
+		lastHoveredParameter->id = &hoveredParam;
+		menu->addChild(lastHoveredParameter);
 	}
 };
 
