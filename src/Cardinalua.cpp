@@ -97,14 +97,12 @@ struct Cardinalua : ModScriptExpander, Module {
         }
 
 		if (autoReload && (script != "")) {
-			// DEBUG("blu?");
 			reloadTimer.process(args.sampleTime);
 			if (reloadTimer.time > 0.5) {
 				reloadTimer.reset();
 				struct stat _st;
 				stat(path.c_str(), &_st);
 				if (_st.st_mtime > lastMtime) {
-					DEBUG("yes reload and set!");
 					setScript();
 				}
 			}
