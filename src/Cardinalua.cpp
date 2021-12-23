@@ -96,6 +96,20 @@ struct Cardinalua : ModScriptExpander, Module {
             processExpMessage();
         }
 
+		if (autoReload && (script != "")) {
+			// DEBUG("blu?");
+			reloadTimer.process(args.sampleTime);
+			if (reloadTimer.time > 0.5) {
+				reloadTimer.reset();
+				struct stat _st;
+				stat(path.c_str(), &_st);
+				if (_st.st_mtime > lastMtime) {
+					DEBUG("yes reload and set!");
+					setScript();
+				}
+			}
+		}
+
 		// Frame divider for reducing sample rate
 		if (++frame < frameDivider)
 			return;
@@ -108,18 +122,6 @@ struct Cardinalua : ModScriptExpander, Module {
 			for (int i = 0; i < NUM_ROWS; i++)
 				outputs[i].setVoltage(0.f);
 			return;
-		}
-
-		if (autoReload) {
-			reloadTimer.process(args.sampleTime);
-			if (reloadTimer.time > 0.5) {
-				reloadTimer.reset();
-				struct stat _st;
-				stat(path.c_str(), &_st);
-				if (_st.st_mtime > lastMtime) {
-					setScript();
-				}
-			}
 		}
 
 		// Inputs

@@ -2,6 +2,26 @@
 function Message(arg)
   return {type = arg[1], channel = arg[2], note = arg[3], value = arg[4]}
 end
+
+NOTE_OFF = 0x8
+NOTE_ON = 0x9
+CC = 0xb
+PROG_CHANGE = 0xc
+AFTERTOUCH = 0xd
+PW = 0xe
+
+function status(msg)
+  if msg.type == NOTE_OFF then return "NOTE_OFF"
+  elseif msg.type == NOTE_ON then return "NOTE_ON"
+  elseif msg.type == CC then return "CC"
+  elseif msg.type == PROG_CHANGE then return "PROG_CHANGE"
+  elseif msg.type == AFTERTOUCH then return "AFTERTOUCH"
+  elseif msg.type == PW then return "PW"
+  else return ""
+  end
+end
+
+
 -- 
 
 -- Module class
