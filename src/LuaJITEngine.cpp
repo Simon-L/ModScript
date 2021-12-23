@@ -91,9 +91,9 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "display");
 
 	lua_pushcfunction(L, native_setParamValue);
-	lua_setglobal(L, "setParamValue");
+	lua_setglobal(L, "__setParamValue");
 	lua_pushcfunction(L, native_getParamValue);
-	lua_setglobal(L, "getParamValue");
+	lua_setglobal(L, "__getParamValue");
 
 	// Set config
 	lua_newtable(L);
@@ -152,7 +152,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	std::stringstream lib_stream;
 	lib_stream
 	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
-	<< "local midi = require('midi')" << std::endl;
+	<< "local lib = require('lib')" << std::endl;
 	std::string lib_script = lib_stream.str();
 
 	// Compile the lib script
