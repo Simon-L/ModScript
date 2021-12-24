@@ -7,6 +7,7 @@
 #include <osdialog.h>
 #include <mutex>
 #include <fstream>
+#include <glob.h>
 #include <sys/stat.h>
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
@@ -15,16 +16,13 @@ struct Cardinalua : ModScriptExpander, Module {
 
 	void sendExpMessage(const midi::Message& msg) override {}
 
-	GenericMidiExpanderMessage _curMsg;
     void processExpMessage() override {
-   		if (leftExpander.messageFlipRequested) {
-        	_curMsg = *((GenericMidiExpanderMessage*)leftExpander.consumerMessage);
-   			// DEBUG("MIDI: %01x %d %d %d", _curMsg.msg.getStatus(), _curMsg.msg.getChannel(), _curMsg.msg.getNote(), _curMsg.msg.getValue());
-   			if (scriptEngine) {
-   				assert(midiMessages.size() < midiMessages.capacity());
-   				midiMessages.push_back(_curMsg);
-   			}
-   		}
+		GenericMidiExpanderMessage* _curMsg = (GenericMidiExpanderMessage*)leftExpander.consumerMessage;
+		DEBUG("MIDI process: %01x %d %d %d %ld", _curMsg->msg.getStatus(), _curMsg->msg.getChannel(), _curMsg->msg.getNote(), _curMsg->msg.getValue(), _curMsg->msg.getFrame());
+		if (scriptEngine) {
+			assert(midiMessages.size() < midiMessages.capacity());
+			midiMessages.push_back(*_curMsg);
+		}
     }
 
 	enum ParamId {
@@ -70,6 +68,9 @@ struct Cardinalua : ModScriptExpander, Module {
 	dsp::Timer reloadTimer;
 	time_t lastMtime = 0;
 
+	std::string scriptsDir;
+	std::vector<std::string> scriptFiles;
+
 	Cardinalua() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -83,17 +84,51 @@ struct Cardinalua : ModScriptExpander, Module {
 		midiMessages.clear();
 
 		setupExpanding(this);
+
+		scriptsDir = asset::plugin(pluginInstance, "scripts");
+		populateUserScripts(scriptsDir);
+		for (int i = 0; i < scriptFiles.size(); ++i)
+		{
+			DEBUG("Found script %s", scriptFiles[i].c_str());
+		}
 	}
 
 	~Cardinalua() {
 		delete block;
 	}
 
+	int populateUserScripts(std::string dir){
+		glob_t glob_result;
+    	memset(&glob_result, 0, sizeof(glob_result));
+
+    	std::string pattern = dir + PATH_SEPARATOR "*.lua";
+    	int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
+    	if(return_value != 0) {
+	        globfree(&glob_result);
+	        DEBUG("User scripts glob() failed with return_value %d", return_value);
+	        return -1;
+	    }
+
+	    for(size_t i = 0; i < glob_result.gl_pathc; ++i) {
+	    	std::string path = std::string(glob_result.gl_pathv[i]);
+	    	size_t sep = path.find_last_of(PATH_SEPARATOR);
+	        scriptFiles.push_back(path.substr(sep + 1, path.size()));
+	    }
+
+	    globfree(&glob_result);
+
+	    return 0;
+	}
+
 	void process(const ProcessArgs& args) override {
 
 		bool expanderPresent = (leftExpander.module && isModScriptExpander(leftExpander.module));
-        if (expanderPresent) {
+        if (expanderPresent && leftExpander.messageFlipRequested) {
+        	processExpRequested = true;
+        }
+        else if (expanderPresent && processExpRequested) {
             processExpMessage();
+            processExpRequested = false;
         }
 
 		if (autoReload && (script != "")) {
@@ -185,9 +220,8 @@ struct Cardinalua : ModScriptExpander, Module {
 	}
 
 	void loadScript() {
-		std::string dir = asset::plugin(pluginInstance, "scripts");
 		osdialog_filters* filters = osdialog_filters_parse("Lua script:lua");
-		char* pathC = osdialog_file(OSDIALOG_OPEN, dir.c_str(), NULL, filters);
+		char* pathC = osdialog_file(OSDIALOG_OPEN, scriptsDir.c_str(), NULL, filters);
 		if (!pathC) {
 			return;
 		}
@@ -346,6 +380,36 @@ struct HoveredIdItem : MenuItem {
 	}
 };
 
+struct UserScriptItem : MenuItem {
+	Cardinalua* module;
+	std::string newPath;
+
+	UserScriptItem(Cardinalua* module, std::string name){
+		this->text = name;
+		this->module = module;
+		this->newPath = module->scriptsDir + PATH_SEPARATOR + name;
+	}
+
+	void onAction(const event::Action& e) override {
+		module->path = newPath;
+		module->setScript();
+	}
+};
+
+struct UserScriptsMenu : MenuItem {
+	Cardinalua* module;
+	Menu* createChildMenu() override {
+		Menu* menu = new Menu;
+		if (module) {
+			for (size_t i = 0; i < module->scriptFiles.size(); i++) {
+				UserScriptItem* it = new UserScriptItem(module, module->scriptFiles[i]);
+				menu->addChild(it);
+			}
+		}
+		return menu;
+	}
+};
+
 struct CardinaluaWidget : ModuleWidget {
 	HoveredNameLabel* lastHoveredName;
 	HoveredParameterLabel* lastHoveredParameter;
@@ -411,6 +475,12 @@ struct CardinaluaWidget : ModuleWidget {
 		LoadScriptItem* loadscript = createMenuItem<LoadScriptItem>("Open script");
 		loadscript->module = _module;
 		menu->addChild(loadscript);
+
+		UserScriptsMenu* scriptsMenu = new UserScriptsMenu;
+		scriptsMenu->text = "User scripts";
+		scriptsMenu->rightText = RIGHT_ARROW;
+		scriptsMenu->module = _module;
+		menu->addChild(scriptsMenu);
 
 		AutoReloadItem* autoreload = createMenuItem<AutoReloadItem>("Auto-reload script on change");
 		autoreload->module = _module;

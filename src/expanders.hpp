@@ -15,11 +15,10 @@ struct ModScriptExpander
 	virtual void sendExpMessage(const midi::Message& msg) = 0;
 	virtual void processExpMessage() = 0;
 
-	GenericMidiExpanderMessage rightMessages[2][1] = {}; // messages from right-side
-    GenericMidiExpanderMessage leftMessages[2][1] = {};// messages from left-side
+	bool processExpRequested = false;
 
     void setupExpanding(Module *module) {
-        module->leftExpander.producerMessage = leftMessages[0];
-        module->leftExpander.consumerMessage = leftMessages[1];
+        module->leftExpander.producerMessage = new GenericMidiExpanderMessage;
+        module->leftExpander.consumerMessage = new GenericMidiExpanderMessage;
     }
 };
