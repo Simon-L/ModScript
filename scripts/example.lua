@@ -18,7 +18,7 @@ function process(block)
 		end
 	end
 
-	-- if block._switch then
+	-- if block.button then
 	-- else
 	-- end
 

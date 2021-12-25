@@ -22,7 +22,7 @@ struct LuaProcessBlock {
 	uint8_t* midiInput[MAX_MIDI_MESSAGES + 1];
 	float* knobs;
 	float* light;
-	bool _switch;
+	bool button;
 };
 
 LuaProcessBlock luaBlock;
@@ -44,7 +44,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 #pragma GCC diagnostic ignored "-Warray-bounds"
 	luaBlock.knobs = &block->knobs[-1];
 	luaBlock.light = &block->light[-1];
-	luaBlock._switch = block->_switch;
+	luaBlock.button = block->button;
 
 	for (int i = 0; i < NUM_ROWS; i++) {
 		luaBlock.inputs[i + 1] = &block->inputs[i][-1];
@@ -123,7 +123,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "uint8_t *midiInput[" << MAX_MIDI_MESSAGES + 1 << "];" << std::endl
 	<< "float *knobs;" << std::endl
 	<< "float *light;" << std::endl
-	<< "bool _switch;" << std::endl
+	<< "bool button;" << std::endl
 	<< "};]]" << std::endl
 	// Declare the function `_castBlock` used to transform `luaBlock` pointer into a LuaJIT cdata
 	<< "_ffi_cast = ffi.cast" << std::endl
@@ -236,7 +236,7 @@ int LuaJITEngine::process() {
 	luaBlock.sampleRate = block->sampleRate;
 	luaBlock.sampleTime = block->sampleTime;
 	luaBlock.bufferSize = block->bufferSize;
-	luaBlock._switch = block->_switch;
+	luaBlock.button = block->button;
 	luaBlock.midiInputSize = block->midiInputSize;
 
 	// Duplicate process function

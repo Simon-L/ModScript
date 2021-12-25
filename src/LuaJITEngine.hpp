@@ -22,7 +22,7 @@ struct ProcessBlock {
 	uint8_t midiInput[MAX_MIDI_MESSAGES][4] = {};
 	float knobs[2] = {};
 	float light[3] = {};
-	bool _switch;
+	bool button;
 };
 
 

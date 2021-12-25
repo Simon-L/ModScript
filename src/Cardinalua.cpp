@@ -39,7 +39,7 @@ struct Cardinalua : ModScriptExpander, Module {
 	enum ParamId {
 		SCRIPT_KNOB1,
 		SCRIPT_KNOB2,
-		SCRIPT_SWITCH,
+		SCRIPT_BUTTON,
 		PARAMS_LEN
 	};
 	enum InputId {
@@ -225,7 +225,7 @@ struct Cardinalua : ModScriptExpander, Module {
 			midiMessages.clear();
 
 			// Params
-			block->_switch = params[2].getValue() > 0.f;
+			block->button = params[2].getValue() > 0.f;
 
 			for (int i = 0; i < 2; i++)
 				block->knobs[i] = params[i].getValue();
@@ -553,7 +553,7 @@ struct CardinaluaWidget : ModuleWidget {
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 37)), module, Cardinalua::SCRIPT_KNOB1));
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 50)), module, Cardinalua::SCRIPT_KNOB2));
 
-		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 24)), module, Cardinalua::SCRIPT_SWITCH));
+		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 24)), module, Cardinalua::SCRIPT_BUTTON));
 
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 64.342)), module, Cardinalua::SCRIPT_INPUT1));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 80.603)), module, Cardinalua::SCRIPT_INPUT2));
