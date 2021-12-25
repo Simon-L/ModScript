@@ -12,6 +12,17 @@
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
 
+struct ExpiringParamHandle : ParamHandle {
+	float expiry;
+
+	ExpiringParamHandle() {
+		color.r = 0.76f;
+		color.g = 0.11f;
+		color.b = 0.22f;
+		color.a = 0.5f;
+	}
+};
+
 struct Cardinalua : ModScriptExpander, Module {
 
 	void sendExpMessage(const midi::Message& msg) override {}
@@ -71,6 +82,9 @@ struct Cardinalua : ModScriptExpander, Module {
 	std::string scriptsDir;
 	std::vector<std::string> scriptFiles;
 
+	ExpiringParamHandle tempHandles[256];
+	float tempHandlesExpiry = 0.55;
+
 	Cardinalua() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -79,6 +93,9 @@ struct Cardinalua : ModScriptExpander, Module {
 		configParam(2, 0.f, 1.f, 0.f, string::f("Switch 1"));
 
 		block = new ProcessBlock;
+		path = "";
+		script = "";
+		setScript();
 
 		midiMessages.reserve(MAX_MIDI_MESSAGES);
 		midiMessages.clear();
@@ -87,14 +104,29 @@ struct Cardinalua : ModScriptExpander, Module {
 
 		scriptsDir = asset::plugin(pluginInstance, "scripts");
 		populateUserScripts(scriptsDir);
-		for (int i = 0; i < scriptFiles.size(); ++i)
+		for (size_t i = 0; i < scriptFiles.size(); ++i)
 		{
 			DEBUG("Found script %s", scriptFiles[i].c_str());
+		}
+
+		for (int id = 0; id < 256; id++) {
+			APP->engine->addParamHandle(&tempHandles[id]);
 		}
 	}
 
 	~Cardinalua() {
+		path = "";
+		script = "";
+		setScript();
 		delete block;
+
+		for (int id = 0; id < 256; id++) {
+			APP->engine->removeParamHandle(&tempHandles[id]);
+		}
+	}
+
+	void onReset() override {
+		setScript();
 	}
 
 	int populateUserScripts(std::string dir){
@@ -139,6 +171,17 @@ struct Cardinalua : ModScriptExpander, Module {
 				stat(path.c_str(), &_st);
 				if (_st.st_mtime > lastMtime) {
 					setScript();
+				}
+			}
+		}
+
+		for (int id = 0; id < 256; id++) {
+			if (tempHandles[id].moduleId > 0) {
+				tempHandles[id].expiry -= args.sampleTime;
+				if (tempHandles[id].expiry <= 0.0) {
+					tempHandles[id].expiry = 0.0;
+					APP->engine->updateParamHandle_NoLock(&tempHandles[id], -1, 0, true);
+					DEBUG("%d has expired, removed, expiry %f", id, tempHandles[id].expiry);
 				}
 			}
 		}
@@ -290,6 +333,50 @@ struct Cardinalua : ModScriptExpander, Module {
 		}
 		this->engineName = scriptEngine->getEngineName();
 	}
+
+	int getEmptySlot() {
+		for (int id = 0; id < 256; id++) {
+			if (tempHandles[id].moduleId < 0) {
+				return id;
+			}
+		}
+		return -1;
+	}
+
+	int isExistingSlot(const int64_t moduleId, const int paramId) {
+		for (int id = 0; id < 256; id++) {
+			DEBUG("Evaluating isExistingSlot %d", id);
+			if ((tempHandles[id].moduleId == moduleId) && (tempHandles[id].paramId == paramId)) {
+				DEBUG("Evaluated isExistingSlot %d YES", id);
+				return id;
+			}
+		}
+		return -1;
+	}
+
+	json_t* dataToJson() override {
+		json_t* rootJ = json_object();
+
+		json_object_set_new(rootJ, "autoReload", json_boolean(this->autoReload));
+
+		json_object_set_new(rootJ, "path", json_string(path.c_str()));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t* rootJ) override {
+		json_t* reload = json_object_get(rootJ, "autoReload");
+		if (reload)
+			this->autoReload = json_is_true(reload);
+
+
+		json_t* pathJ = json_object_get(rootJ, "path");
+		if (pathJ) {
+			std::string path = json_string_value(pathJ);
+			this->script = "";
+			this->path = path;
+			setScript();
+		}
+	}
 };
 
 void LuaJITEngine::display(const std::string& message) {
@@ -305,6 +392,7 @@ void LuaJITEngine::setBufferSize(int bufferSize) {
 ProcessBlock* LuaJITEngine::getProcessBlock() {
 	return module->block;
 }
+
 void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, const double paramValue) {
 	DEBUG("Module %lx param %d value %f", moduleId, paramId, (float)paramValue);
 	rack::engine::Engine* eng = APP->engine;
@@ -318,9 +406,21 @@ void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, cons
 		return;
 	}
 	eng->setParamValue(mod, paramId, paramValue);
+	int id = module->isExistingSlot(moduleId, paramId);
+	if (id >= 0) {
+		module->tempHandles[id].expiry = module->tempHandlesExpiry;
+		DEBUG("%d exists, expiry set to %f", id, module->tempHandles[id].expiry);
+	} else {
+		id = module->getEmptySlot();
+		if (id < 0)
+			return;
+		eng->updateParamHandle_NoLock(&module->tempHandles[id], moduleId, paramId, true);
+		module->tempHandles[id].expiry = module->tempHandlesExpiry;
+		DEBUG("New handle %d. Expiry is %f", id, module->tempHandles[id].expiry);
+	}
 }
 double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
-	DEBUG("Module %lx param %d", moduleId, paramId);
+	DEBUG("Module %lx Parameter %d", moduleId, paramId);
 	rack::engine::Engine* eng = APP->engine;
 	Module* mod = eng->getModule(moduleId);
 	if (!mod) {
