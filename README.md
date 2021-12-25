@@ -19,8 +19,7 @@ The "everything-is-a-module" paradigm can only go as far as your musicianship wi
 - Lune can auto-reload the script whenever it changes.
 - The context menu presents you with a list of the lua files found in the `scripts/` folder
 - The context menu shows and allows to copy the last hovered module's id to the clipboard. Also shows last hovered parameter id.  
-
-If you are reading this you are likely a developer who has been around VCV Rack SDK and sources, you can take a look
+- Parameters modified from the script will briefly show a little indicator (eg. like when mapped in MIDIMap) to make the script's action more visually obvious
 
 #### Soon to be added:
 - Add cables and modules from the script
