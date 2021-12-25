@@ -14,5 +14,5 @@ using namespace rack;
 extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
-extern Model* modelCardinalua;
+extern Model* modelLune;
 extern Model* modelMIDIToExp;

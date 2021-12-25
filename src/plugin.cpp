@@ -8,7 +8,7 @@ void init(Plugin* p) {
 	pluginInstance = p;
 
 	// Add modules here
-	p->addModel(modelCardinalua);
+	p->addModel(modelLune);
 	p->addModel(modelMIDIToExp);
 
 	// Any other plugin initialization may go here.

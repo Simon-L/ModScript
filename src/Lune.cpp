@@ -1,4 +1,4 @@
-// Cardinalua.cpp
+// Lune.cpp
 // Mostly adapted from VCV-Prototype https://github.com/VCVRack/VCV-Prototype/blob/v2/src/Prototype.cpp
 // Copyright © 2019-2021 Andrew Belt and VCV Prototype contributors.
 // 2021 Modifications by Simon-L
@@ -23,7 +23,7 @@ struct ExpiringParamHandle : ParamHandle {
 	}
 };
 
-struct Cardinalua : ModScriptExpander, Module {
+struct Lune : ModScriptExpander, Module {
 
 	void sendExpMessage(const midi::Message& msg) override {}
 
@@ -85,7 +85,7 @@ struct Cardinalua : ModScriptExpander, Module {
 	ExpiringParamHandle tempHandles[256];
 	float tempHandlesExpiry = 0.55;
 
-	Cardinalua() {
+	Lune() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
 		for (int i = 0; i < 2; i++)
@@ -114,7 +114,7 @@ struct Cardinalua : ModScriptExpander, Module {
 		}
 	}
 
-	~Cardinalua() {
+	~Lune() {
 		path = "";
 		script = "";
 		setScript();
@@ -435,14 +435,14 @@ double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
 }
 
 struct LoadScriptItem : MenuItem {
-	Cardinalua *module;
+	Lune *module;
 	void onAction(const event::Action& e) override {
 		module->loadScript();
 	}
 };
 
 struct AutoReloadItem : MenuItem {
-	Cardinalua *module;
+	Lune *module;
 	void onAction(const event::Action& e) override {
 		module->autoReload ^= true;
 		module->reloadTimer.reset();
@@ -481,10 +481,10 @@ struct HoveredIdItem : MenuItem {
 };
 
 struct UserScriptItem : MenuItem {
-	Cardinalua* module;
+	Lune* module;
 	std::string newPath;
 
-	UserScriptItem(Cardinalua* module, std::string name){
+	UserScriptItem(Lune* module, std::string name){
 		this->text = name;
 		this->module = module;
 		this->newPath = module->scriptsDir + PATH_SEPARATOR + name;
@@ -497,7 +497,7 @@ struct UserScriptItem : MenuItem {
 };
 
 struct UserScriptsMenu : MenuItem {
-	Cardinalua* module;
+	Lune* module;
 	Menu* createChildMenu() override {
 		Menu* menu = new Menu;
 		if (module) {
@@ -510,7 +510,7 @@ struct UserScriptsMenu : MenuItem {
 	}
 };
 
-struct CardinaluaWidget : ModuleWidget {
+struct LuneWidget : ModuleWidget {
 	HoveredNameLabel* lastHoveredName;
 	HoveredParameterLabel* lastHoveredParameter;
 	HoveredIdItem* lastHoveredId;
@@ -521,7 +521,7 @@ struct CardinaluaWidget : ModuleWidget {
 
 	void step() override {
 		if (module) {
-			Cardinalua* _module = dynamic_cast<Cardinalua*>(module);
+			Lune* _module = dynamic_cast<Lune*>(module);
 			rack::widget::EventState* evState = APP->event;
 			if (ModuleWidget *mwidget = dynamic_cast<ModuleWidget *>(evState->hoveredWidget)) {
 				int64_t _hovId = mwidget->getModule()->getId();
@@ -544,32 +544,32 @@ struct CardinaluaWidget : ModuleWidget {
 		ModuleWidget::step();
 	}
 
-	CardinaluaWidget(Cardinalua* module) {
+	LuneWidget(Lune* module) {
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/Cardinalua.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/Lune.svg")));
 
-		addChild(createLightCentered<SmallSimpleLight<RedGreenBlueLight>>(mm2px(Vec(10.1605, 6.2435)), module, Cardinalua::SCRIPT_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedGreenBlueLight>>(mm2px(Vec(10.1605, 6.2435)), module, Lune::SCRIPT_LIGHT));
 
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 37)), module, Cardinalua::SCRIPT_KNOB1));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 50)), module, Cardinalua::SCRIPT_KNOB2));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 37)), module, Lune::SCRIPT_KNOB1));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 50)), module, Lune::SCRIPT_KNOB2));
 
-		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 24)), module, Cardinalua::SCRIPT_BUTTON));
+		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 24)), module, Lune::SCRIPT_BUTTON));
 
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 64.342)), module, Cardinalua::SCRIPT_INPUT1));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 80.603)), module, Cardinalua::SCRIPT_INPUT2));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 96.859)), module, Cardinalua::SCRIPT_INPUT3));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 113.115)), module, Cardinalua::SCRIPT_INPUT4));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 64.342)), module, Lune::SCRIPT_INPUT1));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 80.603)), module, Lune::SCRIPT_INPUT2));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 96.859)), module, Lune::SCRIPT_INPUT3));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 113.115)), module, Lune::SCRIPT_INPUT4));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 64.347)), module, Cardinalua::SCRIPT_OUTPUT1));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 80.603)), module, Cardinalua::SCRIPT_OUTPUT2));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 96.707)), module, Cardinalua::SCRIPT_OUTPUT3));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 113.115)), module, Cardinalua::SCRIPT_OUTPUT4));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 64.347)), module, Lune::SCRIPT_OUTPUT1));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 80.603)), module, Lune::SCRIPT_OUTPUT2));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 96.707)), module, Lune::SCRIPT_OUTPUT3));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15, 113.115)), module, Lune::SCRIPT_OUTPUT4));
 	}
 
 	void appendContextMenu(Menu* menu) override {
 		menu->addChild(new MenuEntry);
 
-		Cardinalua* _module = dynamic_cast<Cardinalua*>(module);
+		Lune* _module = dynamic_cast<Lune*>(module);
 		assert(_module);
 
 		LoadScriptItem* loadscript = createMenuItem<LoadScriptItem>("Open script");
@@ -602,4 +602,4 @@ struct CardinaluaWidget : ModuleWidget {
 	}
 };
 
-Model* modelCardinalua = createModel<Cardinalua, CardinaluaWidget>("Cardinalua");
+Model* modelLune = createModel<Lune, LuneWidget>("Lune");

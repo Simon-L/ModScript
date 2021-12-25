@@ -10,7 +10,7 @@ static const int NUM_ROWS = 4;
 static const int MAX_BUFFER_SIZE = 4096;
 static const int MAX_MIDI_MESSAGES = 1024;
 
-struct Cardinalua;
+struct Lune;
 
 struct ProcessBlock {
 	float sampleRate = 0.f;
@@ -54,5 +54,5 @@ struct LuaJITEngine {
 	static int native_getParamValue(lua_State* L);
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
-	Cardinalua* module = NULL;
+	Lune* module = NULL;
 };

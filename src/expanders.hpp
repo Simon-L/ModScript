@@ -9,7 +9,7 @@ struct ModScriptExpander
 	};
 	virtual ~ModScriptExpander(){};
 
-	bool isModScriptExpandable(Module *x) { return x->model == modelCardinalua; };
+	bool isModScriptExpandable(Module *x) { return x->model == modelLune; };
 	bool isModScriptExpander(Module *x) { return x->model == modelMIDIToExp; };
 
 	virtual void sendExpMessage(const midi::Message& msg) = 0;
