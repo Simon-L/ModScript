@@ -548,12 +548,12 @@ struct LuneWidget : ModuleWidget {
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Lune.svg")));
 
-		addChild(createLightCentered<SmallSimpleLight<RedGreenBlueLight>>(mm2px(Vec(10.1605, 6.2435)), module, Lune::SCRIPT_LIGHT));
+		addChild(createLightCentered<SmallSimpleLight<RedGreenBlueLight>>(mm2px(Vec(10.1605, 12.0)), module, Lune::SCRIPT_LIGHT));
 
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 37)), module, Lune::SCRIPT_KNOB1));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(20.32/2, 50)), module, Lune::SCRIPT_KNOB2));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(5.2, 39)), module, Lune::SCRIPT_KNOB1));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(15, 39)), module, Lune::SCRIPT_KNOB2));
 
-		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 24)), module, Lune::SCRIPT_BUTTON));
+		addParam(createParamCentered<PB61303>(mm2px(Vec(20.32/2, 21)), module, Lune::SCRIPT_BUTTON));
 
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 64.342)), module, Lune::SCRIPT_INPUT1));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.2, 80.603)), module, Lune::SCRIPT_INPUT2));

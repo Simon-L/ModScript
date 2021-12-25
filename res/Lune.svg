@@ -11,7 +11,6 @@
    sodipodi:docname="Lune.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -19,28 +18,18 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4614">
-    <linearGradient
-       gradientTransform="matrix(0.44444053,0,0,1,7.9078924e-7,168.49892)"
-       inkscape:collect="always"
-       xlink:href="#linearGradient869"
-       id="linearGradient871"
-       x1="22.450642"
-       y1="0.64095056"
-       x2="22.450642"
-       y2="129.73215"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient869">
-      <stop
-         style="stop-color:#181919;stop-opacity:1;"
-         offset="0"
-         id="stop865" />
-      <stop
-         style="stop-color:#212222;stop-opacity:1"
-         offset="1"
-         id="stop867" />
-    </linearGradient>
+    <rect
+       x="-57.453993"
+       y="129.69188"
+       width="99.982082"
+       height="47.238203"
+       id="rect74061" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect3687" />
     <style
        id="style6"
        type="text/css">
@@ -52,6 +41,228 @@
     .fil1 {fill:#6B6B6B}
    
   </style>
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect49081" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect57571" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect57573" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect57943" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect57945" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect99869" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect116021" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect131667" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect131669" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect131671" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect131673" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect131909" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect139249" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect141187" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect141189" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect141191" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect141193" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect141195" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect141197" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect141544" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect141546" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect141548" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect141550" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect141552" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect141554" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect142059" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect142061" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect142063" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect142065" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect142067" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect142069" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect142372" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="99.551272"
+       height="55.761607"
+       id="rect142374" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="41.800371"
+       height="52.120565"
+       id="rect142376" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="90.375219"
+       height="48.601519"
+       id="rect142378" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect142380" />
+    <rect
+       x="-136.32111"
+       y="109.12245"
+       width="121.15006"
+       height="48.212014"
+       id="rect142382" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -60,15 +271,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="52.679454"
-     inkscape:cy="243.24473"
+     inkscape:zoom="8.0000002"
+     inkscape:cx="37.937499"
+     inkscape:cy="180.5"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g142370"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1011"
-     inkscape:window-x="2560"
+     inkscape:window-width="2560"
+     inkscape:window-height="1531"
+     inkscape:window-x="0"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0"
@@ -89,44 +300,240 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-168.5)">
+     transform="translate(0,-168.5)"
+     style="display:none">
     <rect
-       style="opacity:1;fill:url(#linearGradient871);fill-opacity:1;stroke-width:0.2099;stroke-miterlimit:4;stroke-dasharray:none"
+       style="opacity:1;fill:#293241;fill-opacity:1;stroke-width:0.2099;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect815"
        width="20.32"
        height="128.49823"
        x="0"
        y="168.50089" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.21674562,0,0,0.21674562,32.42419,145.68945)"
+       id="text3685"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect3687);fill:#98c1d9;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142553"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Facade Heavy'"
+           id="tspan142551">lune</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.19853075,0,0,0.19853075,32.26051,267.33535)"
+       id="text49079"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect49081);fill:#98c1d9;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142555">MS</tspan></text>
+    <circle
+       style="fill:#3d5a80;fill-opacity:1;stroke:#ee6c4d;stroke-width:0.203;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path57331"
+       cx="10.16"
+       cy="180.45306"
+       r="1.1180378" />
+    <path
+       style="display:inline;fill:none;stroke:#e0fbfc;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 5.2,232.842 v 48.773"
+       id="path58294"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;stroke:#e0fbfc;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 15.132291,232.842 v 48.773"
+       id="path58811"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.08401361,0,0,0.08401361,15.484975,215.09134)"
+       id="text99867"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect99869);fill:#e0fbfc;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142559"><tspan
+           style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+           id="tspan142557">in</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.08401361,0,0,0.08401361,24.383898,215.09134)"
+       id="text116019"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect116021);fill:#e0fbfc;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142563"><tspan
+           style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+           id="tspan142561">out</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.08401361,0,0,0.08401361,17.680929,204.508)"
+       id="text131907"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect131909);fill:#e0fbfc;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142567"><tspan
+           style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+           id="tspan142565">knobs</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.08401361,0,0,0.08401361,17.344874,187.04548)"
+       id="text139247"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect139249);fill:#e0fbfc;fill-opacity:1;stroke:none"><tspan
+         x="-136.32031"
+         y="144.13262"
+         id="tspan142571"><tspan
+           style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+           id="tspan142569">button</tspan></tspan></text>
+  </g>
+  <g
+     inkscape:label="Copie de Layer 1"
+     inkscape:groupmode="layer"
+     id="g142370"
+     transform="translate(0,-168.5)"
+     style="display:inline">
+    <path
+       id="rect142334"
+       style="opacity:1;fill:#293241;stroke-width:0.2099"
+       d="M 0,168.50089 H 20.32 V 296.99911 H 0 Z" />
     <g
-       style="fill-rule:evenodd"
-       id="g5299"
-       transform="matrix(6.342689,0,0,6.342689,6.8287574,171.41234)">
-      <g
-         transform="translate(-1.6191379e-5,-0.08553947)"
-         id="Layer_x0020_1"
-         inkscape:label="Layer 1"
-         inkscape:groupmode="layer">
-        <metadata
-           id="CorelCorpID_0Corel-Layer" />
-        <circle
-           style="fill:none;stroke:#ffffff;stroke-width:0.0966867;stroke-opacity:1"
-           id="circle10"
-           r="0.15916"
-           cy="0.61075097"
-           cx="0.525226"
-           class="fil0 str0" />
-        <circle
-           style="fill:none;stroke:#ffffff;stroke-width:0.193345;stroke-opacity:1"
-           id="circle12"
-           r="0.42853901"
-           cy="0.61075097"
-           cx="0.525226"
-           class="fil0 str1" />
-      </g>
+       aria-label="lune"
+       transform="matrix(0.21674562,0,0,0.21674562,32.42419,145.68945)"
+       id="text142340"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142372);fill:#98c1d9">
+      <path
+         d="m -128.32031,144.13262 v -31.36 h -5.2 v 31.36 z"
+         style="font-weight:900;-inkscape-font-specification:'Facade Heavy'"
+         id="path142426" />
+      <path
+         d="m -109.52037,144.13262 v -22.8 h -0.6 v 20.88 h -6 v -20.88 h -6.6 v 22.8 z"
+         style="font-weight:900;-inkscape-font-specification:'Facade Heavy'"
+         id="path142428" />
+      <path
+         d="m -97.320398,144.13262 v -20.88 h 6 v 20.88 h 0.6 v -22.8 H -103.9204 v 22.8 z"
+         style="font-weight:900;-inkscape-font-specification:'Facade Heavy'"
+         id="path142430" />
+      <path
+         d="m -71.920425,144.13262 v -1.92 h -6.6 v -8.2 h 6.6 v -12.68 h -13.2 v 22.8 z m -6.6,-20.88 h 6 v 10.16 h -6 z"
+         style="font-weight:900;-inkscape-font-specification:'Facade Heavy'"
+         id="path142432" />
+    </g>
+    <g
+       aria-label="MS"
+       transform="matrix(0.19853075,0,0,0.19853075,32.26051,267.33535)"
+       id="text142346"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142374);fill:#98c1d9">
+      <path
+         d="m -130.12031,144.13262 v -29.36 h 8.4 v 29.36 h 2 v -29.36 h 8.4 v 29.36 h 3.4 v -31.36 h -25.6 v 31.36 z"
+         id="path142421" />
+      <path
+         d="m -89.120361,144.13262 v -22.8 h -9.88 v -6.56 h 9.88 v -2 h -13.199999 v 10.56 h 11.199999 v 18.8 h -11.199999 v 2 z"
+         id="path142423" />
+    </g>
+    <path
+       id="circle142348"
+       style="fill:#3d5a80;stroke:#ee6c4d;stroke-width:0.203"
+       d="M 11.278038,180.45306 A 1.1180378,1.1180378 0 0 1 10.16,181.5711 1.1180378,1.1180378 0 0 1 9.041962,180.45306 1.1180378,1.1180378 0 0 1 10.16,179.33503 a 1.1180378,1.1180378 0 0 1 1.118038,1.11803 z" />
+    <path
+       style="display:inline;fill:none;stroke:#e0fbfc;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 5.2,232.842 v 48.773"
+       id="path142350"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;stroke:#e0fbfc;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 15.132291,232.842 v 48.773"
+       id="path142352"
+       sodipodi:nodetypes="cc" />
+    <g
+       aria-label="in"
+       transform="matrix(0.08401361,0,0,0.08401361,15.484975,215.09134)"
+       id="text142356"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142376);fill:#e0fbfc">
+      <path
+         d="m -130.12031,115.57262 v -2.8 h -3.4 v 2.8 z m 0,28.56 v -22.8 h -3.4 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142415" />
+      <path
+         d="m -121.12037,144.13262 v -20 h 7 v 20 h 2.8 v -22.8 h -13.2 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142417" />
+    </g>
+    <g
+       aria-label="out"
+       transform="matrix(0.08401361,0,0,0.08401361,24.383898,215.09134)"
+       id="text142360"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142378);fill:#e0fbfc">
+      <path
+         d="m -120.32031,144.13262 v -22.8 h -13.2 v 22.8 z m -9.8,-20 h 7 v 17.2 h -7 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142408" />
+      <path
+         d="m -101.52034,144.13262 v -22.8 h -2.8 v 20 h -7 v -20 h -3.4 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142410" />
+      <path
+         d="m -92.520367,144.13262 v -20 h 5.8 v -2.8 h -5.8 v -8.56 h -3.4 v 31.36 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142412" />
+    </g>
+    <g
+       aria-label="knobs"
+       transform="matrix(0.08401361,0,0,0.08401361,17.680929,204.508)"
+       id="text142364"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142380);fill:#e0fbfc">
+      <path
+         d="m -130.12031,144.13262 v -9.04 h 6.4 v 9.04 h 3.4 v -11.84 h -3.4 v -10.96 h -2.8 v 10.96 h -3.6 v -19.52 h -3.4 v 31.36 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142397" />
+      <path
+         d="m -111.72035,144.13262 v -20 h 7 v 20 h 2.8 v -22.8 h -13.2 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142399" />
+      <path
+         d="m -83.120377,144.13262 v -22.8 h -13.2 v 22.8 z m -9.8,-20 h 7 v 17.2 h -7 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142401" />
+      <path
+         d="m -64.320404,144.13262 v -22.8 h -9.8 v -8.56 h -3.4 v 31.36 z m -9.8,-20 h 7 v 17.2 h -7 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142403" />
+      <path
+         d="m -45.520432,144.13262 v -11.84 h -9.8 v -8.16 h 9.8 v -2.8 h -13.2 v 13.76 h 10.4 v 6.24 h -10.4 v 2.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142405" />
+    </g>
+    <g
+       aria-label="button"
+       transform="matrix(0.08401361,0,0,0.08401361,17.344874,187.04548)"
+       id="text142368"
+       style="font-size:40px;line-height:1.25;font-family:Facade;-inkscape-font-specification:Facade;white-space:pre;shape-inside:url(#rect142382);fill:#e0fbfc">
+      <path
+         d="m -120.32031,144.13262 v -22.8 h -9.8 v -8.56 h -3.4 v 31.36 z m -9.8,-20 h 7 v 17.2 h -7 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142384" />
+      <path
+         d="m -101.52034,144.13262 v -22.8 h -2.8 v 20 h -7 v -20 h -3.4 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142386" />
+      <path
+         d="m -92.520367,144.13262 v -20 h 5.8 v -2.8 h -5.8 v -8.56 h -3.4 v 31.36 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142388" />
+      <path
+         d="m -79.32037,144.13262 v -20 h 5.8 v -2.8 h -5.8 v -8.56 h -3.4 v 31.36 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142390" />
+      <path
+         d="m -56.320374,144.13262 v -22.8 h -13.2 v 22.8 z m -9.8,-20 h 7 v 17.2 h -7 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142392" />
+      <path
+         d="m -47.320401,144.13262 v -20 h 7 v 20 h 2.8 v -22.8 h -13.2 v 22.8 z"
+         style="font-weight:100;-inkscape-font-specification:'Facade Thin'"
+         id="path142394" />
     </g>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="components" />
+     inkscape:label="components"
+     style="display:inline" />
 </svg>
