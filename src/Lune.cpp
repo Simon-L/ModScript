@@ -175,17 +175,6 @@ struct Lune : ModScriptExpander, Module {
 			}
 		}
 
-		for (int id = 0; id < 256; id++) {
-			if (tempHandles[id].moduleId > 0) {
-				tempHandles[id].expiry -= args.sampleTime;
-				if (tempHandles[id].expiry <= 0.0) {
-					tempHandles[id].expiry = 0.0;
-					APP->engine->updateParamHandle_NoLock(&tempHandles[id], -1, 0, true);
-					DEBUG("%d has expired, removed, expiry %f", id, tempHandles[id].expiry);
-				}
-			}
-		}
-
 		// Frame divider for reducing sample rate
 		if (++frame < frameDivider)
 			return;
@@ -208,6 +197,16 @@ struct Lune : ModScriptExpander, Module {
 		if (++bufferIndex >= block->bufferSize) {
 			std::lock_guard<std::mutex> lock(scriptMutex);
 			bufferIndex = 0;
+
+			for (int id = 0; id < 256; id++) {
+				if (tempHandles[id].moduleId > 0) {
+					tempHandles[id].expiry -= args.sampleTime * block->bufferSize;
+					if (tempHandles[id].expiry <= 0.0) {
+						tempHandles[id].expiry = 0.0;
+						APP->engine->updateParamHandle_NoLock(&tempHandles[id], -1, 0, true);
+					}
+				}
+			}
 
 			// Block settings
 			block->sampleRate = args.sampleRate;
@@ -345,9 +344,7 @@ struct Lune : ModScriptExpander, Module {
 
 	int isExistingSlot(const int64_t moduleId, const int paramId) {
 		for (int id = 0; id < 256; id++) {
-			DEBUG("Evaluating isExistingSlot %d", id);
 			if ((tempHandles[id].moduleId == moduleId) && (tempHandles[id].paramId == paramId)) {
-				DEBUG("Evaluated isExistingSlot %d YES", id);
 				return id;
 			}
 		}
@@ -383,12 +380,15 @@ void LuaJITEngine::display(const std::string& message) {
 	DEBUG("%s", message.c_str());
 	module->message = message;
 }
+
 void LuaJITEngine::setFrameDivider(int frameDivider) {
 	module->frameDivider = std::max(frameDivider, 1);
 }
+
 void LuaJITEngine::setBufferSize(int bufferSize) {
 	module->block->bufferSize = clamp(bufferSize, 1, MAX_BUFFER_SIZE);
 }
+
 ProcessBlock* LuaJITEngine::getProcessBlock() {
 	return module->block;
 }
@@ -419,6 +419,7 @@ void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, cons
 		DEBUG("New handle %d. Expiry is %f", id, module->tempHandles[id].expiry);
 	}
 }
+
 double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
 	DEBUG("Module %lx Parameter %d", moduleId, paramId);
 	rack::engine::Engine* eng = APP->engine;
@@ -488,6 +489,7 @@ struct UserScriptItem : MenuItem {
 		this->text = name;
 		this->module = module;
 		this->newPath = module->scriptsDir + PATH_SEPARATOR + name;
+		this->rightText = CHECKMARK(module->path == this->newPath);
 	}
 
 	void onAction(const event::Action& e) override {
