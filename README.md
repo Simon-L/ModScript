@@ -3,11 +3,13 @@
 
 :warning: WIP!  
 
+## _Lune_
+### Lua scripting in VCV Rack
 What if scripting in VCV Rack really leveraged a more complete API to the Rack application?  
 In Lune (moon in french, lua being moon in portugese:), you can control arbitrary parameters from any module in the patch.  
 The accompanying "MIDItoExpander" module (a modified version of "MIDI to CV") passes MIDI messages to your script.  
 
-This plugin is also part of a more broader dare I say "experiment" on the Rack codebase, how to improve it not only through modules but more importantly looking at how the software itself can be modified to accomodate new or different needs. [See here](#Notes)  
+This plugin is also part of a broader dare I say "experiment" on the Rack codebase, how to improve it not only through modules but more importantly looking at how the software itself can be modified to accomodate new or different needs. [See here](#Notes)  
 
 The "everything-is-a-module" paradigm can only go as far as your musicianship will let it clutter its realm with non-musical details.  
 
