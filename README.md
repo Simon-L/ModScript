@@ -16,16 +16,17 @@ The "everything-is-a-module" paradigm can only go as far as your musicianship wi
 
 ![Image](doc/lune.png)
 
-#### Convenience features:
+#### Features:
 - 4 i/o, 2 knobs, 1 button, 1 RGB led
 - Lune can auto-reload the script whenever it changes.
 - The context menu presents you with a list of the lua files found in the `scripts/` folder
 - The context menu shows and allows to copy the last hovered module's id to the clipboard. Also shows last hovered parameter id.  
 - Parameters modified from the script will briefly show a little indicator (eg. like when mapped in MIDIMap) to make the script's action more visually obvious
+- Add and remove cables from the script. There are some limitations, see example below.
 
 #### Soon to be added:
-- Add cables and modules from the script
 - MIDI output
+- "Pleine Lune", same features but MIDI I/O and Lua in a single module!
 
 #### Expected super cool usecases:
 - Integrating MIDI controllers with modules
@@ -49,6 +50,11 @@ for i=1,block.midiInputSize do
 	msg = Message(block.midiInput[i])
 	display('type ' .. string.format("0x%x", msg.type) .. ' channel ' .. msg.channel .. ' note ' .. msg.note .. ' value ' .. msg.value)
 end
+
+-- Cables, up to 256 cables can be managed from the script
+id = addCable(moduleWithOutput, outputId, moduleWithInput, inputId) -- returns an id to use when deleting (not the actual Rack id)
+removedCable(id) -- removes cable from the patch, only cables added from the script can be removed
+-- Note: cables added from the script that are not removed from the script will not free their slot in the 256 pool
 ```
 
 
