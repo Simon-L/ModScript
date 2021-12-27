@@ -12,6 +12,10 @@
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
 
+struct LuaCable : Cable {
+	int64_t luaId;
+};
+
 struct ExpiringParamHandle : ParamHandle {
 	float expiry;
 
@@ -85,6 +89,10 @@ struct Lune : ModScriptExpander, Module {
 	ExpiringParamHandle tempHandles[256];
 	float tempHandlesExpiry = 0.55;
 
+	bool addCableRequested = false;
+	bool removeCableRequested = false;
+	std::vector<LuaCable*> cables;
+
 	Lune() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -99,6 +107,9 @@ struct Lune : ModScriptExpander, Module {
 
 		midiMessages.reserve(MAX_MIDI_MESSAGES);
 		midiMessages.clear();
+
+		cables.reserve(MAX_CABLES);
+		cables.clear();
 
 		setupExpanding(this);
 
@@ -123,6 +134,24 @@ struct Lune : ModScriptExpander, Module {
 		for (int id = 0; id < 256; id++) {
 			APP->engine->removeParamHandle(&tempHandles[id]);
 		}
+		for (size_t i = 0; i < cables.size(); ++i) {
+			Cable* cable = cables[i];
+			rack::app::CableWidget* cw = APP->scene->rack->getCable(cable->id);
+			APP->scene->rack->removeCable(cw);
+			cw->inputPort = NULL;
+			cw->outputPort = NULL;
+			cw->updateCable();
+		}
+	}
+
+	void requestRemoveAllCables() {
+		for (size_t i = 0; i < cables.size(); ++i) {
+			LuaCable* cable = (LuaCable*)cables[i];
+			if (cable->id) {
+				cable->luaId = -1;
+			}
+		}
+		removeCableRequested = true;
 	}
 
 	void onReset() override {
@@ -277,6 +306,7 @@ struct Lune : ModScriptExpander, Module {
 	}
 
 	void setScript() {
+		requestRemoveAllCables();
 		DEBUG("Loading %s", path.c_str());
 		std::lock_guard<std::mutex> lock(scriptMutex);
 		// Read file
@@ -374,6 +404,29 @@ struct Lune : ModScriptExpander, Module {
 			setScript();
 		}
 	}
+
+	bool cableExists(Module* outputModule, int outputId, Module* inputModule, int inputId) {
+		for (LuaCable* cable : cables) {
+			if (cable->outputModule == outputModule &&
+				cable->outputId == outputId &&
+				cable->inputModule == inputModule &&
+				cable->inputId == inputId &&
+				APP->engine->hasCable((Cable*)cable)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	Cable* getLuaCable(const int64_t id) {
+		for (size_t i = 0; i < cables.size(); ++i)
+		{
+			if (cables[i]->luaId == id)
+				return cables[i];
+		}
+		return (Cable*)NULL;
+	}
+
 };
 
 void LuaJITEngine::display(const std::string& message) {
@@ -433,6 +486,38 @@ double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
 		return 0.0;
 	}
 	return eng->getParamValue(mod, paramId);
+}
+
+int64_t LuaJITEngine::addCable(const int64_t outputModuleId, const int outputId, const int64_t inputModuleId, const int inputId) {
+	LuaCable* cable = new LuaCable;
+	cable->outputModule = APP->engine->getModule(outputModuleId);
+	cable->outputId = outputId;
+	cable->inputModule = APP->engine->getModule(inputModuleId);
+	cable->inputId = inputId;
+	if (module->cableExists(cable->outputModule, cable->outputId, cable->inputModule, cable->inputId)) {
+		DEBUG("Cable exists, not adding");
+		return -1;
+	}
+	DEBUG("cables size %zu", module->cables.size());
+	cable->luaId = module->cables.size();
+	DEBUG("new cable id %ld", cable->luaId);
+	module->cables.push_back(cable);
+	DEBUG("cables size is now %zu", module->cables.size());
+	module->addCableRequested = true;
+	return cable->luaId;
+};
+
+
+bool LuaJITEngine::removeCable(const int64_t cableId) {
+	rack::engine::Engine* eng = APP->engine;
+	LuaCable* cable = (LuaCable*)module->getLuaCable(cableId);
+	if (eng->hasCable(cable)) {
+		DEBUG("REMOVE requested for cable %ld at position %ld", cable->id, cableId);
+		cable->luaId = -1;
+		module->removeCableRequested = true;
+		return true;
+	}
+	return false;
 }
 
 struct LoadScriptItem : MenuItem {
@@ -541,6 +626,46 @@ struct LuneWidget : ModuleWidget {
 					hoveredParam = _hovId;
 					hoveredParameterName = pwidget->module->getParamQuantity(hoveredParam)->name;
 				}
+			}
+			if (_module->addCableRequested) {
+				for (size_t i = 0; i < _module->cables.size(); ++i) {
+					if (_module->cables[i]->id == -1) {
+						int64_t cabId = i;
+						DEBUG("ADD cable at id %ld", cabId);
+						DEBUG("inmod %lx in %d outmod %lx out %d", _module->cables[cabId]->inputModule->getId(), _module->cables[cabId]->inputId, _module->cables[cabId]->outputModule->getId(), _module->cables[cabId]->outputId);
+						APP->engine->addCable(_module->cables[cabId]);
+						rack::app::CableWidget* cw = new rack::app::CableWidget;
+						cw->setCable(_module->cables[cabId]);
+						cw->color = NVGcolor{0.76f, 0.11f, 0.22f, 1.00f};
+				    	if (cw->isComplete()) {
+			            	APP->scene->rack->addCable(cw);
+				    	}
+						DEBUG("luaCable %ld has id %ld", cabId, _module->cables[cabId]->id);
+					}
+				}
+				_module->addCableRequested = false;
+			}
+			if (_module->removeCableRequested) {
+				std::vector<Cable*> removed;
+				for (size_t i = 0; i < _module->cables.size(); ++i) {
+					LuaCable* cable = (LuaCable*)_module->cables[i];
+					if (cable->luaId == -1) {
+						DEBUG("REMOVING cable %ld at position %ld", cable->id, i);
+						DEBUG("inmod %lx in %d outmod %lx out %d", cable->inputModule->getId(), cable->inputId, cable->outputModule->getId(), cable->outputId);
+						rack::app::CableWidget* cw = APP->scene->rack->getCable(cable->id);
+						APP->scene->rack->removeCable(cw);
+						cw->inputPort = NULL;
+						cw->outputPort = NULL;
+						cw->updateCable();
+						removed.push_back(cable);
+					}
+				}
+				DEBUG("cables size before is %zu", _module->cables.size());
+				for (Cable* cable : removed) {
+					_module->cables.erase(std::remove(_module->cables.begin(), _module->cables.end(), cable), _module->cables.end());
+				}
+				DEBUG("cables size after is %zu", _module->cables.size());
+				_module->removeCableRequested = false;
 			}
 		}
 		ModuleWidget::step();

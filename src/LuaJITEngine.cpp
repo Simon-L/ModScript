@@ -94,6 +94,10 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__setParamValue");
 	lua_pushcfunction(L, native_getParamValue);
 	lua_setglobal(L, "__getParamValue");
+	lua_pushcfunction(L, native_addCable);
+	lua_setglobal(L, "__addCable");
+	lua_pushcfunction(L, native_removeCable);
+	lua_setglobal(L, "__removeCable");
 
 	// Set config
 	lua_newtable(L);
@@ -295,6 +299,34 @@ int LuaJITEngine::native_getParamValue(lua_State* L) {
 	lua_pushnumber(L, paramValue);
 	return 1;
 }
+
+int LuaJITEngine::native_addCable(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 4) {
+		DEBUG("LuaJIT: addCable: exactly 4 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int64_t outputModuleId = lua_tointeger(L, 1);
+	int outputId = lua_tointeger(L, 2);
+	int64_t inputModuleId = lua_tointeger(L, 3);
+	int inputId = lua_tointeger(L, 4);
+	int64_t cableId = getEngine(L)->addCable(outputModuleId, outputId, inputModuleId, inputId);
+	lua_pushinteger(L, cableId);
+	return 1;
+}
+
+int LuaJITEngine::native_removeCable(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 1) {
+		DEBUG("LuaJIT: removeCable: exactly 1 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int64_t cableId = lua_tointeger(L, 1);
+	bool ok = getEngine(L)->removeCable(cableId);
+	lua_pushinteger(L, ok ? 1 : 0);
+	return 1;
+}
+
 int LuaJITEngine::native_display(lua_State* L) {
 	lua_getglobal(L, "tostring");
 	lua_pushvalue(L, 1);

@@ -55,4 +55,18 @@ function setParamValue(module, param, value)
     __setParamValue(id, paramid, value)
   end
 end
+
+function addCable(outModule, outId, inModule, inId)
+  if outModule.id ~= nil and outId ~= nil and inModule.id ~= nil and inId ~= nil then
+    return __addCable(outModule.id, outId, inModule.id, inId)
+  end
+  return -1
+end
+
+function removeCable(cableId)
+  if cableId ~= nil then
+    return __removeCable(cableId)
+  end
+  return -1
+end
 --
