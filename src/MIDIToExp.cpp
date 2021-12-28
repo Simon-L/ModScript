@@ -508,11 +508,6 @@ struct MIDIToExpWidget : ModuleWidget {
 		display->setMidiPort(module ? &module->midiInput : NULL);
 		addChild(display);
 
-		LedDisplayChoice* display2 = createWidget<LedDisplayChoice>(mm2px(Vec(15.0, 15.0)));
-		display2->text = "lolz";
-		display2->show();
-		addChild(display2);
-
 		// MidiButton example
 		// MidiButton* midiButton = createWidget<MidiButton_MIDI_DIN>(Vec(0, 0));
 		// midiButton->setMidiPort(module ? &module->midiInput : NULL);
