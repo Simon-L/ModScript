@@ -45,10 +45,11 @@ struct LuaJITEngine {
 	// Communication with Prototype module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
 	void display(const std::string& message);
-	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue);
+	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized);
 	double getParamValue(const int64_t moduleId, const int paramId);
 	int64_t addCable(const int64_t outputModuleId, const int outputId, const int64_t inputModuleId, const int inputId);
 	bool removeCable(const int64_t cableId);
+	bool sendMidiMessage(const uint8_t status, const uint8_t channel, const uint8_t note, const uint8_t value);
 	void setFrameDivider(int frameDivider);
 	void setBufferSize(int bufferSize);
 	ProcessBlock* getProcessBlock();
@@ -57,6 +58,7 @@ struct LuaJITEngine {
 	static int native_getParamValue(lua_State* L);
 	static int native_addCable(lua_State* L);
 	static int native_removeCable(lua_State* L);
+	static int native_sendMidiMessage(lua_State* L);
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
 	Lune* module = NULL;

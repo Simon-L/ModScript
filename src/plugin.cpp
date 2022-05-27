@@ -9,6 +9,7 @@ void init(Plugin* p) {
 
 	// Add modules here
 	p->addModel(modelLune);
+	p->addModel(modelPleineLune);
 	p->addModel(modelMIDIToExp);
 
 	// Any other plugin initialization may go here.

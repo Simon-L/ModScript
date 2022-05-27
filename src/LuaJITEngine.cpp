@@ -98,6 +98,8 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__addCable");
 	lua_pushcfunction(L, native_removeCable);
 	lua_setglobal(L, "__removeCable");
+	lua_pushcfunction(L, native_sendMidiMessage);
+	lua_setglobal(L, "__sendMidiMessage");
 
 	// Set config
 	lua_newtable(L);
@@ -283,7 +285,7 @@ int LuaJITEngine::native_setParamValue(lua_State* L) {
 	int64_t moduleId = lua_tointeger(L, 1);
 	int paramId = lua_tointeger(L, 2);
 	lua_Number paramValue = lua_tonumber(L, 3);
-	getEngine(L)->setParamValue(moduleId, paramId, paramValue);
+	getEngine(L)->setParamValue(moduleId, paramId, paramValue, false);
 	return 0;
 }
 
@@ -323,6 +325,21 @@ int LuaJITEngine::native_removeCable(lua_State* L) {
 	}
 	int64_t cableId = lua_tointeger(L, 1);
 	bool ok = getEngine(L)->removeCable(cableId);
+	lua_pushinteger(L, ok ? 1 : 0);
+	return 1;
+}
+
+int LuaJITEngine::native_sendMidiMessage(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 4) {
+		DEBUG("LuaJIT: sendMidiMessage: exactly 4 parameters needed, %d were provided", n);
+		return 0;
+	}
+	uint8_t status = lua_tointeger(L, 1);
+	uint8_t channel = lua_tointeger(L, 2);
+	uint8_t note = lua_tointeger(L, 3);
+	uint8_t value = lua_tointeger(L, 4);
+	bool ok = getEngine(L)->sendMidiMessage(status, channel, note, value);
 	lua_pushinteger(L, ok ? 1 : 0);
 	return 1;
 }

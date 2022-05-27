@@ -19,7 +19,8 @@ ProcessBlock* LuaJITEngine::getProcessBlock() {
 	return module->block;
 }
 
-void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, const double paramValue) {
+// TODO: 0.0-1.0 normalized value unimplemented
+void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized) {
 	DEBUG("Module %lx param %d value %f", moduleId, paramId, (float)paramValue);
 	rack::engine::Engine* eng = APP->engine;
 	Module* mod = eng->getModule(moduleId);
@@ -91,4 +92,19 @@ bool LuaJITEngine::removeCable(const int64_t cableId) {
 		return true;
 	}
 	return false;
+}
+
+bool LuaJITEngine::sendMidiMessage(const uint8_t status, const uint8_t channel, const uint8_t note, const uint8_t value) {
+	midi::Message msg;
+	msg.setStatus(status);
+	msg.setChannel(channel);
+	msg.setNote(note);
+	msg.setValue(value);
+	DEBUG("MIDI: %ld %s", msg.getFrame(), msg.toString().c_str());
+	if (module->midiOutput.getDevice() == NULL) {
+		return false;
+	} else {
+		module->midiOutput.sendMessage(msg);
+		return true;
+	}
 }

@@ -22,7 +22,20 @@ struct ExpiringParamHandle : ParamHandle {
 	}
 };
 
+struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
+	void onMessage(const midi::Message& message) override {
+		Output::sendMessage(message);
+	}
+
+	void reset() {
+		Output::reset();
+		MidiGenerator::reset();
+	}
+};
+
 struct Lune : ModScriptExpander, Module {
+
+	MidiOutput midiOutput;
 
 	void sendExpMessage(const midi::Message& msg) override {}
 

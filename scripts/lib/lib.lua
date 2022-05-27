@@ -1,3 +1,5 @@
+local dsp = require('dsp')
+
 -- MIDI Message
 function Message(arg)
   return {type = arg[1], channel = arg[2], note = arg[3], value = arg[4]}
@@ -42,6 +44,10 @@ function Module.new(id, ...)
     -- TODO: get parameters automatically for known modules
   end
   return self
+end
+
+function sendMidiMessage(status, note, value)
+  __sendMidiMessage(status, 0, note, value)
 end
 
 function setParamValue(module, param, value)
