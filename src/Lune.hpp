@@ -22,6 +22,18 @@ struct ExpiringParamHandle : ParamHandle {
 	}
 };
 
+#ifdef USING_CARDINAL_NOT_RACK
+struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS> {
+	void onMessage(const midi::Message& message) override {
+		DEBUG("Using Cardinal onMessage");
+	}
+
+	void reset() {
+		// Output::reset();
+		MidiGenerator::reset();
+	}
+};
+#else
 struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 	void onMessage(const midi::Message& message) override {
 		Output::sendMessage(message);
@@ -32,6 +44,7 @@ struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 		MidiGenerator::reset();
 	}
 };
+#endif
 
 struct Lune : ModScriptExpander, Module {
 

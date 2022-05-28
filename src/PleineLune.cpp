@@ -4,7 +4,11 @@
 
 struct PleineLune : Lune {
 
+#ifdef USING_CARDINAL_NOT_RACK
+	void* midiInput;
+#else
 	midi::InputQueue midiInput;
+#endif
 
 	std::vector<midi::Message> midiOutputMessages;
 
@@ -31,7 +35,9 @@ struct PleineLune : Lune {
 
 	void onReset() override {
 		setScript();
+#ifndef USING_CARDINAL_NOT_RACK
 		midiInput.reset();
+#endif
 		midiOutput.reset();
 	}
 
@@ -116,6 +122,9 @@ struct PleineLune : Lune {
 			// Midi messages
 			midi::Message msg;
 			int msgIndex = 0;
+#ifdef USING_CARDINAL_NOT_RACK
+			// foo
+#else
 			while (midiInput.tryPop(&msg, args.frame)) {
 				block->midiInput[msgIndex][0] = msg.getStatus();
 				block->midiInput[msgIndex][1] = msg.getChannel();
@@ -123,6 +132,7 @@ struct PleineLune : Lune {
 				block->midiInput[msgIndex][3] = msg.getValue();
 				msgIndex++;
 			}
+#endif
 			block->midiInputSize = msgIndex;
 			// for (size_t i = 0; i < midiMessages.size(); ++i)
 			// {	
@@ -175,8 +185,10 @@ struct PleineLune : Lune {
 		json_object_set_new(rootJ, "autoReload", json_boolean(this->autoReload));
 
 		json_object_set_new(rootJ, "path", json_string(path.c_str()));
+#ifndef USING_CARDINAL_NOT_RACK
 		json_object_set_new(rootJ, "midiInput", midiInput.toJson());
 		json_object_set_new(rootJ, "midiOutput", midiOutput.toJson());
+#endif
 		return rootJ;
 	}
 
@@ -195,15 +207,18 @@ struct PleineLune : Lune {
 			setScript();
 		}
 
+#ifndef USING_CARDINAL_NOT_RACK
 		json_t* midiJ = json_object_get(rootJ, "midiInput");
 		if (midiJ)
 			midiInput.fromJson(midiJ);
 		midiJ = json_object_get(rootJ, "midiOutput");
 		if (midiJ)
 			midiOutput.fromJson(midiJ);
+#endif
 	}
 };
 
+#ifndef USING_CARDINAL_NOT_RACK
 struct MidiMenu : MenuItem {
 	PleineLune* module;
 	// true for input, false for output
@@ -239,6 +254,7 @@ struct MidiMenu : MenuItem {
 		return menu;
 	}
 };
+#endif
 
 struct PleineLuneWidget : ModuleWidget {
 	HoveredNameLabel* lastHoveredName;
@@ -356,6 +372,7 @@ struct PleineLuneWidget : ModuleWidget {
 		autoreload->module = _module;
 		menu->addChild(autoreload);
 
+#ifndef USING_CARDINAL_NOT_RACK
 		menu->addChild(new MenuSeparator);
 		MidiMenu* midiInputMenu = new MidiMenu(true);
 		midiInputMenu->text = "MIDI input";
@@ -368,6 +385,7 @@ struct PleineLuneWidget : ModuleWidget {
 		midiOutputMenu->rightText = RIGHT_ARROW;
 		midiOutputMenu->module = _module;
 		menu->addChild(midiOutputMenu);
+#endif
 
 		menu->addChild(new MenuSeparator);
 		menu->addChild(createMenuLabel("Last hovered module:"));
