@@ -44,6 +44,14 @@ Lune::Lune() {
 	for (int id = 0; id < 256; id++) {
 		APP->engine->addParamHandle(&tempHandles[id]);
 	}
+
+
+#ifdef USING_CARDINAL_NOT_RACK
+		// cardinal specific
+		midiOutputMessages.reserve(MAX_MIDI_MESSAGES);
+		midiOutputMessages.clear();
+		midiOutput.pcontext = static_cast<CardinalPluginContext*>(APP);
+#endif
 }
 
 Lune::~Lune() {
@@ -210,6 +218,20 @@ void Lune::process(const ProcessArgs& args) {
 		outputs[i].setVoltage(block->outputs[i][bufferIndex]);
 
 }
+
+#ifdef USING_CARDINAL_NOT_RACK
+	void Lune::processTerminalInput(const ProcessArgs& args) {
+		// process midi here
+	}
+
+	void Lune::processTerminalOutput(const ProcessArgs&) {
+		// process midi here
+		for (size_t i = 0; i < midiOutputMessages.size(); i++) {
+			midiOutput.sendMessage(midiOutputMessages[i]);
+		}
+		midiOutputMessages.clear();
+	}
+#endif
 
 void Lune::loadScript() {
 	osdialog_filters* filters = osdialog_filters_parse("Lua script:lua");

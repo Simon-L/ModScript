@@ -102,6 +102,7 @@ bool LuaJITEngine::sendMidiMessage(const uint8_t status, const uint8_t channel, 
 	msg.setValue(value);
 #ifdef USING_CARDINAL_NOT_RACK
 	// send midi
+	module->midiOutputMessages.push_back(msg);
 	return true;
 #else
 	DEBUG("MIDI: %ld %s", msg.getFrame(), msg.toString().c_str());

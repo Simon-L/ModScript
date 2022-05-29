@@ -23,15 +23,17 @@ struct ExpiringParamHandle : ParamHandle {
 };
 
 #ifdef USING_CARDINAL_NOT_RACK
-struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS> {
-	void onMessage(const midi::Message& message) override {
-		DEBUG("Using Cardinal onMessage");
-	}
+#include "plugincontext.hpp"
+struct MidiOutput {
+    // cardinal specific
+    CardinalPluginContext* pcontext;
+    uint8_t channel = 0;
 
-	void reset() {
-		// Output::reset();
-		MidiGenerator::reset();
-	}
+    void sendMessage(const midi::Message& message)
+    {	
+        pcontext->writeMidiMessage(message, channel);
+    }
+
 };
 #else
 struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
@@ -48,12 +50,12 @@ struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 
 #ifdef USING_CARDINAL_NOT_RACK
 struct Lune : ModScriptExpander, TerminalModule {
+	void processTerminalInput(const ProcessArgs& args) override ;
+	void processTerminalOutput(const ProcessArgs&) override ;
+	std::vector<midi::Message> midiOutputMessages;
 #else
 struct Lune : ModScriptExpander, Module {
 #endif
-
-	void processTerminalInput(const ProcessArgs& args) override {} // dummy
-	void processTerminalOutput(const ProcessArgs& args) override {} // dummy
 
 	MidiOutput midiOutput;
 

@@ -1,5 +1,38 @@
 // Hacked from plugins/Cardinal/plugincontext.hpp
 
+/*
+ * DISTRHO Cardinal Plugin
+ * Copyright (C) 2021-2022 Filipe Coelho <falktx@falktx.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * For a full copy of the GNU General Public License see the LICENSE file.
+ */
+
+#pragma once
+
+#include "plugin.hpp"
+#include "DistrhoUtils.hpp"
+
+// #ifndef HEADLESS
+// # include "dgl/Base.hpp"
+// #else
+// # include "extra/LeakDetector.hpp"
+// #endif
+
+// -----------------------------------------------------------------------------------------------------------
+// from PluginContext.hpp
+
+START_NAMESPACE_DISTRHO
+
 static constexpr const uint32_t kModuleParameters = 24;
 
 enum CardinalVariant {
@@ -8,6 +41,7 @@ enum CardinalVariant {
     kCardinalVariantSynth,
 };
 
+class Plugin;
 class UI;
 
 struct MidiEvent {
@@ -33,14 +67,22 @@ struct CardinalPluginContext : rack::Context {
     float** dataOuts;
     const MidiEvent* midiEvents;
     uint32_t midiEventCount;
-    void* const plugin;
+    Plugin* const plugin;
 #ifndef HEADLESS
     UI* ui;
 #endif
-    CardinalPluginContext(void* const p);
+    CardinalPluginContext(Plugin* const p);
     void writeMidiMessage(const rack::midi::Message& message, uint8_t channel);
 #ifndef HEADLESS
     bool addIdleCallback(void* cb) const;
     void removeIdleCallback(void* cb) const;
 #endif
 };
+
+#ifndef HEADLESS
+void handleHostParameterDrag(const CardinalPluginContext* pcontext, uint index, bool started);
+#endif
+
+END_NAMESPACE_DISTRHO
+
+// -----------------------------------------------------------------------------------------------------------
