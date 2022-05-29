@@ -10,6 +10,8 @@ struct PleineLune : Lune {
 	midi::InputQueue midiInput;
 #endif
 
+	MidiOutput midiOutput;
+
 	std::vector<midi::Message> midiOutputMessages;
 
 	PleineLune() {
@@ -176,6 +178,14 @@ struct PleineLune : Lune {
 			outputs[i].setVoltage(block->outputs[i][bufferIndex]);
 
 		return;
+	}
+
+	void processTerminalInput(const ProcessArgs& args) override {
+		// process midi here
+	}
+
+	void processTerminalOutput(const ProcessArgs& args) override {
+		// process midi here
 	}
 
 	json_t* dataToJson() override {

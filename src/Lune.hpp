@@ -46,7 +46,14 @@ struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 };
 #endif
 
+#ifdef USING_CARDINAL_NOT_RACK
+struct Lune : ModScriptExpander, TerminalModule {
+#else
 struct Lune : ModScriptExpander, Module {
+#endif
+
+	void processTerminalInput(const ProcessArgs& args) override {} // dummy
+	void processTerminalOutput(const ProcessArgs& args) override {} // dummy
 
 	MidiOutput midiOutput;
 
