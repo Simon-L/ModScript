@@ -24,18 +24,103 @@ struct ExpiringParamHandle : ParamHandle {
 
 #ifdef USING_CARDINAL_NOT_RACK
 #include "plugincontext.hpp"
+
+struct MidiInput {
+    // Cardinal specific
+    CardinalPluginContext* pcontext;
+    const MidiEvent* midiEvents;
+    uint32_t midiEventsLeft;
+    uint32_t midiEventFrame;
+    uint32_t lastProcessCounter;
+    uint8_t channel;
+
+    MidiInput() {
+        reset();
+    }
+
+    void reset() {
+        midiEvents = nullptr;
+        midiEventsLeft = 0;
+        midiEventFrame = 0;
+        lastProcessCounter = 0;
+        channel = 0;
+    }
+
+    bool process(const bool isBypassed, ProcessBlock* block) {
+        // Cardinal specific
+        const uint32_t processCounter = pcontext->processCounter;
+        const bool processCounterChanged = lastProcessCounter != processCounter;
+
+        if (processCounterChanged)
+        {
+            lastProcessCounter = processCounter;
+            midiEvents = pcontext->midiEvents;
+            midiEventsLeft = pcontext->midiEventCount;
+            midiEventFrame = 0;
+        }
+
+        if (isBypassed)
+        {
+            ++midiEventFrame;
+            return false;
+        }
+
+        block->midiInputSize = midiEventsLeft;
+        uint32_t ev = 0;
+        while (midiEventsLeft != 0)
+        {
+            const MidiEvent& midiEvent(*midiEvents);
+
+            if (midiEvent.frame > midiEventFrame)
+                break;
+
+            ++midiEvents;
+            --midiEventsLeft;
+
+            const uint8_t* const data = midiEvent.size > MidiEvent::kDataSize
+                                      ? midiEvent.dataExt
+                                      : midiEvent.data;
+
+            if (channel != 0 && data[0] < 0xF0)
+            {
+                if ((data[0] & 0x0F) != (channel - 1))
+                    continue;
+            }
+
+            const uint8_t status = data[0] & 0xF0;
+            const uint8_t chan = data[0] & 0x0F;
+
+            block->midiInput[ev][0] = status;
+			block->midiInput[ev][1] = chan;
+			block->midiInput[ev][2] = data[1];
+			block->midiInput[ev][3] = midiEvent.size > 2 ? data[2] : 0;
+			ev++;
+        }
+
+        ++midiEventFrame;
+
+		return processCounterChanged;
+	}
+
+};
+
 struct MidiOutput {
     // cardinal specific
     CardinalPluginContext* pcontext;
     uint8_t channel = 0;
+    int64_t frame = 0;
 
-    void sendMessage(const midi::Message& message)
+    void sendMessage(midi::Message& message)
     {	
+    	message.setFrame(frame);
         pcontext->writeMidiMessage(message, channel);
     }
 
+	void reset() {
+	}
 };
 #else
+
 struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 	void onMessage(const midi::Message& message) override {
 		Output::sendMessage(message);
@@ -51,10 +136,12 @@ struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 #ifdef USING_CARDINAL_NOT_RACK
 struct Lune : ModScriptExpander, TerminalModule {
 	void processTerminalInput(const ProcessArgs& args) override ;
-	void processTerminalOutput(const ProcessArgs&) override ;
+	void processTerminalOutput(const ProcessArgs& args) override ;
 	std::vector<midi::Message> midiOutputMessages;
+	MidiInput midiInput;
 #else
 struct Lune : ModScriptExpander, Module {
+	midi::InputQueue midiInput;
 #endif
 
 	MidiOutput midiOutput;

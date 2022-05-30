@@ -4,12 +4,6 @@
 
 struct PleineLune : Lune {
 
-#ifdef USING_CARDINAL_NOT_RACK
-	void* midiInput;
-#else
-	midi::InputQueue midiInput;
-#endif
-
 	PleineLune() {
 
 		for (int i = 0; i < 2; i++)
@@ -39,26 +33,16 @@ struct PleineLune : Lune {
 #endif
 	}
 
-	~PleineLune() {
-		// path = "";
-		// script = "";
-		// setScript();
-		// delete block;
+#ifdef USING_CARDINAL_NOT_RACK
+	void processTerminalInput(const ProcessArgs& args) override {}
 
-		// for (int id = 0; id < 256; id++) {
-		// 	APP->engine->removeParamHandle(&tempHandles[id]);
-		// }
-		// for (size_t i = 0; i < cables.size(); ++i) {
-		// 	Cable* cable = cables[i];
-		// 	rack::app::CableWidget* cw = APP->scene->rack->getCable(cable->id);
-		// 	APP->scene->rack->removeCable(cw);
-		// 	cw->inputPort = NULL;
-		// 	cw->outputPort = NULL;
-		// 	cw->updateCable();
-		// }
-	}
+	void process(const ProcessArgs& args) {}
 
-	void process(const ProcessArgs& args) override {
+	void processTerminalOutput(const ProcessArgs& args) override
+#else
+	void process(const ProcessArgs& args) override
+#endif
+	{
 		bool expanderPresent = (leftExpander.module && isModScriptExpander(leftExpander.module));
 	    if (expanderPresent && leftExpander.messageFlipRequested) {
 	    	processExpRequested = true;
@@ -100,6 +84,13 @@ struct PleineLune : Lune {
 
 		// Process block
 		if (++bufferIndex >= block->bufferSize) {
+
+		    if (midiInput.process(isBypassed(), block)) {
+		        midiOutput.frame = 0;
+		    } else {
+		        ++midiOutput.frame;
+		    }
+
 			std::lock_guard<std::mutex> lock(scriptMutex);
 			bufferIndex = 0;
 
@@ -118,11 +109,11 @@ struct PleineLune : Lune {
 			block->sampleTime = args.sampleTime;
 
 			// Midi messages
+#ifdef USING_CARDINAL_NOT_RACK
+			// All done in ProcessTerminalInput
+#else
 			midi::Message msg;
 			int msgIndex = 0;
-#ifdef USING_CARDINAL_NOT_RACK
-			// foo
-#else
 			while (midiInput.tryPop(&msg, args.frame)) {
 				block->midiInput[msgIndex][0] = msg.getStatus();
 				block->midiInput[msgIndex][1] = msg.getChannel();
@@ -130,8 +121,8 @@ struct PleineLune : Lune {
 				block->midiInput[msgIndex][3] = msg.getValue();
 				msgIndex++;
 			}
-#endif
 			block->midiInputSize = msgIndex;
+#endif
 			// for (size_t i = 0; i < midiMessages.size(); ++i)
 			// {	
 			// }
@@ -172,6 +163,14 @@ struct PleineLune : Lune {
 		// Outputs
 		for (int i = 0; i < NUM_ROWS; i++)
 			outputs[i].setVoltage(block->outputs[i][bufferIndex]);
+
+#ifdef USING_CARDINAL_NOT_RACK
+		// process midi here
+		for (size_t i = 0; i < midiOutputMessages.size(); i++) {
+			midiOutput.sendMessage(midiOutputMessages[i]);
+		}
+		midiOutputMessages.clear();
+#endif
 
 		return;
 	}

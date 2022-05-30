@@ -51,6 +51,7 @@ Lune::Lune() {
 		midiOutputMessages.reserve(MAX_MIDI_MESSAGES);
 		midiOutputMessages.clear();
 		midiOutput.pcontext = static_cast<CardinalPluginContext*>(APP);
+		midiInput.pcontext = static_cast<CardinalPluginContext*>(APP);
 #endif
 }
 
@@ -84,6 +85,8 @@ void Lune::requestRemoveAllCables() {
 }
 
 void Lune::onReset() {
+    midiInput.reset();
+    midiOutput.reset();
 	setScript();
 }
 
@@ -110,7 +113,18 @@ int Lune::populateUserScripts(std::string dir){
     return 0;
 }
 
-void Lune::process(const ProcessArgs& args) {
+
+#ifdef USING_CARDINAL_NOT_RACK
+void Lune::processTerminalInput(const ProcessArgs& args) {
+}
+
+void Lune::process(const ProcessArgs& args) {}
+
+void Lune::processTerminalOutput(const ProcessArgs& args)
+#else
+void Lune::process(const ProcessArgs& args)
+#endif
+{
 
 	bool expanderPresent = (leftExpander.module && isModScriptExpander(leftExpander.module));
     if (expanderPresent && leftExpander.messageFlipRequested) {
@@ -217,34 +231,34 @@ void Lune::process(const ProcessArgs& args) {
 	for (int i = 0; i < NUM_ROWS; i++)
 		outputs[i].setVoltage(block->outputs[i][bufferIndex]);
 
+#ifdef USING_CARDINAL_NOT_RACK
+	// process midi here
+	for (size_t i = 0; i < midiOutputMessages.size(); i++) {
+		midiOutput.sendMessage(midiOutputMessages[i]);
+	}
+	midiOutputMessages.clear();
+#endif
 }
 
-#ifdef USING_CARDINAL_NOT_RACK
-	void Lune::processTerminalInput(const ProcessArgs& args) {
-		// process midi here
-	}
-
-	void Lune::processTerminalOutput(const ProcessArgs&) {
-		// process midi here
-		for (size_t i = 0; i < midiOutputMessages.size(); i++) {
-			midiOutput.sendMessage(midiOutputMessages[i]);
-		}
-		midiOutputMessages.clear();
-	}
-#endif
-
 void Lune::loadScript() {
+#ifdef USING_CARDINAL_NOT_RACK
+	DEBUG("path %s", scriptsDir.c_str());
+	Lune *module = this;
+	async_dialog_filebrowser(false, scriptsDir.c_str(), "Open Lua script", [module](char* path) {
+		module->path = path;
+	});
+#else
 	osdialog_filters* filters = osdialog_filters_parse("Lua script:lua");
 	char* pathC = osdialog_file(OSDIALOG_OPEN, scriptsDir.c_str(), NULL, filters);
 	if (!pathC) {
 		return;
 	}
 	osdialog_filters_free(filters);
-
 	this->path = pathC;
-	DEBUG("Script path %s", pathC);
 	std::free(pathC);
+#endif
 
+	DEBUG("Script path: %s", this->path.c_str());
 	setScript();
 }
 
