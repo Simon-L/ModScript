@@ -54,14 +54,6 @@ struct PleineLune : Lune {
 
 		if (autoReload && (script != "")) {
 			reloadTimer.process(args.sampleTime);
-			if (reloadTimer.time > 0.5) {
-				reloadTimer.reset();
-				struct stat _st;
-				stat(path.c_str(), &_st);
-				if (_st.st_mtime > lastMtime) {
-					setScript();
-				}
-			}
 		}
 
 		// Frame divider for reducing sample rate
@@ -85,12 +77,13 @@ struct PleineLune : Lune {
 		// Process block
 		if (++bufferIndex >= block->bufferSize) {
 
+#ifdef USING_CARDINAL_NOT_RACK
 		    if (midiInput.process(isBypassed(), block)) {
 		        midiOutput.frame = 0;
 		    } else {
 		        ++midiOutput.frame;
 		    }
-
+#endif
 			std::lock_guard<std::mutex> lock(scriptMutex);
 			bufferIndex = 0;
 
@@ -322,6 +315,17 @@ struct PleineLuneWidget : ModuleWidget {
 				}
 				DEBUG("cables size after is %zu", _module->cables.size());
 				_module->removeCableRequested = false;
+			}
+
+			if (_module->autoReload && (_module->script != "")) {
+				if (_module->reloadTimer.time > 0.5) {
+					_module->reloadTimer.reset();
+					struct stat _st;
+					stat(_module->path.c_str(), &_st);
+					if (_st.st_mtime > _module->lastMtime) {
+						_module->setScript();
+					}
+				}
 			}
 		}
 		ModuleWidget::step();
