@@ -50,6 +50,10 @@ function sendMidiMessage(status, note, value)
   __sendMidiMessage(status, 0, note, value)
 end
 
+function sendSysex(bytes)
+  __sendSysex(bytes)
+end
+
 function setParamValue(module, param, value)
   id = module.id
   if type(param) == "string" then
@@ -58,7 +62,55 @@ function setParamValue(module, param, value)
     paramid = param
   end
   if paramid ~= nil and id ~= nil then
-    __setParamValue(id, paramid, value)
+    __setParamValue(id, paramid, value, true, false, false)
+  end
+end
+
+function setParamValueRelative(module, param, value)
+  id = module.id
+  if type(param) == "string" then
+    paramid = module.params[param]
+  else
+    paramid = param
+  end
+  if paramid ~= nil and id ~= nil then
+    __setParamValue(id, paramid, value, true, false, true)
+  end
+end
+
+function setParamValueRelativeRaw(module, param, value)
+  id = module.id
+  if type(param) == "string" then
+    paramid = module.params[param]
+  else
+    paramid = param
+  end
+  if paramid ~= nil and id ~= nil then
+    __setParamValue(id, paramid, value, false, false, true)
+  end
+end
+
+function setParamValueNoIndicator(module, param, value)
+  id = module.id
+  if type(param) == "string" then
+    paramid = module.params[param]
+  else
+    paramid = param
+  end
+  if paramid ~= nil and id ~= nil then
+    __setParamValue(id, paramid, value, true, true, false)
+  end
+end
+
+function getParamValue(module, param)
+  id = module.id
+  if type(param) == "string" then
+    paramid = module.params[param]
+  else
+    paramid = param
+  end
+  if paramid ~= nil and id ~= nil then
+    return __getParamValue(id, paramid)
   end
 end
 

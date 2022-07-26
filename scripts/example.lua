@@ -19,7 +19,8 @@ function process(block)
 	end
 
 	if block.button then
-		sendMidiMessage(NOTE_ON, 60, 127)
+		display('hey2')
+		sendMidiMessage(NOTE_ON, 61, 127)
 	else
 	end
 

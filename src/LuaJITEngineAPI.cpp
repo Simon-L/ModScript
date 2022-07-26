@@ -19,9 +19,8 @@ ProcessBlock* LuaJITEngine::getProcessBlock() {
 	return module->block;
 }
 
-// TODO: 0.0-1.0 normalized value unimplemented
-void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized) {
-	DEBUG("Module %lx param %d value %f", moduleId, paramId, (float)paramValue);
+void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized, const bool noIndicator, const bool relative) {
+	// DEBUG("Module %lx param %d value %f", moduleId, paramId, (float)paramValue);
 	rack::engine::Engine* eng = APP->engine;
 	Module* mod = eng->getModule(moduleId);
 	if (!mod) {
@@ -32,23 +31,42 @@ void LuaJITEngine::setParamValue(const int64_t moduleId, const int paramId, cons
 		DEBUG("No parameter with that Id");
 		return;
 	}
-	eng->setParamValue(mod, paramId, paramValue);
-	int id = module->isExistingSlot(moduleId, paramId);
-	if (id >= 0) {
-		module->tempHandles[id].expiry = module->tempHandlesExpiry;
-		DEBUG("%d exists, expiry set to %f", id, module->tempHandles[id].expiry);
+	rack::engine::ParamQuantity* quantity = mod->getParamQuantity(paramId);
+	float min = quantity->getMinValue();
+	float max = quantity->getMaxValue();
+	if (normalized) {
+		if (relative) {
+			float newValue = eng->getParamValue(mod, paramId) + abs(max - min) * paramValue;
+			eng->setParamValue(mod, paramId, rack::math::clamp(newValue, min, max));
+		} else {
+			float normValue = rack::math::rescale(paramValue, 0.0f, 1.0f, min, max);
+			normValue = rack::math::clamp(normValue, min, max);
+			eng->setParamValue(mod, paramId, normValue);
+		}
 	} else {
-		id = module->getEmptySlot();
-		if (id < 0)
-			return;
-		eng->updateParamHandle_NoLock(&module->tempHandles[id], moduleId, paramId, true);
-		module->tempHandles[id].expiry = module->tempHandlesExpiry;
-		DEBUG("New handle %d. Expiry is %f", id, module->tempHandles[id].expiry);
+		if (relative) {
+			eng->setParamValue(mod, paramId, rack::math::clamp(eng->getParamValue(mod, paramId) + paramValue, min, max));
+		} else {
+			eng->setParamValue(mod, paramId, rack::math::clamp(paramValue, min, max));
+		}
+	}
+	if (noIndicator) {
+	} else {
+		int id = module->isExistingSlot(moduleId, paramId);
+		if (id >= 0) {
+			module->tempHandles[id].expiry = module->tempHandlesExpiry;
+		} else {
+			id = module->getEmptySlot();
+			if (id < 0)
+				return;
+			eng->updateParamHandle_NoLock(&module->tempHandles[id], moduleId, paramId, true);
+			module->tempHandles[id].expiry = module->tempHandlesExpiry;
+		}
 	}
 }
 
 double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
-	DEBUG("Module %lx Parameter %d", moduleId, paramId);
+	// DEBUG("Module %lx Parameter %d", moduleId, paramId);
 	rack::engine::Engine* eng = APP->engine;
 	Module* mod = eng->getModule(moduleId);
 	if (!mod) {

@@ -4,6 +4,44 @@
 -- Just rewritten some of Andrew Belt's classes from Rack SDK.
 -- https://github.com/VCVRack/Rack/blob/v1/include/dsp/digital.hpp
 
+BooleanTrigger = {}
+BooleanTrigger.__index = BooleanTrigger
+
+function BooleanTrigger.new()
+    local self = setmetatable({}, BooleanTrigger)
+    self.state = true
+    self.rising = false
+    self.falling = false
+    return self
+end
+
+function BooleanTrigger:reset()
+    self.state = true
+end
+
+---
+---@param input number
+function BooleanTrigger:process(input)
+    self.rising = false
+    self.falling = false
+    triggered = (input and not self.state)
+    if triggered then self.rising = true end
+    if (not input and self.state) then self.falling = true end
+    self.state = input
+    return triggered
+end
+
+function BooleanTrigger:isHigh()
+    return self.state
+end
+
+function BooleanTrigger:isRising()
+    return self.rising
+end
+
+function BooleanTrigger:isFalling()
+    return self.falling
+end
 
 SchmittTrigger = {}
 SchmittTrigger.__index = SchmittTrigger

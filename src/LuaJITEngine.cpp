@@ -1,7 +1,7 @@
 // LuaJITEngine.cpp
 // Mostly adapted from the LuaJIT engine in VCV-Prototype https://github.com/VCVRack/VCV-Prototype/blob/v2/src/LuaJITEngine.cpp
 // Copyright © 2019-2021 Andrew Belt and VCV Prototype contributors.
-// 2021 Modifications by Simon-L
+// 2021-2022 Modifications by Simon-L
 
 #include "LuaJITEngine.hpp"
 #include <string>
@@ -79,6 +79,10 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		lua_call(L, 1, 0);
 	}
 
+	// Clear and initialize SysEx buffers
+	sysexData.clear();
+	sysexData.resize(MAX_SYSEX_LEN);
+
 	// Set user pointer
 	lua_pushlightuserdata(L, this);
 	lua_setglobal(L, "_engine");
@@ -100,6 +104,8 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__removeCable");
 	lua_pushcfunction(L, native_sendMidiMessage);
 	lua_setglobal(L, "__sendMidiMessage");
+	lua_pushcfunction(L, native_sendSysex);
+	lua_setglobal(L, "__sendSysex");
 
 	// Set config
 	lua_newtable(L);
@@ -278,14 +284,17 @@ LuaJITEngine* LuaJITEngine::getEngine(lua_State* L) {
 
 int LuaJITEngine::native_setParamValue(lua_State* L) {
 	int n = lua_gettop(L);
-	if (n != 3) {
-		DEBUG("LuaJIT: getParamValue: exactly 3 parameters needed, %d were provided", n);
+	if (n != 6) {
+		DEBUG("LuaJIT: getParamValue: exactly 6 parameters needed, %d were provided", n);
 		return 0;
 	}
 	int64_t moduleId = lua_tointeger(L, 1);
 	int paramId = lua_tointeger(L, 2);
 	lua_Number paramValue = lua_tonumber(L, 3);
-	getEngine(L)->setParamValue(moduleId, paramId, paramValue, false);
+	bool normalized = lua_toboolean(L, 4);
+	bool noIndicator = lua_toboolean(L, 5);
+	bool relative = lua_toboolean(L, 6);
+	getEngine(L)->setParamValue(moduleId, paramId, paramValue, normalized, noIndicator, relative);
 	return 0;
 }
 
@@ -342,6 +351,29 @@ int LuaJITEngine::native_sendMidiMessage(lua_State* L) {
 	bool ok = getEngine(L)->sendMidiMessage(status, channel, note, value);
 	lua_pushinteger(L, ok ? 1 : 0);
 	return 1;
+}
+
+int LuaJITEngine::native_sendSysex(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 1) {
+		DEBUG("LuaJIT: sendSysex: exactly 1 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int isTable = lua_istable(L, 1);
+	if (isTable) {
+		lua_pushnil(L);
+		while(lua_next(L, -2)) {
+		    if(lua_isnumber(L, -1)) {
+		        int i = (int)lua_tonumber(L, -1);
+		        DEBUG("%x", i);
+		    }
+		    lua_pop(L, 1);
+		}
+		lua_pop(L, 1);
+	} else {
+		DEBUG("LuaJIT: not a table, SysEx message ignored");
+	}
+	return 0;
 }
 
 int LuaJITEngine::native_display(lua_State* L) {

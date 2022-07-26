@@ -10,6 +10,7 @@ static const int NUM_ROWS = 4;
 static const int MAX_BUFFER_SIZE = 4096;
 static const int MAX_MIDI_MESSAGES = 1024;
 static const int MAX_CABLES = 255;
+static const int MAX_SYSEX_LEN = 2048;
 
 struct Lune;
 
@@ -42,10 +43,13 @@ struct LuaJITEngine {
 	*/
 	virtual int process();
 
+	std::vector<uint8_t> sysexData;
+	midi::Message sysexMessage;
+
 	// Communication with Prototype module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
 	void display(const std::string& message);
-	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized);
+	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized, const bool noIndicator, const bool relative);
 	double getParamValue(const int64_t moduleId, const int paramId);
 	int64_t addCable(const int64_t outputModuleId, const int outputId, const int64_t inputModuleId, const int inputId);
 	bool removeCable(const int64_t cableId);
@@ -59,6 +63,7 @@ struct LuaJITEngine {
 	static int native_addCable(lua_State* L);
 	static int native_removeCable(lua_State* L);
 	static int native_sendMidiMessage(lua_State* L);
+	static int native_sendSysex(lua_State* L);
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
 	Lune* module = NULL;
