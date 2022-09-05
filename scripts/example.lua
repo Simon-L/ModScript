@@ -1,26 +1,19 @@
 -- Demo script
 
 config.frameDivider = 1
-config.bufferSize = 32
+config.bufferSize = 8
 
--- _8vert = Module(0xa1114e2bdb822)
+-- mymodule = Module(0xdeadbeef)
 
 function process(block)
 	for i=1,block.midiInputSize do
 		msg = Message(block.midiInput[i])
 		display('type ' .. string.format("0x%x", msg.type) .. ' channel ' .. msg.channel .. ' note ' .. msg.note .. ' value ' .. msg.value)
-		-- if msg.note >= 60 and msg.note <=67 then
-		-- 	if msg.type == NOTE_ON then
-		-- 		setParamValue(_8vert, msg.note - 60, 1.0)
-		-- 	else
-		-- 		setParamValue(_8vert, msg.note - 60, -1.0)
-		-- 	end
-		-- end
 	end
 
 	if block.button then
 		display('hey2')
-		sendMidiMessage(NOTE_ON, 61, 127)
+		-- sendMidiMessage(NOTE_ON, 61, 127)
 	else
 	end
 

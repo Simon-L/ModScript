@@ -10,6 +10,8 @@ struct PleineLune : Lune {
 			configParam(i, 0.f, 1.f, 0.5f, string::f("Knob %d", i + 1));
 		configParam(2, 0.f, 1.f, 0.f, string::f("Switch 1"));
 
+		configLight(0, "Script RGB");
+
 		block = new ProcessBlock;
 		path = "";
 		script = "";
@@ -169,7 +171,6 @@ struct PleineLune : Lune {
 	}
 
 	json_t* dataToJson() override {
-		DEBUG("Overridden to!");
 		json_t* rootJ = json_object();
 
 		json_object_set_new(rootJ, "autoReload", json_boolean(this->autoReload));
@@ -183,7 +184,6 @@ struct PleineLune : Lune {
 	}
 
 	void dataFromJson(json_t* rootJ) override {
-		DEBUG("Overridden from!");
 		json_t* reload = json_object_get(rootJ, "autoReload");
 		if (reload)
 			this->autoReload = json_is_true(reload);
@@ -277,6 +277,7 @@ struct PleineLuneWidget : ModuleWidget {
 				}
 			}
 			if (_module->addCableRequested) {
+				DEBUG("Warning: Adding and removing cables is considered experimental!")
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					if (_module->cables[i]->id == -1) {
 						int64_t cabId = i;
@@ -295,6 +296,7 @@ struct PleineLuneWidget : ModuleWidget {
 				_module->addCableRequested = false;
 			}
 			if (_module->removeCableRequested) {
+				DEBUG("Warning: Adding and removing cables is considered experimental!")
 				std::vector<Cable*> removed;
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					LuaCable* cable = (LuaCable*)_module->cables[i];
@@ -309,11 +311,9 @@ struct PleineLuneWidget : ModuleWidget {
 						removed.push_back(cable);
 					}
 				}
-				DEBUG("cables size before is %zu", _module->cables.size());
 				for (Cable* cable : removed) {
 					_module->cables.erase(std::remove(_module->cables.begin(), _module->cables.end(), cable), _module->cables.end());
 				}
-				DEBUG("cables size after is %zu", _module->cables.size());
 				_module->removeCableRequested = false;
 			}
 
