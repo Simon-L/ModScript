@@ -9,6 +9,7 @@ void init(Plugin* p) {
 
 	// Add modules here
 	p->addModel(modelLune);
+	p->addModel(modelLuneHelper);
 	p->addModel(modelPleineLune);
 
 	// Any other plugin initialization may go here.

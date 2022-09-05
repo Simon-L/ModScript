@@ -19,4 +19,5 @@ extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
 extern Model* modelLune;
+extern Model* modelLuneHelper;
 extern Model* modelPleineLune;

@@ -24,6 +24,12 @@
       "name": "PleineLune",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "LuneHelper",
+      "name": "LuneHelper",
+      "description": "",
+      "tags": []
     }
   ]
 }
