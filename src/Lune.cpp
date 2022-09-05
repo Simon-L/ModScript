@@ -1,7 +1,7 @@
 // Lune.cpp
 // Mostly adapted from VCV-Prototype https://github.com/VCVRack/VCV-Prototype/blob/v2/src/Prototype.cpp
 // Copyright © 2019-2021 Andrew Belt and VCV Prototype contributors.
-// 2021 Modifications by Simon-L
+// 2021-2022 Modifications by Simon-L
 #include "Lune.hpp"
 #include "Widgets.hpp"
 
