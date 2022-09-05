@@ -12,7 +12,7 @@ ModScript's approach differs from the usual "everything-is-a-module" paradigm: i
 
 ![Image](doc/modules.png)
 
-Interested? Please join the conversation on VCV Rack forum!
+Interested? Please [join the conversation](https://community.vcvrack.com/t/modscript-using-scripts-for-a-better-and-richer-integration-with-midi-controllers-beta-soon/18197) on VCV Rack forum!
 
 #### Features:
 - 2 variations, Lune & Pleine Lune, the latter adds MIDI i/o
