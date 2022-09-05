@@ -37,7 +37,7 @@ Interested? Please join the conversation on VCV Rack forum!
 
 https://synthe.tiseur.fr/userfiles/videos/lune/lune3.mp4
 
-See also [this video](https://synthe.tiseur.fr/userfiles/videos/lune/lune1.mp4) and [this one for a bit of live coding!](https://synthe.tiseur.fr/userfiles/videos/lune/lune2_3.mp4) ([resulting script](https://github.com/Simon-L/ModScript/blob/refactor/scripts/apcmini.lua))
+See also [this video](https://synthe.tiseur.fr/userfiles/videos/lune/lune1.mp4) and [this one for a bit of live coding!](https://synthe.tiseur.fr/userfiles/videos/lune/lune2_3.mp4) ([resulting script](/scripts/apcmini.lua))
 
 ## Example and API demo
 ### Modules
