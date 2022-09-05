@@ -8,7 +8,7 @@ Scripting in VCV Rack for better integration with your patch and designed for us
 In Lune, you can control arbitrary parameters from any module in the patch.  
 The accompanying "Lune Helper" module helps with finding the info you need to write scripts for the patch you are working on.  
 
-ModScript's approach differs from the usual "everything-is-a-module" paradigm: it allows you to write all the MIDI interaction you need using code that is easy to read to write and to remain focused on musical elements in the patch.  
+ModScript's approach differs from the usual "everything-is-a-module" paradigm: it allows you to write all the MIDI interaction you need using code that is easy to read and write and to remain focused on musical elements in the patch.  
 
 ![Image](doc/modules.png)
 
