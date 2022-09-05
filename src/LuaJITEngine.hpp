@@ -43,7 +43,7 @@ struct LuaJITEngine {
 	*/
 	virtual int process();
 
-	std::vector<uint8_t> sysexData;
+	static std::vector<uint8_t> sysexData;
 	midi::Message sysexMessage;
 
 	// Communication with Prototype module.
@@ -51,15 +51,18 @@ struct LuaJITEngine {
 	void display(const std::string& message);
 	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized, const bool noIndicator, const bool relative);
 	double getParamValue(const int64_t moduleId, const int paramId);
+	double getLightValue(const int64_t moduleId, const int lightId);
 	int64_t addCable(const int64_t outputModuleId, const int outputId, const int64_t inputModuleId, const int inputId);
 	bool removeCable(const int64_t cableId);
 	bool sendMidiMessage(const uint8_t status, const uint8_t channel, const uint8_t note, const uint8_t value);
+	bool sendSysexMessage(const uint16_t size);
 	void setFrameDivider(int frameDivider);
 	void setBufferSize(int bufferSize);
 	ProcessBlock* getProcessBlock();
 	static int native_display(lua_State* L);
 	static int native_setParamValue(lua_State* L);
 	static int native_getParamValue(lua_State* L);
+	static int native_getLightValue(lua_State* L);
 	static int native_addCable(lua_State* L);
 	static int native_removeCable(lua_State* L);
 	static int native_sendMidiMessage(lua_State* L);

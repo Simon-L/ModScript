@@ -80,6 +80,22 @@ double LuaJITEngine::getParamValue(const int64_t moduleId, const int paramId) {
 	return eng->getParamValue(mod, paramId);
 }
 
+double LuaJITEngine::getLightValue(const int64_t moduleId, const int lightId) {
+	// DEBUG("Module %lx Light %d", moduleId, lightId);
+	rack::engine::Engine* eng = APP->engine;
+	Module* mod = eng->getModule(moduleId);
+	if (!mod) {
+		DEBUG("No module with that Id: %d", mod == NULL);
+		return 0.0;
+	}
+	if (lightId >= mod->getNumLights()) {
+		DEBUG("No light with that Id");
+		return 0.0;
+	}
+	rack::engine::Light light = mod->getLight(lightId);
+	return light.getBrightness();
+}
+
 int64_t LuaJITEngine::addCable(const int64_t outputModuleId, const int outputId, const int64_t inputModuleId, const int inputId) {
 	LuaCable* cable = new LuaCable;
 	cable->outputModule = APP->engine->getModule(outputModuleId);
@@ -131,4 +147,17 @@ bool LuaJITEngine::sendMidiMessage(const uint8_t status, const uint8_t channel, 
 		return true;
 	}
 #endif
+}
+
+bool LuaJITEngine::sendSysexMessage(const uint16_t size) {
+	sysexMessage.bytes.clear();
+	sysexMessage.bytes = sysexData;
+	sysexMessage.bytes.resize(size);
+	if (module->midiOutput.getDevice() == NULL) {
+		return false;
+	} else {
+		module->midiOutput.sendMessage(sysexMessage);
+		return true;
+	}
+	return 0;
 }

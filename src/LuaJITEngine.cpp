@@ -10,6 +10,8 @@
 
 lua_State* L = NULL;
 
+std::vector<uint8_t> LuaJITEngine::sysexData;
+
 // This is a mirror of ProcessBlock that we are going to use
 // to provide 1-based indices within the Lua VM
 struct LuaProcessBlock {
@@ -98,6 +100,8 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__setParamValue");
 	lua_pushcfunction(L, native_getParamValue);
 	lua_setglobal(L, "__getParamValue");
+	lua_pushcfunction(L, native_getLightValue);
+	lua_setglobal(L, "__getLightValue");
 	lua_pushcfunction(L, native_addCable);
 	lua_setglobal(L, "__addCable");
 	lua_pushcfunction(L, native_removeCable);
@@ -161,9 +165,10 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	}
 
 	std::string lib_dir = asset::plugin(pluginInstance, "scripts" PATH_SEPARATOR "lib");
+	std::string scripts_dir = asset::plugin(pluginInstance, "scripts");
 	std::stringstream lib_stream;
 	lib_stream
-	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
+	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. \"" << scripts_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
 	<< "local lib = require('lib')" << std::endl;
 	std::string lib_script = lib_stream.str();
 
@@ -311,6 +316,19 @@ int LuaJITEngine::native_getParamValue(lua_State* L) {
 	return 1;
 }
 
+int LuaJITEngine::native_getLightValue(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 2) {
+		DEBUG("LuaJIT: getLightValue: exactly 2 parameters needed, %d were provided", n);
+		return 0;
+	}
+	int64_t moduleId = lua_tointeger(L, 1);
+	int lightId = lua_tointeger(L, 2);
+	double lightValue = getEngine(L)->getLightValue(moduleId, lightId);
+	lua_pushnumber(L, lightValue);
+	return 1;
+}
+
 int LuaJITEngine::native_addCable(lua_State* L) {
 	int n = lua_gettop(L);
 	if (n != 4) {
@@ -361,19 +379,31 @@ int LuaJITEngine::native_sendSysex(lua_State* L) {
 	}
 	int isTable = lua_istable(L, 1);
 	if (isTable) {
+		sysexData.clear();
+		sysexData.resize(MAX_SYSEX_LEN);
+		sysexData[0] = 0xF0; // SysEx start byte
+		uint16_t size = 1;
+		int num;
 		lua_pushnil(L);
 		while(lua_next(L, -2)) {
 		    if(lua_isnumber(L, -1)) {
-		        int i = (int)lua_tonumber(L, -1);
-		        DEBUG("%x", i);
+		        num = (int)lua_tonumber(L, -1);
+		        sysexData[size] = num;
+		        size += 1;
 		    }
 		    lua_pop(L, 1);
 		}
 		lua_pop(L, 1);
+		sysexData[size] = 0xF7; // SysEx end byte
+		size += 1;
+		bool ok = getEngine(L)->sendSysexMessage(size);
+		lua_pushinteger(L, ok ? 1 : 0);
+		return 1;
 	} else {
 		DEBUG("LuaJIT: not a table, SysEx message ignored");
+		lua_pushinteger(L, 0);
+		return 1;
 	}
-	return 0;
 }
 
 int LuaJITEngine::native_display(lua_State* L) {
