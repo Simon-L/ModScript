@@ -2,7 +2,7 @@
 
 
 Plugin* pluginInstance;
-
+std::mutex luaMutex;
 
 void init(Plugin* p) {
 	pluginInstance = p;

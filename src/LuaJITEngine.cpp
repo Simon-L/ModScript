@@ -48,6 +48,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	luaBlock.light = &block->light[-1];
 	luaBlock.button = block->button;
 
+	DEBUG("%lx (run) Debug point 4: 0", myId);
 	for (int i = 0; i < NUM_ROWS; i++) {
 		luaBlock.inputs[i + 1] = &block->inputs[i][-1];
 		luaBlock.outputs[i + 1] = &block->outputs[i][-1];
@@ -62,9 +63,10 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		DEBUG("Could not create LuaJIT context");
 		return -1;
 	}
+	DEBUG("%lx (run) Debug point 4: 1", myId);
 
 	// Import a subset of the standard library
-	static const luaL_Reg lj_lib_load[] = {
+	const luaL_Reg lj_lib_load[] = {
 		{"",              luaopen_base},
 		{LUA_LOADLIBNAME, luaopen_package},
 		{LUA_TABLIBNAME,  luaopen_table},
@@ -80,6 +82,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		lua_pushstring(L, lib->name);
 		lua_call(L, 1, 0);
 	}
+	DEBUG("%lx (run) Debug point 4: 2", myId);
 
 	// Clear and initialize SysEx buffers
 	sysexData.clear();
@@ -95,6 +98,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 
 	lua_pushcfunction(L, native_display);
 	lua_setglobal(L, "display");
+	DEBUG("%lx (run) Debug point 4: 3", myId);
 
 	lua_pushcfunction(L, native_setParamValue);
 	lua_setglobal(L, "__setParamValue");
@@ -122,6 +126,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		lua_setfield(L, -2, "bufferSize");
 	}
 	lua_setglobal(L, "config");
+	DEBUG("%lx (run) Debug point 4: 4", myId);
 
 	// Load the FFI auxiliary functions.
 	std::stringstream ffi_stream;
@@ -145,20 +150,22 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "_ffi_cast = ffi.cast" << std::endl
 	<< "function _castBlock(b) return _ffi_cast('struct LuaProcessBlock*', b) end" << std::endl;
 	std::string ffi_script = ffi_stream.str();
+	DEBUG("%lx (run) Debug point 4: 5", myId);
 
 	// Compile the ffi script
 	if (luaL_loadbuffer(L, ffi_script.c_str(), ffi_script.size(), "ffi_script.lua")) {
 		const char* s = lua_tostring(L, -1);
-		WARN("LuaJIT: %s", s);
+		WARN("%ld LuaJIT: %s", myId, s);
 		DEBUG(s);
 		lua_pop(L, 1);
 		return -1;
 	}
+	DEBUG("%lx (run) Debug point 4: 6", myId);
 
 	// Run the ffi script
 	if (lua_pcall(L, 0, 0, 0)) {
 		const char* s = lua_tostring(L, -1);
-		WARN("LuaJIT: %s", s);
+		WARN("%ld LuaJIT: %s", myId, s);
 		DEBUG(s);
 		lua_pop(L, 1);
 		return -1;
@@ -171,24 +178,29 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. \"" << scripts_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
 	<< "local lib = require('lib')" << std::endl;
 	std::string lib_script = lib_stream.str();
+	DEBUG("%lx (run) Debug point 4: 7", myId);
 
 	// Compile the lib script
 	if (luaL_loadbuffer(L, lib_script.c_str(), lib_script.size(), "lib_script.lua")) {
 		const char* s = lua_tostring(L, -1);
+		DEBUG("%lx Là 1?!", myId);
 		WARN("LuaJIT: %s", s);
 		DEBUG(s);
 		lua_pop(L, 1);
 		return -1;
 	}
 
+	DEBUG("%lx (run) Debug point 4: 7 1?!", myId);
 	// Run the lib script
 	if (lua_pcall(L, 0, 0, 0)) {
 		const char* s = lua_tostring(L, -1);
+		DEBUG("%lx Là 2?!", myId);
 		WARN("LuaJIT: %s", s);
 		DEBUG(s);
 		lua_pop(L, 1);
 		return -1;
 	}
+	DEBUG("%lx (run) Debug point 4: 8", myId);
 
 	// Compile user script
 	if (luaL_loadbuffer(L, script.c_str(), script.size(), path.c_str())) {
@@ -242,6 +254,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		return -1;
 	}
 
+	DEBUG("%lx (run) Debug point 4: done.", myId);
 	return 0;
 }
 
@@ -263,7 +276,7 @@ int LuaJITEngine::process() {
 	// Call process function
 	if (lua_pcall(L, 1, 0, 0)) {
 		const char* err = lua_tostring(L, -1);
-		WARN("LuaJIT: %s", err);
+		WARN("%lx LuaJIT: %s", myId, err);
 		DEBUG(err);
 		return -1;
 	}

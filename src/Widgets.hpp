@@ -1,3 +1,4 @@
+#include <thread>
 struct LoadScriptItem : MenuItem {
 	Lune *module;
 	void onAction(const event::Action& e) override {
@@ -56,8 +57,11 @@ struct UserScriptItem : MenuItem {
 	}
 
 	void onAction(const event::Action& e) override {
+		DEBUG("Id: %lx UserScriptSet", module->getId());
 		module->path = newPath;
 		module->setScript();
+		module->wasJustSet = true;
+		DEBUG("On passe ici hein?");
 	}
 };
 
@@ -68,9 +72,16 @@ struct UserScriptsMenu : MenuItem {
 		if (module) {
 			menu->addChild(createMenuItem("Unload script", "",
 				[=]() {
-					module->path = "";
-					module->script = "";
-					module->setScript();
+					// module->path = "";
+					// module->script = "";
+					std::lock_guard<std::mutex> lock(module->scriptMutex);
+					DEBUG("Script mutex ok");
+					std::lock_guard<std::mutex> lock2(luaMutex);
+					DEBUG("Lua mutex ok");
+					module->wasJustSet = true;
+					module->requestUnloadScript();
+					DEBUG("Step 1: Id: %lx Thread: %lx, wasJustSet:%d requestedUnloadScript:%d", module->getId(), std::hash<std::thread::id>{}(std::this_thread::get_id()),
+						module->wasJustSet, module->requestedUnloadScript);
 				}
 			));
 			menu->addChild(new MenuSeparator);

@@ -1,6 +1,7 @@
 #include "plugin.hpp"
 #include "Lune.hpp"
 #include "Widgets.hpp"
+#include <thread>
 
 struct PleineLune : Lune {
 
@@ -86,7 +87,25 @@ struct PleineLune : Lune {
 		        ++midiOutput.frame;
 		    }
 #endif
+			if (requestedSetScript) {
+				DEBUG("%lx requestedSetScript is true", this->getId());
+				setScript();
+				requestedSetScript = false;
+				DEBUG("%lx requestedSetScript is done", this->getId());
+			} else if (requestedUnloadScript) {
+				DEBUG("Step 2: %lx requestedUnloadScript is true", this->getId());
+				setScript();
+				requestedUnloadScript = false;
+				DEBUG("Step 3: %lx requestedUnloadScript is done", this->getId());
+			}
 			std::lock_guard<std::mutex> lock(scriptMutex);
+			DEBUG("Step 4: %lx scriptMutex ok", this->getId());
+			std::lock_guard<std::mutex> lock2(luaMutex);
+			DEBUG("Id: %lx %p %lx luaMutex ok", this->getId(), (void *)&scriptEngine, std::hash<std::thread::id>{}(std::this_thread::get_id()));
+			if (path == "" && script == "") {
+				DEBUG("Id: %lx Path and script empty, script unloaded %p %lx", this->getId(), (void*)scriptEngine, std::hash<std::thread::id>{}(std::this_thread::get_id()));
+				return;
+			}
 			bufferIndex = 0;
 
 			for (int id = 0; id < 256; id++) {
@@ -118,10 +137,6 @@ struct PleineLune : Lune {
 			}
 			block->midiInputSize = msgIndex;
 #endif
-			// for (size_t i = 0; i < midiMessages.size(); ++i)
-			// {	
-			// }
-			// midiMessages.clear();
 
 			// Params
 			block->button = params[2].getValue() > 0.f;
@@ -135,11 +150,21 @@ struct PleineLune : Lune {
 			{
 				// Process buffer
 				if (scriptEngine) {
+					DEBUG("Id: %lx %p Process wasJustSet? %d %lx", this->getId(), (void *)&scriptEngine, wasJustSet, std::hash<std::thread::id>{}(std::this_thread::get_id()));
 					if (scriptEngine->process()) {
-						WARN("Script %s process() failed. Stopped script.", path.c_str());
+						WARN("%lx Script %s process() failed. Stopped script.", this->getId(), path.c_str());
 						delete scriptEngine;
 						scriptEngine = NULL;
+						if (wasJustSet) {
+							DEBUG("ERROR but wasJustSet back");
+							wasJustSet = false;
+						}
 						return;
+					} else {
+						if (wasJustSet) {
+							DEBUG("Ok! wasJustSet back");
+							wasJustSet = false;
+						}
 					}
 				}
 			}
@@ -215,7 +240,6 @@ struct MidiMenu : MenuItem {
 	bool select;
 	midi::Port* _port;
 	MidiMenu(bool select) {
-		DEBUG("Yah %d", select);
 		this->select = select;
 	}
 
@@ -228,18 +252,12 @@ struct MidiMenu : MenuItem {
 			else {
 				_port = &module->midiOutput;
 			}
-			DEBUG("Ha!");
 			appendMidiMenu(menu, _port);
-			DEBUG("Hu?!!");
 		} else {
-			if (module)
-				DEBUG("Yes module");
-			if (_port)
-				DEBUG("Yes port");
-			if (!module)
-				DEBUG("No module");
-			if (!_port)
-				DEBUG("No port");
+			if (module) {}
+			if (_port) {}
+			if (!module) {}
+			if (!_port) {}
 		}
 		return menu;
 	}
@@ -277,7 +295,7 @@ struct PleineLuneWidget : ModuleWidget {
 				}
 			}
 			if (_module->addCableRequested) {
-				DEBUG("Warning: Adding and removing cables is considered experimental!")
+				DEBUG("Warning: Adding and removing cables is considered experimental!");
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					if (_module->cables[i]->id == -1) {
 						int64_t cabId = i;
@@ -296,7 +314,7 @@ struct PleineLuneWidget : ModuleWidget {
 				_module->addCableRequested = false;
 			}
 			if (_module->removeCableRequested) {
-				DEBUG("Warning: Adding and removing cables is considered experimental!")
+				DEBUG("Warning: Adding and removing cables is considered experimental!");
 				std::vector<Cable*> removed;
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					LuaCable* cable = (LuaCable*)_module->cables[i];

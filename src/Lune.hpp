@@ -203,6 +203,8 @@ struct Lune : ModScriptExpander, Module {
 	bool removeCableRequested = false;
 	std::vector<LuaCable*> cables;
 
+	bool wasJustSet = false;
+
 	Lune();
 
 	~Lune();
@@ -230,5 +232,11 @@ struct Lune : ModScriptExpander, Module {
 	bool cableExists(Module* outputModule, int outputId, Module* inputModule, int inputId);
 
 	Cable* getLuaCable(const int64_t id);
+
+	bool requestedSetScript = false;
+	void requestSetScript() {requestedSetScript = true;}
+
+	bool requestedUnloadScript = false;
+	void requestUnloadScript() {requestedUnloadScript = true;}
 
 };

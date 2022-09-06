@@ -14,6 +14,8 @@
 
 using namespace rack;
 
+extern std::mutex luaMutex;
+
 // Declare the Plugin, defined in plugin.cpp
 extern Plugin* pluginInstance;
 

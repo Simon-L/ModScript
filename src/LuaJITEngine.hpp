@@ -46,6 +46,8 @@ struct LuaJITEngine {
 	static std::vector<uint8_t> sysexData;
 	midi::Message sysexMessage;
 
+	int64_t myId = 0xdeadbeef;
+
 	// Communication with Prototype module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
 	void display(const std::string& message);

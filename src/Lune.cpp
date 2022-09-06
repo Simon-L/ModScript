@@ -168,6 +168,11 @@ void Lune::process(const ProcessArgs& args)
 	// Process block
 	if (++bufferIndex >= block->bufferSize) {
 		std::lock_guard<std::mutex> lock(scriptMutex);
+		std::lock_guard<std::mutex> lock2(luaMutex);
+		if (requestedSetScript) {
+			setScript();
+			requestedSetScript = false;
+		}
 		bufferIndex = 0;
 
 		for (int id = 0; id < 256; id++) {
@@ -263,27 +268,36 @@ void Lune::loadScript() {
 }
 
 void Lune::setScript() {
-	requestRemoveAllCables();
-	DEBUG("Loading %s", path.c_str());
+	// requestRemoveAllCables();
+	DEBUG("%lx Loading %s", this->getId(), path.c_str());
 	std::lock_guard<std::mutex> lock(scriptMutex);
-	// Read file
+	DEBUG("Script mutex ok");
+	std::lock_guard<std::mutex> lock2(luaMutex);
+	DEBUG("Lua mutex ok");
 	std::string script;
-	std::ifstream file;
-	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	try {
-		file.open(path);
-		std::stringstream buffer;
-		buffer << file.rdbuf();
-		script = buffer.str();
-	}
-	catch (const std::runtime_error& err) {
-		WARN("Failed opening %s", path.c_str());
-	}
-	struct stat _st;
-	stat(path.c_str(), &_st);
-	lastMtime = _st.st_mtime;
+	if (requestedUnloadScript) {
+		this->path = "";
+		this->script = "";
+		DEBUG("Unload requested, emptied path and script!");
+	} else {
+		// Read file
+		std::ifstream file;
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		try {
+			file.open(path);
+			std::stringstream buffer;
+			buffer << file.rdbuf();
+			script = buffer.str();
+		}
+		catch (const std::runtime_error& err) {
+			WARN("Failed opening %s", path.c_str());
+		}
+		struct stat _st;
+		stat(path.c_str(), &_st);
+		lastMtime = _st.st_mtime;
 
-	DEBUG("Content:\n%s", script.c_str());
+		DEBUG("%lx %p Content:\n%s", this->getId(), (void *)&scriptEngine, script.c_str());
+	}
 
 	// Reset script state
 	if (scriptEngine) {
@@ -293,31 +307,44 @@ void Lune::setScript() {
 	this->script = "";
 	this->engineName = "";
 	this->message = "";
+
+	DEBUG("Debug point 1");
+	if (script == "") {
+		DEBUG("%lx %p %d Script is empty, return from setScript!", this->getId(), (void *)&scriptEngine, requestedUnloadScript);
+		return;
+	}
 	// Reset process state
 	frameDivider = 32;
 	frame = 0;
 	bufferIndex = 0;
 	// Reset block
 	*block = ProcessBlock();
-
-	if (script == "")
-		return;
+	
 	this->script = script;
+	DEBUG("Debug point 2");
 
 	scriptEngine = new LuaJITEngine;
 	if (!scriptEngine) {
+		DEBUG("Error: Couldn't create LuaJIT engine.");
 		return;
 	}
+	DEBUG("Debug point 3");
 	scriptEngine->module = this;
+	scriptEngine->myId = this->getId();
 
+	DEBUG("Debug point 4");
 	// Run script
 	if (scriptEngine->run(path, script)) {
 		// Error message should have been set by ScriptEngine
+		DEBUG("Debug point 5");
 		delete scriptEngine;
 		scriptEngine = NULL;
+		DEBUG("Debug point 6");
 		return;
 	}
+	DEBUG("Debug point 7");
 	this->engineName = scriptEngine->getEngineName();
+	DEBUG("All done in setScript");
 }
 
 int Lune::getEmptySlot() {
