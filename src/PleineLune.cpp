@@ -134,7 +134,7 @@ struct PleineLune : Lune {
 			// Run process function
 			{
 				// Process buffer
-				if (scriptEngine) {
+				if (scriptEngine != NULL) {
 					if (scriptEngine->process()) {
 						WARN("Script %s process() failed. Stopped script.", path.c_str());
 						delete scriptEngine;
@@ -277,7 +277,7 @@ struct PleineLuneWidget : ModuleWidget {
 				}
 			}
 			if (_module->addCableRequested) {
-				DEBUG("Warning: Adding and removing cables is considered experimental!")
+				DEBUG("Warning: Adding and removing cables is considered experimental!");
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					if (_module->cables[i]->id == -1) {
 						int64_t cabId = i;
@@ -296,7 +296,7 @@ struct PleineLuneWidget : ModuleWidget {
 				_module->addCableRequested = false;
 			}
 			if (_module->removeCableRequested) {
-				DEBUG("Warning: Adding and removing cables is considered experimental!")
+				DEBUG("Warning: Adding and removing cables is considered experimental!");
 				std::vector<Cable*> removed;
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					LuaCable* cable = (LuaCable*)_module->cables[i];
