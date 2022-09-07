@@ -43,8 +43,26 @@ struct LuaJITEngine {
 	*/
 	virtual int process();
 
-	static std::vector<uint8_t> sysexData;
 	midi::Message sysexMessage;
+
+	std::vector<uint8_t> sysexData;
+
+	// This is a mirror of ProcessBlock that we are going to use
+	// to provide 1-based indices within the Lua VM
+	struct LuaProcessBlock {
+		float sampleRate;
+		float sampleTime;
+		int bufferSize;
+		int midiInputSize;
+		float* inputs[NUM_ROWS + 1];
+		float* outputs[NUM_ROWS + 1];
+		uint8_t* midiInput[MAX_MIDI_MESSAGES + 1];
+		float* knobs;
+		float* light;
+		bool button;
+	};
+
+	LuaProcessBlock luaBlock;
 
 	// Communication with Prototype module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
@@ -70,4 +88,5 @@ struct LuaJITEngine {
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
 	Lune* module = NULL;
+	lua_State* L = NULL;
 };

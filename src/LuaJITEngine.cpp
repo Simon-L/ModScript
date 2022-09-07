@@ -8,26 +8,7 @@
 #include <ostream>
 #include <rack.hpp>
 
-lua_State* L = NULL;
 
-std::vector<uint8_t> LuaJITEngine::sysexData;
-
-// This is a mirror of ProcessBlock that we are going to use
-// to provide 1-based indices within the Lua VM
-struct LuaProcessBlock {
-	float sampleRate;
-	float sampleTime;
-	int bufferSize;
-	int midiInputSize;
-	float* inputs[NUM_ROWS + 1];
-	float* outputs[NUM_ROWS + 1];
-	uint8_t* midiInput[MAX_MIDI_MESSAGES + 1];
-	float* knobs;
-	float* light;
-	bool button;
-};
-
-LuaProcessBlock luaBlock;
 
 LuaJITEngine::~LuaJITEngine() {
 	if (L)
@@ -379,22 +360,22 @@ int LuaJITEngine::native_sendSysex(lua_State* L) {
 	}
 	int isTable = lua_istable(L, 1);
 	if (isTable) {
-		sysexData.clear();
-		sysexData.resize(MAX_SYSEX_LEN);
-		sysexData[0] = 0xF0; // SysEx start byte
+		getEngine(L)->sysexData.clear();
+		getEngine(L)->sysexData.resize(MAX_SYSEX_LEN);
+		getEngine(L)->sysexData[0] = 0xF0; // SysEx start byte
 		uint16_t size = 1;
 		int num;
 		lua_pushnil(L);
 		while(lua_next(L, -2)) {
 		    if(lua_isnumber(L, -1)) {
 		        num = (int)lua_tonumber(L, -1);
-		        sysexData[size] = num;
+		        getEngine(L)->sysexData[size] = num;
 		        size += 1;
 		    }
 		    lua_pop(L, 1);
 		}
 		lua_pop(L, 1);
-		sysexData[size] = 0xF7; // SysEx end byte
+		getEngine(L)->sysexData[size] = 0xF7; // SysEx end byte
 		size += 1;
 		bool ok = getEngine(L)->sendSysexMessage(size);
 		lua_pushinteger(L, ok ? 1 : 0);
