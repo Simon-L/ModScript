@@ -106,11 +106,8 @@ int64_t LuaJITEngine::addCable(const int64_t outputModuleId, const int outputId,
 		DEBUG("Cable exists, not adding");
 		return -1;
 	}
-	DEBUG("cables size %zu", module->cables.size());
 	cable->luaId = module->cables.size();
-	DEBUG("new cable id %ld", cable->luaId);
 	module->cables.push_back(cable);
-	DEBUG("cables size is now %zu", module->cables.size());
 	module->addCableRequested = true;
 	return cable->luaId;
 };

@@ -242,7 +242,6 @@ void Lune::process(const ProcessArgs& args)
 
 void Lune::loadScript() {
 #ifdef USING_CARDINAL_NOT_RACK
-	DEBUG("path %s", scriptsDir.c_str());
 	Lune *module = this;
 	async_dialog_filebrowser(false, scriptsDir.c_str(), "Open Lua script", [module](char* path) {
 		module->path = path;
@@ -403,7 +402,6 @@ struct LuneWidget : ModuleWidget {
 					hoveredModule = _hovId;
 					hoveredParam = -1;
 					hoveredParameterName = "-/-";
-					// DEBUG("%lx - %s", (int64_t)hoveredModule, mwidget->getModel()->getFullName().c_str());
 					hoveredModuleName = mwidget->getModel()->getFullName();
 				}
 			}
@@ -419,8 +417,6 @@ struct LuneWidget : ModuleWidget {
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					if (_module->cables[i]->id == -1) {
 						int64_t cabId = i;
-						DEBUG("ADD cable at id %ld", cabId);
-						DEBUG("inmod %lx in %d outmod %lx out %d", _module->cables[cabId]->inputModule->getId(), _module->cables[cabId]->inputId, _module->cables[cabId]->outputModule->getId(), _module->cables[cabId]->outputId);
 						APP->engine->addCable(_module->cables[cabId]);
 						rack::app::CableWidget* cw = new rack::app::CableWidget;
 						cw->setCable(_module->cables[cabId]);
@@ -428,7 +424,6 @@ struct LuneWidget : ModuleWidget {
 				    	if (cw->isComplete()) {
 			            	APP->scene->rack->addCable(cw);
 				    	}
-						DEBUG("luaCable %ld has id %ld", cabId, _module->cables[cabId]->id);
 					}
 				}
 				_module->addCableRequested = false;
@@ -439,8 +434,6 @@ struct LuneWidget : ModuleWidget {
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					LuaCable* cable = (LuaCable*)_module->cables[i];
 					if (cable->luaId == -1) {
-						DEBUG("REMOVING cable %ld at position %ld", cable->id, i);
-						DEBUG("inmod %lx in %d outmod %lx out %d", cable->inputModule->getId(), cable->inputId, cable->outputModule->getId(), cable->outputId);
 						rack::app::CableWidget* cw = APP->scene->rack->getCable(cable->id);
 						APP->scene->rack->removeCable(cw);
 						cw->inputPort = NULL;
@@ -449,11 +442,9 @@ struct LuneWidget : ModuleWidget {
 						removed.push_back(cable);
 					}
 				}
-				DEBUG("cables size before is %zu", _module->cables.size());
 				for (Cable* cable : removed) {
 					_module->cables.erase(std::remove(_module->cables.begin(), _module->cables.end(), cable), _module->cables.end());
 				}
-				DEBUG("cables size after is %zu", _module->cables.size());
 				_module->removeCableRequested = false;
 			}
 		}

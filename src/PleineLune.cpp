@@ -118,10 +118,6 @@ struct PleineLune : Lune {
 			}
 			block->midiInputSize = msgIndex;
 #endif
-			// for (size_t i = 0; i < midiMessages.size(); ++i)
-			// {	
-			// }
-			// midiMessages.clear();
 
 			// Params
 			block->button = params[2].getValue() > 0.f;
@@ -215,7 +211,6 @@ struct MidiMenu : MenuItem {
 	bool select;
 	midi::Port* _port;
 	MidiMenu(bool select) {
-		DEBUG("Yah %d", select);
 		this->select = select;
 	}
 
@@ -228,18 +223,7 @@ struct MidiMenu : MenuItem {
 			else {
 				_port = &module->midiOutput;
 			}
-			DEBUG("Ha!");
 			appendMidiMenu(menu, _port);
-			DEBUG("Hu?!!");
-		} else {
-			if (module)
-				DEBUG("Yes module");
-			if (_port)
-				DEBUG("Yes port");
-			if (!module)
-				DEBUG("No module");
-			if (!_port)
-				DEBUG("No port");
 		}
 		return menu;
 	}
@@ -281,8 +265,6 @@ struct PleineLuneWidget : ModuleWidget {
 				for (size_t i = 0; i < _module->cables.size(); ++i) {
 					if (_module->cables[i]->id == -1) {
 						int64_t cabId = i;
-						DEBUG("ADD cable at id %ld", cabId);
-						DEBUG("inmod %lx in %d outmod %lx out %d", _module->cables[cabId]->inputModule->getId(), _module->cables[cabId]->inputId, _module->cables[cabId]->outputModule->getId(), _module->cables[cabId]->outputId);
 						APP->engine->addCable(_module->cables[cabId]);
 						rack::app::CableWidget* cw = new rack::app::CableWidget;
 						cw->setCable(_module->cables[cabId]);
@@ -302,7 +284,6 @@ struct PleineLuneWidget : ModuleWidget {
 					LuaCable* cable = (LuaCable*)_module->cables[i];
 					if (cable->luaId == -1) {
 						DEBUG("REMOVING cable %ld at position %ld", cable->id, i);
-						DEBUG("inmod %lx in %d outmod %lx out %d", cable->inputModule->getId(), cable->inputId, cable->outputModule->getId(), cable->outputId);
 						rack::app::CableWidget* cw = APP->scene->rack->getCable(cable->id);
 						APP->scene->rack->removeCable(cw);
 						cw->inputPort = NULL;
