@@ -91,10 +91,33 @@ void Lune::onReset() {
 }
 
 int Lune::populateUserScripts(std::string dir){
+	std::string pattern = dir + PATH_SEPARATOR "*.lua";
+
+#ifdef ARCH_WIN
+	HANDLE hFind;
+    WIN32_FIND_DATA data;
+
+    int wchars_num = MultiByteToWideChar( CP_UTF8 , 0 , pattern.c_str() , -1, NULL , 0 );
+	wchar_t* wstr = new wchar_t[wchars_num];
+	MultiByteToWideChar( CP_UTF8 , 0 , pattern.c_str() , -1, wstr , wchars_num );
+    hFind = FindFirstFile(wstr, &data);
+
+    if (hFind != INVALID_HANDLE_VALUE) {
+        do {
+            std::wstring ws(data.cFileName);
+            std::string path(ws.begin(), ws.end());
+	    	size_t sep = path.find_last_of(PATH_SEPARATOR);
+	        scriptFiles.push_back(path.substr(sep + 1, path.size()));
+        } while (FindNextFile(hFind, &data));
+        FindClose(hFind);
+    } else {
+        DEBUG("User scripts glob() failed with return_value %ld", GetLastError());
+        return -1;
+    }
+#else
 	glob_t glob_result;
 	memset(&glob_result, 0, sizeof(glob_result));
 
-	std::string pattern = dir + PATH_SEPARATOR "*.lua";
 	int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
 	if(return_value != 0) {
         globfree(&glob_result);
@@ -109,6 +132,7 @@ int Lune::populateUserScripts(std::string dir){
     }
 
     globfree(&glob_result);
+#endif
 
     return 0;
 }

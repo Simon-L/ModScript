@@ -2,10 +2,15 @@
 #include <osdialog.h>
 #include <mutex>
 #include <fstream>
-#include <glob.h>
 #include <sys/stat.h>
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
+
+#ifdef ARCH_WIN
+#include <windows.h>
+#else
+#include <glob.h>
+#endif
 
 struct LuaCable : Cable {
 	int64_t luaId;

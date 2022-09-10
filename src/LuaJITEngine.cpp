@@ -149,7 +149,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	std::string scripts_dir = asset::plugin(pluginInstance, "scripts");
 	std::stringstream lib_stream;
 	lib_stream
-	<< "package.path = \"" << lib_dir << PATH_SEPARATOR "?.lua;\" .. \"" << scripts_dir << PATH_SEPARATOR "?.lua;\" .. package.path" << std::endl
+	<< "package.path = \"" << lib_dir << "/?.lua;\" .. \"" << scripts_dir << "/?.lua;\"  .. \"" << lib_dir << "/?/init.lua;\" .. package.path" << std::endl
 	<< "local lib = require('lib')" << std::endl;
 	std::string lib_script = lib_stream.str();
 
