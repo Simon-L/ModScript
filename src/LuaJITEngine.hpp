@@ -4,7 +4,7 @@
 #pragma once
 #include <rack.hpp>
 #include "plugin.hpp"
-#include <luajit-2.0/lua.hpp>
+#include <luajit-2.1/lua.hpp>
 
 static const int NUM_ROWS = 4;
 static const int MAX_BUFFER_SIZE = 4096;
