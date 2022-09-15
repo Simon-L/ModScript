@@ -15,6 +15,9 @@ OBJECTS += $(luajit)
 DEPS += $(luajit)
 $(luajit):
 	git clone https://github.com/openresty/luajit2 dep/luajit2
+	# Remove the root system paths from the default path
+	sed -i 's/\<LUA_JPATH LUA_LLPATH LUA_RLPATH\>/LUA_JPATH LUA_RLPATH/g' dep/luajit2/src/luaconf.h
+	sed -i 's/\<LUA_LCPATH1 LUA_RCPATH LUA_LCPATH2\>/LUA_RCPATH/g' dep/luajit2/src/luaconf.h
 # handle the special case of building for Windows using the rack-plugin-toolchain
 # this is set here https://github.com/VCVRack/rack-plugin-toolchain/blob/v2/Makefile#L138
 # TODO: test OSX compability and find a proper way to handle this
