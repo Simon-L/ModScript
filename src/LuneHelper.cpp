@@ -178,7 +178,7 @@ struct LuneHelperWidget : ModuleWidget {
 
 		int baseModY = 32;
 		int baseParamY = 66;
-		int baseLightY = 72;
+		// int baseLightY = 72;
 		int lineHeight = 7;
 		pluginLabel = new CenteredLabel;
 		pluginLabel->box.pos = Vec(35, baseModY);
