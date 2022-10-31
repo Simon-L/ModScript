@@ -158,3 +158,39 @@ bool LuaJITEngine::sendSysexMessage(const uint16_t size) {
 	}
 	return 0;
 }
+
+size_t LuaJITEngine::shiftOscMessage(char* dest) {
+	if (!module->oscThreadCh.empty()) {
+		oscThreadMessage msg = module->oscThreadCh.shift();
+		size_t size;
+		msg.msg.serialise(msg.path, dest, &size);
+		return size;
+	} else {
+		return 0;
+	}
+}
+
+// void LuaJITEngine::setOscAddress(const char* address) {
+// 	delete module->a;
+// 	char _address[10 + strlen(address)] = "osc.udp://";
+// 	strcat(_address, address);
+// 	module->a = new lo::Address(_address);
+// 	if (!module->a->is_valid()) {
+// 		DEBUG("Error setting address.");
+// 	} else {
+// 		DEBUG("Address set to: %s", _address);
+// 	}
+// 	return;
+// }
+
+bool LuaJITEngine::dispatchOscMessage(const char* data, size_t size, const char* path) {
+	lo::Message::maybe maybe_msg = lo::Message::deserialise((void*)data, size);
+	if (maybe_msg.second.is_valid()) {
+		DEBUG("Sending. Path: %s", path);
+		maybe_msg.second.print();
+		if (module->a->is_valid()) {
+			module->a->send(path, maybe_msg.second);
+		}
+	}
+	return false;
+}

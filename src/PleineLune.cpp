@@ -5,25 +5,6 @@
 struct PleineLune : Lune {
 
 	PleineLune() {
-
-		for (int i = 0; i < 2; i++)
-			configParam(i, 0.f, 1.f, 0.5f, string::f("Knob %d", i + 1));
-		configParam(2, 0.f, 1.f, 0.f, string::f("Switch 1"));
-
-		configLight(0, "Script RGB");
-
-		block = new ProcessBlock;
-		path = "";
-		script = "";
-		setScript();
-
-		midiMessages.reserve(MAX_MIDI_MESSAGES);
-		midiMessages.clear();
-
-		cables.reserve(MAX_CABLES);
-		cables.clear();
-
-		setupExpanding(this);
 	}
 
 
@@ -89,6 +70,8 @@ struct PleineLune : Lune {
 			std::lock_guard<std::mutex> lock(scriptMutex);
 			bufferIndex = 0;
 
+			block->oscInputSize = oscThreadCh.size();
+
 			for (int id = 0; id < 256; id++) {
 				if (tempHandles[id].moduleId > 0) {
 					tempHandles[id].expiry -= args.sampleTime * block->bufferSize;
@@ -151,6 +134,11 @@ struct PleineLune : Lune {
 				lights[c].setBrightness(block->light[c]);
 		}
 
+		if (oscThreadCh.size() == oscThreadCh.capacity()) {
+			oscThreadMessage msg = oscThreadCh.shift();
+			DEBUG("Osc message queue is full (128). Message with path %s was dropped.", msg.path.c_str());
+		}
+		
 		// Outputs
 		for (int i = 0; i < NUM_ROWS; i++)
 			outputs[i].setVoltage(block->outputs[i][bufferIndex]);

@@ -5,6 +5,31 @@
 #include "Lune.hpp"
 #include "Widgets.hpp"
 
+void oscThreadFunc(int port, rack::dsp::DoubleRingBuffer<oscThreadMessage, 128> *ch, std::atomic_bool *exit, lo::Server *s) {
+	DEBUG("Starting OSC thread");
+
+	s->add_method("/rack*", NULL,
+		[&ch](const char* path, const lo::Message& msg) {
+			if (ch->size() != ch->capacity()) {
+				oscThreadMessage otm;
+				otm.msg = lo::Message(msg);
+				otm.path = std::string(path);
+				ch->push(otm);
+			} else {
+				DEBUG("Osc message queue is full (128), message dropped.");
+			}
+		}
+	);
+
+	while (!*exit) {
+        if (s->recv(0)) {
+        	usleep(400);
+        }
+    }
+	DEBUG("Exiting OSC thread");
+	return;
+}
+
 void Lune::processExpMessage() {
 	GenericMidiExpanderMessage* _curMsg = (GenericMidiExpanderMessage*)leftExpander.consumerMessage;
 	DEBUG("MIDI process: %01x %d %d %d %ld", _curMsg->msg.getStatus(), _curMsg->msg.getChannel(), _curMsg->msg.getNote(), _curMsg->msg.getValue(), _curMsg->msg.getFrame());
@@ -20,6 +45,8 @@ Lune::Lune() {
 	for (int i = 0; i < 2; i++)
 		configParam(i, 0.f, 1.f, 0.5f, string::f("Knob %d", i + 1));
 	configParam(2, 0.f, 1.f, 0.f, string::f("Switch 1"));
+
+	configLight(0, "Script RGB");
 
 	block = new ProcessBlock;
 	path = "";
@@ -53,6 +80,7 @@ Lune::Lune() {
 		midiOutput.pcontext = static_cast<CardinalPluginContext*>(APP);
 		midiInput.pcontext = static_cast<CardinalPluginContext*>(APP);
 #endif
+
 }
 
 Lune::~Lune() {
@@ -71,6 +99,19 @@ Lune::~Lune() {
 		cw->inputPort = NULL;
 		cw->outputPort = NULL;
 		cw->updateCable();
+	}
+
+	if (oscThread != NULL) {
+		if (oscThread->joinable()) {
+			DEBUG("Joining osc thread...");
+			*exitThread = true;
+			oscThread->join();
+			delete s;
+			delete a;
+			delete oscThread;
+			delete exitThread;
+			DEBUG("Joined osc thread!");
+		}
 	}
 }
 
@@ -312,6 +353,20 @@ void Lune::setScript() {
 	if (scriptEngine) {
 		delete scriptEngine;
 		scriptEngine = NULL;
+
+		if (oscThread != NULL) {
+			if (oscThread->joinable()) {
+				DEBUG("Joining osc thread...");
+				*exitThread = true;
+				oscThread->join();
+				delete s;
+				delete a;
+				delete oscThread;
+				delete exitThread;
+				DEBUG("Joined osc thread!");
+				oscThread = NULL;
+			}
+		}
 	}
 	this->script = "";
 	this->engineName = "";
@@ -341,6 +396,18 @@ void Lune::setScript() {
 		return;
 	}
 	this->engineName = scriptEngine->getEngineName();
+
+	if (scriptEngine->luaOsc.osc) {
+		exitThread = new std::atomic_bool(false);
+		a = new lo::Address(string::f("osc.udp://%s", scriptEngine->luaOsc.oscAddress).c_str());
+		s = new lo::Server(scriptEngine->luaOsc.oscPort);
+	    if (!s->is_valid()) {
+	        DEBUG("OSC Server is not valid");
+	    } else {
+		    DEBUG("URL: %s", s->url().c_str());
+			oscThread = new std::thread{oscThreadFunc, 42, &oscThreadCh, exitThread, s};
+		}	
+	}
 }
 
 int Lune::getEmptySlot() {

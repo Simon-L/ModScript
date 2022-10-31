@@ -91,6 +91,12 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__sendMidiMessage");
 	lua_pushcfunction(L, native_sendSysex);
 	lua_setglobal(L, "__sendSysex");
+	lua_pushcfunction(L, native_shiftOscMessage);
+	lua_setglobal(L, "__shiftOscMessage");
+	lua_pushcfunction(L, native_dispatchOscMessage);
+	lua_setglobal(L, "__dispatchOscMessage");
+	// lua_pushcfunction(L, native_setOscAddress);
+	// lua_setglobal(L, "__setOscAddress");
 
 	// Set config
 	lua_newtable(L);
@@ -115,6 +121,7 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	<< "float sampleTime;" << std::endl
 	<< "int bufferSize;" << std::endl
 	<< "int midiInputSize;" << std::endl
+	<< "int oscInputSize;" << std::endl
 	<< "float *inputs[" << NUM_ROWS + 1 << "];" << std::endl
 	<< "float *outputs[" << NUM_ROWS + 1 << "];" << std::endl
 	<< "uint8_t *midiInput[" << MAX_MIDI_MESSAGES + 1 << "];" << std::endl
@@ -202,6 +209,26 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 		int bufferSize = lua_tointeger(L, -1);
 		setBufferSize(bufferSize);
 		lua_pop(L, 1);
+		// osc
+		lua_getfield(L, -1, "osc");
+		if (!lua_isnil(L, -1)) {
+			luaOsc.osc = (lua_toboolean(L, -1) ? true : false);
+			lua_pop(L, 1);
+			if (luaOsc.osc) {
+				lua_getfield(L, -1, "oscPort");
+				luaOsc.oscPort = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_getfield(L, -1, "oscAddress");
+				luaOsc.oscAddress = lua_tostring(L, -1);
+				lua_pop(L, 1);
+			}
+		} else {
+			luaOsc.osc = false;
+			luaOsc.oscPort = -1;
+			luaOsc.oscAddress = "";
+			lua_pop(L, 1);
+		}
+		DEBUG("osc %d oscPort %d oscAddress %s", luaOsc.osc, luaOsc.oscPort, luaOsc.oscAddress);
 	}
 	lua_pop(L, 1);
 
@@ -236,6 +263,7 @@ int LuaJITEngine::process() {
 	luaBlock.bufferSize = block->bufferSize;
 	luaBlock.button = block->button;
 	luaBlock.midiInputSize = block->midiInputSize;
+	luaBlock.oscInputSize = block->oscInputSize;
 
 	// Duplicate process function
 	lua_pushvalue(L, -2);
@@ -386,6 +414,50 @@ int LuaJITEngine::native_sendSysex(lua_State* L) {
 		return 1;
 	}
 }
+
+int LuaJITEngine::native_shiftOscMessage(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 0) {
+		DEBUG("LuaJIT: shiftOscMessage: exactly 0 parameters needed, %d were provided", n);
+		return 0;
+	}
+	char data[MAX_OSC_LEN];
+	size_t s = getEngine(L)->shiftOscMessage(data);
+	if (s) {
+		lua_pushlstring(L, data, s);
+	} else {
+		lua_pushlstring(L, "", 0);
+	}
+	return 1;
+}
+
+int LuaJITEngine::native_dispatchOscMessage(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 2) {
+		DEBUG("LuaJIT: dispatchOscMessage: exactly 2 parameters needed, %d were provided", n);
+		return 0;
+	}
+	size_t size;
+	const char* s = lua_tolstring(L, 1, &size);
+	const char* path = lua_tostring(L, 2);
+	if (!s)
+		s = "(null)";
+	DEBUG("Path: %s - Byte string of length %zu: %s", path, size, s);
+	bool ok = getEngine(L)->dispatchOscMessage(s, size, path);
+	lua_pushnumber(L, ok ? 1 : 0);
+	return 1;
+}
+
+// int LuaJITEngine::native_setOscAddress(lua_State* L) {
+// 	int n = lua_gettop(L);
+// 	if (n != 1) {
+// 		DEBUG("LuaJIT: setOscAddress: exactly 1 parameters needed, %d were provided", n);
+// 		return 0;
+// 	}
+// 	const char* address = lua_tostring(L, 1);
+// 	getEngine(L)->setOscAddress(address);
+// 	return 0;
+// }
 
 int LuaJITEngine::native_display(lua_State* L) {
 	lua_getglobal(L, "tostring");
