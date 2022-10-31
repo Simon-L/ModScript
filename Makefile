@@ -54,7 +54,7 @@ SOURCES += $(wildcard src/*.cpp)
 
 # Add files to the ZIP package when running `make dist`
 # The compiled plugin and "plugin.json" are automatically added.
-DISTRIBUTABLES += res scripts/example.lua scripts/apcmini.lua scripts/lib/* scripts/mpk_303.lua scripts/keyboard.lua
+DISTRIBUTABLES += res scripts/*.lua scripts/apcmini.lua scripts/lib/*
 DISTRIBUTABLES += $(wildcard LICENSE*)
 DISTRIBUTABLES += $(wildcard presets)
 
