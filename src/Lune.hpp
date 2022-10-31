@@ -2,6 +2,8 @@
 #include <osdialog.h>
 #include <mutex>
 #include <fstream>
+#include <thread>
+#include <unistd.h>
 #include <sys/stat.h>
 #include "LuaJITEngine.hpp"
 #include "expanders.hpp"
@@ -11,6 +13,9 @@
 #else
 #include <glob.h>
 #endif
+
+ #include <lo/lo.h>
+#include "lo/lo_cpp.h"
 
 struct LuaCable : Cable {
 	int64_t luaId;
@@ -138,6 +143,11 @@ struct MidiOutput : dsp::MidiGenerator<PORT_MAX_CHANNELS>, midi::Output {
 };
 #endif
 
+struct oscThreadMessage {
+	lo::Message msg;
+	std::string path;
+};
+
 #ifdef USING_CARDINAL_NOT_RACK
 struct Lune : ModScriptExpander, TerminalModule {
 	void processTerminalInput(const ProcessArgs& args) override ;
@@ -207,6 +217,12 @@ struct Lune : ModScriptExpander, Module {
 	bool addCableRequested = false;
 	bool removeCableRequested = false;
 	std::vector<LuaCable*> cables;
+
+	std::atomic_bool *exitThread;
+	lo::Server *s;
+	lo::Address *a;
+	std::thread *oscThread = NULL;
+	rack::dsp::DoubleRingBuffer<oscThreadMessage, 128> oscThreadCh;
 
 	Lune();
 

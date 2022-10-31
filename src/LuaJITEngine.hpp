@@ -11,6 +11,7 @@ static const int MAX_BUFFER_SIZE = 4096;
 static const int MAX_MIDI_MESSAGES = 1024;
 static const int MAX_CABLES = 255;
 static const int MAX_SYSEX_LEN = 2048;
+static const int MAX_OSC_LEN = 2048;
 
 struct Lune;
 
@@ -19,6 +20,7 @@ struct ProcessBlock {
 	float sampleTime = 0.f;
 	int bufferSize = 1;
 	int midiInputSize = 0;
+	int oscInputSize = 0;
 	float inputs[NUM_ROWS][MAX_BUFFER_SIZE] = {};
 	float outputs[NUM_ROWS][MAX_BUFFER_SIZE] = {};
 	uint8_t midiInput[MAX_MIDI_MESSAGES][4] = {};
@@ -54,6 +56,7 @@ struct LuaJITEngine {
 		float sampleTime;
 		int bufferSize;
 		int midiInputSize;
+		int oscInputSize;
 		float* inputs[NUM_ROWS + 1];
 		float* outputs[NUM_ROWS + 1];
 		uint8_t* midiInput[MAX_MIDI_MESSAGES + 1];
@@ -64,7 +67,15 @@ struct LuaJITEngine {
 
 	LuaProcessBlock luaBlock;
 
-	// Communication with Prototype module.
+	struct LuaOscConfig {
+		bool osc;
+		int oscPort;
+		const char* oscAddress;
+	};
+
+	LuaOscConfig luaOsc;
+
+	// Communication with Lune module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
 	void display(const std::string& message);
 	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized, const bool noIndicator, const bool relative);
@@ -76,6 +87,9 @@ struct LuaJITEngine {
 	bool sendSysexMessage(const uint16_t size);
 	void setFrameDivider(int frameDivider);
 	void setBufferSize(int bufferSize);
+	size_t shiftOscMessage(char* dest);
+	void setOscAddress(const char* address);
+	bool dispatchOscMessage(const char* data, size_t size, const char* path);
 	ProcessBlock* getProcessBlock();
 	static int native_display(lua_State* L);
 	static int native_setParamValue(lua_State* L);
@@ -85,6 +99,8 @@ struct LuaJITEngine {
 	static int native_removeCable(lua_State* L);
 	static int native_sendMidiMessage(lua_State* L);
 	static int native_sendSysex(lua_State* L);
+	static int native_shiftOscMessage(lua_State* L);
+	static int native_dispatchOscMessage(lua_State* L);
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
 	Lune* module = NULL;

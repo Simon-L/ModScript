@@ -1,6 +1,8 @@
 local dsp = require('dsp')
 local inspect = require 'inspect'
 local modules = require 'modules'
+local osc = require("losc")
+local oscMessage = require("losc.message")
 
 -- MIDI Message
 function Message(arg)
@@ -191,3 +193,18 @@ function removeCable(cableId)
   return -1
 end
 --
+
+-- OSC
+
+function sendOscMessage(tbl)
+  local msg = oscMessage.new(tbl)
+  local bs = oscMessage.pack(msg.content)
+  display(inspect(bs))
+  __dispatchOscMessage(bs, msg:address())
+end
+
+function getOscMessage()
+  buffer = __shiftOscMessage()
+  msg = oscMessage.new(oscMessage.unpack(buffer))
+  return msg
+end

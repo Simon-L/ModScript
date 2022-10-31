@@ -5,14 +5,16 @@ config.bufferSize = 8
 
 -- mymodule = Module(0xdeadbeef)
 
+buttonTrig = BooleanTrigger.new()
+
 function process(block)
 	for i=1,block.midiInputSize do
 		msg = Message(block.midiInput[i])
 		display('type ' .. string.format("0x%x", msg.type) .. ' channel ' .. msg.channel .. ' note ' .. msg.note .. ' value ' .. msg.value)
 	end
 
-	if block.button then
-		display('hey2')
+	if buttonTrig:process(block.button) then
+		display('Button pressed!')
 		-- sendMidiMessage(NOTE_ON, 61, 127)
 	else
 	end

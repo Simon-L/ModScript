@@ -30,6 +30,21 @@ else
 		$(MAKE) -C dep/luajit2 BUILDMODE=static PREFIX="$(DEP_PATH)" install
 endif
 
+losc := dep/share/lua/5.1/losc
+DEPS += $(losc)
+$(losc): $(luajit)
+	git clone https://github.com/davidgranstrom/losc dep/losc
+	cp -r dep/losc/src/losc dep/share/lua/5.1/
+
+liblo := dep/lib/liblo.a
+OBJECTS += $(liblo)
+DEPS += $(liblo)
+$(liblo):
+	git clone https://github.com/radarsat1/liblo dep/liblo
+	cd dep/liblo && ./autogen.sh --prefix="$(DEP_PATH)" --enable-static=yes --enable-shared=no --disable-tests --disable-network-tests --disable-tools --disable-examples
+	$(MAKE) -C dep/liblo
+	$(MAKE) -C dep/liblo install
+
 # Careful about linking to shared libraries, since you can't assume much about the user's environment and library search path.
 # Static libraries are fine, but they should be added to this plugin's build system.
 LDFLAGS +=
