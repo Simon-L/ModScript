@@ -186,7 +186,6 @@ size_t LuaJITEngine::shiftOscMessage(char* dest) {
 bool LuaJITEngine::dispatchOscMessage(const char* data, size_t size, const char* path) {
 	lo::Message::maybe maybe_msg = lo::Message::deserialise((void*)data, size);
 	if (maybe_msg.second.is_valid()) {
-		DEBUG("Sending. Path: %s", path);
 		maybe_msg.second.print();
 		if (module->a->is_valid()) {
 			module->a->send(path, maybe_msg.second);

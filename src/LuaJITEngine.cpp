@@ -442,7 +442,6 @@ int LuaJITEngine::native_dispatchOscMessage(lua_State* L) {
 	const char* path = lua_tostring(L, 2);
 	if (!s)
 		s = "(null)";
-	DEBUG("Path: %s - Byte string of length %zu: %s", path, size, s);
 	bool ok = getEngine(L)->dispatchOscMessage(s, size, path);
 	lua_pushnumber(L, ok ? 1 : 0);
 	return 1;

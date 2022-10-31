@@ -199,7 +199,7 @@ end
 function sendOscMessage(tbl)
   local msg = oscMessage.new(tbl)
   local bs = oscMessage.pack(msg.content)
-  display(inspect(bs))
+  -- display(inspect(bs))
   __dispatchOscMessage(bs, msg:address())
 end
 
