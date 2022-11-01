@@ -16,7 +16,9 @@ DEPS += $(luajit)
 $(luajit):
 	git clone https://github.com/openresty/luajit2 dep/luajit2
 	# Remove the root system paths from the default path
-ifdef $(ARCH_MAC)
+	@echo $(ARCH_MAC)
+	@echo $(ARCH_OS_NAME)
+ifeq ($(ARCH_OS_NAME),mac)
 	sed -i '' 's/\<LUA_JPATH LUA_LLPATH LUA_RLPATH\>/LUA_JPATH LUA_RLPATH/g' dep/luajit2/src/luaconf.h
 	sed -i '' 's/\<LUA_LCPATH1 LUA_RCPATH LUA_LCPATH2\>/LUA_RCPATH/g' dep/luajit2/src/luaconf.h
 else
