@@ -27,7 +27,7 @@ ifneq (,$(findstring x86_64-w64-mingw32,$(PATH)))
 		cd dep/luajit2/src && mv luajit.exe luajit
 		$(MAKE) -C dep/luajit2 HOST_CC="gcc" CROSS=x86_64-w64-mingw32- TARGET_SYS=Windows BUILDMODE=static PREFIX="$(DEP_PATH)" install
 else	
-		$(MAKE) -C dep/luajit2 BUILDMODE=static PREFIX="$(DEP_PATH)" install
+		$(MAKE) -C dep/luajit2 MACOSX_DEPLOYMENT_TARGET="10.15" BUILDMODE=static PREFIX="$(DEP_PATH)" install
 endif
 
 losc := dep/share/lua/5.1/losc
