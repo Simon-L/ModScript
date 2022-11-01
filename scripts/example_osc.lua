@@ -2,8 +2,8 @@ config.frameDivider = 4
 config.bufferSize = 8
 
 config.osc = true
-config.oscPort = 9000 -- receive port
-config.oscAddress = "127.0.0.1:9001" -- send address
+config.oscPort = 9001 -- receive port
+config.oscAddress = "127.0.0.1:9002" -- send address
 
 buttonTrig = BooleanTrigger.new()
 

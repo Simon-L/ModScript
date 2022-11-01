@@ -78,6 +78,7 @@ struct LuaJITEngine {
 	// Communication with Lune module.
 	// These cannot be called from your constructor, so initialize your engine in the run() method.
 	void display(const std::string& message);
+	void scrollWindow(math::Vec scrollVec);
 	void setParamValue(const int64_t moduleId, const int paramId, const double paramValue, const bool normalized, const bool noIndicator, const bool relative);
 	double getParamValue(const int64_t moduleId, const int paramId);
 	double getLightValue(const int64_t moduleId, const int lightId);
@@ -101,6 +102,7 @@ struct LuaJITEngine {
 	static int native_sendSysex(lua_State* L);
 	static int native_shiftOscMessage(lua_State* L);
 	static int native_dispatchOscMessage(lua_State* L);
+	static int native_scrollWindow(lua_State* L);
 	static LuaJITEngine* getEngine(lua_State* L);
 	// private
 	Lune* module = NULL;

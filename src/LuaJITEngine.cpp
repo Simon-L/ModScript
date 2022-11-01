@@ -95,8 +95,8 @@ int LuaJITEngine::run(const std::string& path, const std::string& script) {
 	lua_setglobal(L, "__shiftOscMessage");
 	lua_pushcfunction(L, native_dispatchOscMessage);
 	lua_setglobal(L, "__dispatchOscMessage");
-	// lua_pushcfunction(L, native_setOscAddress);
-	// lua_setglobal(L, "__setOscAddress");
+	lua_pushcfunction(L, native_scrollWindow);
+	lua_setglobal(L, "__scrollWindow");
 
 	// Set config
 	lua_newtable(L);
@@ -466,6 +466,18 @@ int LuaJITEngine::native_display(lua_State* L) {
 	if (!s)
 		s = "(null)";
 	getEngine(L)->display(s);
+	return 0;
+}
+
+int LuaJITEngine::native_scrollWindow(lua_State* L) {
+	int n = lua_gettop(L);
+	if (n != 2) {
+		DEBUG("LuaJIT: scrollWindow: exactly 2 parameters needed, %d were provided", n);
+		return 0;
+	}
+	lua_Number x = lua_tonumber(L, 1);
+	lua_Number y = lua_tonumber(L, 2);
+	getEngine(L)->scrollWindow(math::Vec(x, y));
 	return 0;
 }
 

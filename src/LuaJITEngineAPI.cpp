@@ -7,6 +7,15 @@ void LuaJITEngine::display(const std::string& message) {
 	module->message = message;
 }
 
+void LuaJITEngine::scrollWindow(math::Vec scrollVec) {
+	scrollVec.x *= 30;
+	scrollVec.y *= 2;
+	math::Vec scroll = APP->scene->rackScroll->getGridOffset();
+	scroll.x += scrollVec.x;
+	scroll.y += scrollVec.y;
+	APP->scene->rackScroll->setGridOffset(scroll);
+}
+
 void LuaJITEngine::setFrameDivider(int frameDivider) {
 	module->frameDivider = std::max(frameDivider, 1);
 }
