@@ -39,22 +39,30 @@ $(losc): $(luajit)
 liblo := dep/lib/liblo.a
 OBJECTS += $(liblo)
 DEPS += $(liblo)
-$(liblo):
+$(liblo): $(losc)
 	git clone https://github.com/radarsat1/liblo dep/liblo
+ifneq (,$(findstring x86_64-w64-mingw32,$(PATH)))
+	cd dep/liblo && ./autogen.sh --host=x86_64-w64-mingw32 CFLAGS="-Wno-error=unused-variable" --prefix="$(DEP_PATH)" --enable-static=yes --enable-shared=no --disable-tests --disable-network-tests --disable-tools --disable-examples
+else	
 	cd dep/liblo && ./autogen.sh --prefix="$(DEP_PATH)" --enable-static=yes --enable-shared=no --disable-tests --disable-network-tests --disable-tools --disable-examples
+endif
 	$(MAKE) -C dep/liblo
 	$(MAKE) -C dep/liblo install
 
 # Careful about linking to shared libraries, since you can't assume much about the user's environment and library search path.
 # Static libraries are fine, but they should be added to this plugin's build system.
-LDFLAGS +=
+ifneq (,$(findstring x86_64-w64-mingw32,$(PATH)))
+LDFLAGS += -lws2_32 -liphlpapi
+else
+LDFLAGS += 
+endif
 
 # Add .cpp files to the build
 SOURCES += $(wildcard src/*.cpp)
 
 # Add files to the ZIP package when running `make dist`
 # The compiled plugin and "plugin.json" are automatically added.
-DISTRIBUTABLES += res scripts/*.lua scripts/apcmini.lua scripts/lib/*
+DISTRIBUTABLES += res scripts/*.lua scripts/lib/*
 DISTRIBUTABLES += $(wildcard LICENSE*)
 DISTRIBUTABLES += $(wildcard presets)
 
