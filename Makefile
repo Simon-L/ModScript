@@ -16,8 +16,6 @@ DEPS += $(luajit)
 $(luajit):
 	git clone https://github.com/openresty/luajit2 dep/luajit2
 	# Remove the root system paths from the default path
-	@echo $(ARCH_MAC)
-	@echo $(ARCH_OS_NAME)
 ifeq ($(ARCH_OS_NAME),mac)
 	sed -i '' 's/\<LUA_JPATH LUA_LLPATH LUA_RLPATH\>/LUA_JPATH LUA_RLPATH/g' dep/luajit2/src/luaconf.h
 	sed -i '' 's/\<LUA_LCPATH1 LUA_RCPATH LUA_LCPATH2\>/LUA_RCPATH/g' dep/luajit2/src/luaconf.h
@@ -33,7 +31,7 @@ ifneq (,$(findstring x86_64-w64-mingw32,$(PATH)))
 		cd dep/luajit2/src && mv luajit.exe luajit
 		$(MAKE) -C dep/luajit2 HOST_CC="gcc" CROSS=x86_64-w64-mingw32- TARGET_SYS=Windows BUILDMODE=static PREFIX="$(DEP_PATH)" install
 else	
-ifdef $(ARCH_MAC)
+ifeq ($(ARCH_OS_NAME),mac)
 		$(MAKE) -C dep/luajit2 MACOSX_DEPLOYMENT_TARGET="10.15" BUILDMODE=static PREFIX="$(DEP_PATH)" install
 else
 		$(MAKE) -C dep/luajit2 BUILDMODE=static PREFIX="$(DEP_PATH)" install

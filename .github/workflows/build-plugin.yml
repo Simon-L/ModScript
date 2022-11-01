@@ -90,7 +90,7 @@ jobs:
           curl -o Rack-SDK.zip https://vcvrack.com/downloads/Rack-SDK-${{ env.rack-sdk-version }}-mac.zip
           unzip Rack-SDK.zip
       - name: Install automake
-        run: brew install autoconf automake libtool
+        run: brew install automake
       - name: Build plugin
         run: |
           export RACK_DIR=$HOME/Rack-SDK
