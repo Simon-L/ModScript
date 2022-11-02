@@ -7,6 +7,9 @@ config.bufferSize = 8
 
 buttonTrig = BooleanTrigger.new()
 
+-- uncomment below to help debug library paths
+-- display(package.path)
+
 function process(block)
 	for i=1,block.midiInputSize do
 		msg = Message(block.midiInput[i])
