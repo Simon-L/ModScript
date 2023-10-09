@@ -86,7 +86,7 @@ struct LuneHelper : Module {
 		if (idTrigger.process(params[ID_PARAM].getValue() > 0.f)) {
 			// Module ID
 			char hexID[32];
-			sprintf(hexID, "0x%lx", hoveredModule);
+			sprintf(hexID, "0x%llx", hoveredModule);
 			glfwSetClipboardString(APP->window->win, hexID);
 		}
 
@@ -141,10 +141,10 @@ struct LuneHelperWidget : ModuleWidget {
 					_mod->hoveredModule = hoveredModule;
 				}
 				hoveredParam = -1;
-				// DEBUG("%lx - %s", (int64_t)hoveredModule, mwidget->getModel()->getFullName().c_str());
+				// DEBUG("%llx - %s", (int64_t)hoveredModule, mwidget->getModel()->getFullName().c_str());
 				pluginLabel->text = mwidget->getModel()->plugin->name.c_str();
 				moduleLabel->text = mwidget->getModel()->name.c_str();
-				moduleIdLabel->text = string::f("0x%lx", (int64_t)hoveredModule);
+				moduleIdLabel->text = string::f("0x%llx", (int64_t)hoveredModule);
 				paramLabel->text = "";
 				valueLabel->text = "";
 				limitsLabel->text = "";
